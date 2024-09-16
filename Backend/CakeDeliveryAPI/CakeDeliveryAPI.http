@@ -1,0 +1,6 @@
+@CakeDeliveryAPI_HostAddress = http://localhost:5003
+
+GET {{CakeDeliveryAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
