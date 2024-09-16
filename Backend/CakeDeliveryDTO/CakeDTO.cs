@@ -7,7 +7,7 @@ namespace DTOs
 {
     public class CakeDTO
     {
-        public CakeDTO(int cakeId, string cakeName, string description, decimal price, int stockQuantity, string category, string imageUrl, DateTime createdAt)
+        public CakeDTO(int? cakeId, string cakeName, string description, decimal price, int? stockQuantity, string category, string imageUrl, DateTime createdAt)
         {
             this.CakeID = cakeId;
             this.CakeName = cakeName;
@@ -19,11 +19,11 @@ namespace DTOs
             this.CreatedAt = createdAt;
         }
 
-        public int CakeID { get; set; }
+        public int? CakeID { get; set; }
         public string CakeName { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public int StockQuantity { get; set; }
+        public int? StockQuantity { get; set; }
         public string Category { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }

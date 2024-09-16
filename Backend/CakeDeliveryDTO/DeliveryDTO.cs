@@ -2,7 +2,7 @@
 {
     public class DeliveryDTO
     {
-        public DeliveryDTO(int deliveryId, int orderId, string deliveryAddress, string deliveryCity, string deliveryPostalCode, string deliveryCountry, DateTime deliveryDate, string deliveryStatus)
+        public DeliveryDTO(int? deliveryId, int? orderId, string deliveryAddress, string deliveryCity, string deliveryPostalCode, string deliveryCountry, DateTime deliveryDate, string deliveryStatus)
         {
             this.DeliveryID = deliveryId;
             this.OrderID = orderId;
@@ -14,8 +14,8 @@
             this.DeliveryStatus = deliveryStatus;
         }
 
-        public int DeliveryID { get; set; }
-        public int OrderID { get; set; }
+        public int? DeliveryID { get; set; }
+        public int? OrderID { get; set; }
         public string DeliveryAddress { get; set; }
         public string DeliveryCity { get; set; }
         public string DeliveryPostalCode { get; set; }

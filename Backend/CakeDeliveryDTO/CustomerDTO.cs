@@ -2,7 +2,7 @@
 {
     public class CustomerDTO
     {
-        public CustomerDTO(int customerId, string firstName, string lastName, string email, string phoneNumber, string address, string city, string postalCode, string country, DateTime createdAt)
+        public CustomerDTO(int? customerId, string firstName, string lastName, string email, string phoneNumber, string address, string city, string postalCode, string country, DateTime createdAt)
         {
             this.CustomerID = customerId;
             this.FirstName = firstName;
@@ -16,7 +16,7 @@
             this.CreatedAt = createdAt;
         }
 
-        public int CustomerID { get; set; }
+        public int? CustomerID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
