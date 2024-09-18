@@ -7,15 +7,11 @@ using System.Threading.Tasks;
 namespace DTOs
 {
     /// <summary>
-    /// DTO Used for updating an existing order
+    /// DTO Used for deleting an order
     /// </summary>
     /// 
-    public record OrderUpdateRequestDTO(
-        int OrderID,
-        int CustomerID,
-        decimal TotalAmount,
-        string PaymentStatus,
-        string DeliveryStatus
+    public record OrderDeleteDTO(
+        int OrderID
     );
 
 }
