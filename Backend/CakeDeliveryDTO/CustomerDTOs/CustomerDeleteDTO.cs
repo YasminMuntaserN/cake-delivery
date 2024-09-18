@@ -1,7 +1,7 @@
 ﻿namespace CakeDeliveryDTO.CustomerDTOs
 {
     /// <summary>
-    /// DTO for Delete a customer.
+    /// DTO Used when deleting a customer based on their CustomerID..
     /// </summary>
     /// 
     public record CustomerDeleteDTO(
