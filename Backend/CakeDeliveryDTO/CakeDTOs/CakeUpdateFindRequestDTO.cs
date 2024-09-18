@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 namespace CakeDeliveryDTO.CakeDTOs
 {
     /// <summary>
-    /// DTO for Updating a new cake.
+    /// DTO for Updating or Find a cake.
     /// </summary>
     /// 
-    public record CakeUpdateRequestDTO(
+    public record CakeUpdateFindRequestDTO(
         int CakeID,
         string CakeName,
         string Description,
