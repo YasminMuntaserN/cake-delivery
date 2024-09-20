@@ -14,7 +14,6 @@ namespace DataAccessLayer
     public class DataAccessHelper
     {
         // Create an instance of clsErrorLogger
-
         private static  clsErrorLogger _logger = new clsErrorLogger(clsErrorLogger.LogToEventViewer);
 
         // Method to handle exceptions and log them
@@ -128,8 +127,8 @@ namespace DataAccessLayer
             return default;
         }
 
-        // Retrieve all records with optional parameters
-        public static List<T> GetAll<T>(string storedProcedureName, Func<IDataRecord, T> mapFunction, params (string name, object? value)[] parameters)
+        // Retrieve a All records
+        public static List<T> GetAll<T>(string storedProcedureName, Func<IDataRecord, T> mapFunction)
         {
             var list = new List<T>();
 
@@ -140,12 +139,6 @@ namespace DataAccessLayer
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-
-                        // Add optional parameters to the command
-                        foreach (var parameter in parameters)
-                        {
-                            command.Parameters.AddWithValue($"@{parameter.name}", parameter.value ?? DBNull.Value);
-                        }
 
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -167,7 +160,44 @@ namespace DataAccessLayer
             return list;
         }
 
+        // Delete record 
+        public static bool Delete(string storedProcedureName, string parameterName, object? value)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add the parameter for the ID or value used to identify the record to delete
+                        command.Parameters.AddWithValue($"@{parameterName}", value ?? DBNull.Value);
+
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            // If rowsAffected > 0, it means the record was successfully deleted
+            return (rowsAffected > 0);
+        }
+
+
         // Add parameters from a DTO object to a SqlCommand
+        /// <summary>
+        /// a helper method that dynamically adds parameters to a SqlCommand based on the properties of
+        /// a given object (dto). This method uses reflection to inspect the properties of the object and 
+        /// automatically create SQL parameters for each property. The parameters are then added to the
+        /// SqlCommand, which is used in database operations like inserts, updates, etc.
+        /// </summary>
         private static void AddParametersFromDto<T>(SqlCommand command, T dto)
         {
             // Use reflection to add parameters dynamically
@@ -179,5 +209,4 @@ namespace DataAccessLayer
             }
         }
     }
-}
 }
