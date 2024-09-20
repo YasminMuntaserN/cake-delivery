@@ -5,19 +5,24 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System;
+using System.Configuration;
+using System.Diagnostics;
 
 namespace DataAccessLayer
 {
-    public static class DataAccessHelper
+    public class DataAccessHelper
     {
-        private static readonly ErrorLogger _logger = new ErrorLogger(LogHandler.LogToEventViewer);
+        // Create an instance of clsErrorLogger
+
+        private static  clsErrorLogger _logger = new clsErrorLogger(clsErrorLogger.LogToEventViewer);
 
         // Method to handle exceptions and log them
         private static void HandleException(Exception ex)
         {
             if (ex is SqlException sqlEx)
             {
-                _logger.LogError("Database Exception", sqlEx);
+                _logger.LogError("Database Exception", ex);
             }
             else
             {
