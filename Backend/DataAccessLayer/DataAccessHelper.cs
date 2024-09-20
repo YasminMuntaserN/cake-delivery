@@ -31,13 +31,13 @@ namespace DataAccessLayer
         }
 
         // Insert a new record and return the new ID
-        public static int? Add<T>(string storedProcedureName, string outputParameterName, T entity, Func<IDataRecord, T> mapFunction)
+        public static int? Add<T>(string storedProcedureName, string outputParameterName, T entity)
         {
             int? newId = null;
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
@@ -75,7 +75,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
@@ -102,7 +102,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
@@ -135,7 +135,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
