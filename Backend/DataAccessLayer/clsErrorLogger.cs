@@ -24,7 +24,7 @@ namespace DataAccessLayer
             // Implementation for logging to the Event Viewer
             using (EventLog eventLog = new EventLog("Application"))
             {
-                eventLog.Source = "YourAppSource"; // Your application source name
+                eventLog.Source = "CakeDelivery"; // Your application source name
                 eventLog.WriteEntry($"{message}: {ex.Message}", EventLogEntryType.Error);
             }
         }
