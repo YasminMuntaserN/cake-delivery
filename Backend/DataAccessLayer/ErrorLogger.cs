@@ -1,17 +1,18 @@
 ﻿namespace DataAccessLayer
 {
-    public class ErrorLogger
+    public class clsErrorLogger
     {
-        private readonly Action<string, Exception> _logAction;
+        private Action<string, Exception> _logAction;
 
-        public ErrorLogger(Action<string, Exception> logAction)
+        public clsErrorLogger(Action<string, Exception> logAction)
         {
             _logAction = logAction;
         }
 
-        public void LogError(string message, Exception ex)
+        public void LogError(string errorType, Exception ex)
         {
-            _logAction(message, ex);
+            _logAction?.Invoke(errorType, ex);
         }
     }
+}
 }
