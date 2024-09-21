@@ -57,27 +57,30 @@ public class CakeApiController : ControllerBase
         return Ok(cake);
     }
 
-   
-    
-    //[HttpPost(Name = "AddCake")]
-    //[ProducesResponseType(StatusCodes.Status201Created)]
-    //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-    //public ActionResult<CakeDTO> AddCake([FromBody] CakeDTO newCakeDTO)
-    //{
-    //    if (newCakeDTO == null || string.IsNullOrEmpty(newCakeDTO.CakeName))
-    //    {
-    //        return BadRequest("Invalid cake data.");
-    //    }
 
-    //    clsCake cakeInstance = new clsCake(newCakeDTO, clsCake.enMode.AddNew);
-    //    if (cakeInstance.Save())
-    //    {
-    //        newCakeDTO?.CakeID = cakeInstance.CakeID;
-    //        return CreatedAtRoute("GetCakeById", new { id = newCakeDTO.CakeID }, newCakeDTO);
-    //    }
 
-    //    return BadRequest("Unable to create cake.");
-    //}
+    [HttpPost(Name = "AddCake")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ActionResult<CakeDTO> AddCake([FromBody] CakeCreateDto newCakeDTO)
+    {
+        if (newCakeDTO == null || string.IsNullOrEmpty(newCakeDTO.CakeName))
+        {
+            return BadRequest("Invalid cake data.");
+        }
+
+        clsCake cakeInstance = new clsCake
+            (new CakeDTO(null , newCakeDTO.CakeName , newCakeDTO.Description , newCakeDTO.Price , newCakeDTO.StockQuantity , newCakeDTO.Category , newCakeDTO.ImageUrl)
+            , clsCake.enMode.AddNew);
+
+        if (cakeInstance.Save())
+        {
+            return CreatedAtRoute("GetCakeById", new { id = cakeInstance.CakeID }, newCakeDTO);
+        }
+
+        return BadRequest("Unable to create cake.");
+    }
+
 
     //[HttpPut("{id}", Name = "UpdateCake")]
     //[ProducesResponseType(StatusCodes.Status200OK)]

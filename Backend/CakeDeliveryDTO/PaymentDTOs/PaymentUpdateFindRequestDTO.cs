@@ -1,4 +1,4 @@
-﻿namespace CakeDeliveryDTO.PaymentDTOs
+﻿namespace CakeDeliveryDTO
 {
     /// <summary>Used when creating a new payment.Used to delete a delivery
     /// </summary>
