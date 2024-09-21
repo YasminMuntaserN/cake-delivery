@@ -9,7 +9,7 @@ namespace CakeDeliveryDTO.CakeDTOs
     /// DTO for creating a new cake.
     /// </summary>
     /// 
-    public record CakeCreateRequestDTO(
+    public record CakeCreateDto(
         string CakeName,
         string Description,
         decimal Price,

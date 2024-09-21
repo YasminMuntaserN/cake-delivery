@@ -50,16 +50,11 @@ namespace Business_Layer
 
         private bool _Update()
         {
-            return clsCakeData.Update(this.ToCakeDto());
+            return clsCakeData.UpdateCake(this.ToCakeDto());
         }
 
         public bool Save()
         {
-            if (!_Validate())
-            {
-                return false;
-            }
-
             switch (Mode)
             {
                 case enMode.AddNew:
@@ -77,58 +72,49 @@ namespace Business_Layer
             return false;
         }
 
-        public bool TryToSave(out bool isValidationError)
+
+        public static CakeDTO? FindCakeById(int? cakeId)
         {
-            if (!_Validate())
-            {
-                isValidationError = true;
-                return false;
-            }
-
-            switch (Mode)
-            {
-                case enMode.AddNew:
-                    if (_Add())
-                    {
-                        Mode = enMode.Update;
-                        isValidationError = false;
-                        return true;
-                    }
-                    else
-                    {
-                        isValidationError = false;
-                        return false;
-                    }
-
-                case enMode.Update:
-                    isValidationError = false;
-                    return _Update();
-            }
-
-            isValidationError = false;
-            return false;
+            return clsCakeData.GetCakeById(cakeId);
         }
 
-        public static clsCake? FindBy<T>(T data, enFindBy findBy)
+        public static CakeDTO? FindCakeByName(string cakeName)
         {
-            var finder = CakeFinderFactory.GetFinder(findBy);
-            return finder.FindCake(data);
+            return clsCakeData.GetCakeByName(cakeName);
         }
 
         public static bool Delete(int? cakeID)
-            => clsCakeData.Delete(cakeID);
+            => clsCakeData.DeleteCake(cakeID);
 
         public static bool Exists(object data, enFindBy findBy)
         {
-            var verifier = ExistenceVerifierFactory.GetExistenceVerifier(findBy);
-            return verifier != null && verifier.Exists(data);
+            switch (findBy)
+            {
+                case enFindBy.CakeID:
+                    if (data is int cakeId)
+                    {
+                        var cake = clsCakeData.GetCakeById(cakeId);
+                        return cake != null; 
+                    }
+                    break;
+
+                case enFindBy.CakeName:
+                    if (data is string cakeName)
+                    {
+                        var cake = clsCakeData.GetCakeByName(cakeName);
+                        return cake != null; 
+                    }
+                    break;
+            }
+
+            return false; 
         }
 
-        public static List<CakeViewDto> All()
-            => clsCakeData.AllCakes();
+        public static List<CakeDTO> All()
+            => clsCakeData.GetAllCakes();
 
-        public static int Count()
-            => clsCakeData.Count();
+        public static List<CakeDTO> All(string Category)
+           => clsCakeData.GetCakesByCategory(Category);
     }
 
 }
