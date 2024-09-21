@@ -72,7 +72,6 @@ namespace Business_Layer
             return false;
         }
 
-
         public static CakeDTO? FindCakeById(int? cakeId)
         {
             return clsCakeData.GetCakeById(cakeId);
@@ -94,7 +93,7 @@ namespace Business_Layer
                     if (data is int cakeId)
                     {
                         var cake = clsCakeData.GetCakeById(cakeId);
-                        return cake != null; 
+                        return cake != null;
                     }
                     break;
 
@@ -102,12 +101,12 @@ namespace Business_Layer
                     if (data is string cakeName)
                     {
                         var cake = clsCakeData.GetCakeByName(cakeName);
-                        return cake != null; 
+                        return cake != null;
                     }
                     break;
             }
 
-            return false; 
+            return false;
         }
 
         public static List<CakeDTO> All()

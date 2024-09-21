@@ -19,7 +19,7 @@ namespace DataAccessLayer
         {
             return DataAccessHelper.Add(
                 "sp_AddCake",  // Stored procedure name for inserting a cake
-                "CakeID",      // Output parameter
+                "NewCakeID",      // Output parameter
                 cake           // Cake data DTO
             );
         }
