@@ -96,8 +96,8 @@ namespace DataAccessLayer
             return (rowAffected > 0);
         }
 
-        // Retrieve a single record by ID
-        public static T? GetById<T>(string storedProcedureName, string parameterName, object? value, Func<IDataRecord, T> mapFunction)
+        // Retrieve a single record by any parameter (ID, string, etc.)
+        public static T? GetByParameter<T>(string storedProcedureName, string parameterName, object? value, Func<IDataRecord, T> mapFunction)
         {
             try
             {
@@ -106,6 +106,8 @@ namespace DataAccessLayer
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
+
+                        // Add parameter with dynamic type
                         command.Parameters.AddWithValue($"@{parameterName}", value ?? DBNull.Value);
 
                         connection.Open();
@@ -113,7 +115,7 @@ namespace DataAccessLayer
                         {
                             if (reader.Read())
                             {
-                                return mapFunction(reader);
+                                return mapFunction(reader); 
                             }
                         }
                     }
@@ -121,11 +123,12 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                HandleException(ex);  
             }
 
-            return default;
+            return default; // Return default value if no result found
         }
+
 
         // Retrieve a All records
         public static List<T> GetAll<T>(string storedProcedureName, Func<IDataRecord, T> mapFunction)
