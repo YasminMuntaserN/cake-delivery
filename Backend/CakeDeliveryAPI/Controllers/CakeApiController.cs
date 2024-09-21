@@ -109,23 +109,24 @@ public class CakeApiController : ControllerBase
         return StatusCode(500, new { message = "Error updating cake." });
     }
 
-    //[HttpDelete("{id}", Name = "DeleteCake")]
-    //[ProducesResponseType(StatusCodes.Status200OK)]
-    //[ProducesResponseType(StatusCodes.Status404NotFound)]
-    //public ActionResult DeleteCake(int id)
-    //{
-    //    if (id < 1)
-    //    {
-    //        return BadRequest($"Not accepted ID {id}");
-    //    }
+   
+    [HttpDelete("{id}", Name = "DeleteCake")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult DeleteCake(int id)
+    {
+        if (id < 1)
+        {
+            return BadRequest($"Not accepted ID {id}");
+        }
 
-    //    if (clsCake.Delete(id))
-    //    {
-    //        return Ok($"Cake with ID {id} has been deleted.");
-    //    }
+        if (clsCake.Delete(id))
+        {
+            return Ok($"Cake with ID {id} has been deleted.");
+        }
 
-    //    return NotFound($"Cake with ID {id} not found. No rows deleted!");
-    //}
+        return NotFound($"Cake with ID {id} not found. No rows deleted!");
+    }
 
     //[HttpGet("category/{category}", Name = "GetCakesByCategory")]
     //[ProducesResponseType(StatusCodes.Status200OK)]
