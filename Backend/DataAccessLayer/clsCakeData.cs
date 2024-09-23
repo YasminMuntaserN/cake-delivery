@@ -13,19 +13,18 @@ namespace DataAccessLayer
         /// <summary>
         /// Adds a new cake to the database.
         /// </summary>
-        /// <param name="cake">CakeCreateRequestDTO with cake data.</param>
+        /// <param name="cake">CakeCreateDto with cake data.</param>
         /// <returns>The new CakeID if successful, otherwise null.</returns>
         public static int? Add(CakeCreateDto cake)
         {
             return DataAccessHelper.Add(
                 "sp_AddCake",  // Stored procedure name for inserting a cake
-                "NewCakeID",      // Output parameter
+                "NewCakeID",   // Output parameter
                 cake           // Cake data DTO
             );
         }
 
-
-        // <summary>
+        /// <summary>
         /// Retrieves a cake by its ID.
         /// </summary>
         /// <param name="cakeId">The ID of the cake to find.</param>
@@ -42,13 +41,11 @@ namespace DataAccessLayer
                     Description: reader["Description"].ToString(),
                     Price: (decimal)reader["Price"],
                     StockQuantity: (int)reader["StockQuantity"],
-                    Category: reader["Category"].ToString(),
+                    CategoryID: (int)reader["CategoryID"],  // Changed to CategoryID
                     ImageUrl: reader["ImageUrl"].ToString()
                 )
             );
         }
-
-
 
         /// <summary>
         /// Retrieves a cake by its name.
@@ -67,18 +64,16 @@ namespace DataAccessLayer
                     Description: reader["Description"].ToString(),
                     Price: (decimal)reader["Price"],
                     StockQuantity: (int)reader["StockQuantity"],
-                    Category: reader["Category"].ToString(),
+                    CategoryID: (int)reader["CategoryID"],  // Changed to CategoryID
                     ImageUrl: reader["ImageUrl"].ToString()
                 )
             );
         }
 
-
-
         /// <summary>
         /// Updates an existing cake in the database.
         /// </summary>
-        /// <param name="cakeToUpdate">CakeUpdateFindRequestDTO with updated cake data.</param>
+        /// <param name="cakeToUpdate">CakeDTO with updated cake data.</param>
         /// <returns>True if successful, otherwise false.</returns>
         public static bool UpdateCake(CakeDTO cakeToUpdate)
         {
@@ -87,7 +82,6 @@ namespace DataAccessLayer
                 cakeToUpdate      // DTO containing updated data
             );
         }
-
 
         /// <summary>
         /// Deletes a cake by its ID.
@@ -103,11 +97,10 @@ namespace DataAccessLayer
             );
         }
 
-
         /// <summary>
         /// Retrieves all cakes from the database.
         /// </summary>
-        /// <returns>A list of CakeUpdateFindRequestDTO objects.</returns>
+        /// <returns>A list of CakeDTO objects.</returns>
         public static List<CakeDTO> GetAllCakes()
         {
             return DataAccessHelper.GetAll(
@@ -118,32 +111,32 @@ namespace DataAccessLayer
                     Description: reader["Description"].ToString(),
                     Price: (decimal)reader["Price"],
                     StockQuantity: (int)reader["StockQuantity"],
-                    Category: reader["Category"].ToString(),
+                    CategoryID: (int)reader["CategoryID"],  // Changed to CategoryID
                     ImageUrl: reader["ImageUrl"].ToString()
                 )
             );
         }
 
-
         /// <summary>
         /// Retrieves all cakes belonging to a specified category.
         /// </summary>
-        /// <param name="categoryName">The name of the category to filter cakes.</param>
+        /// <param name="categoryId">The ID of the category to filter cakes.</param>
         /// <returns>A list of CakeDTO objects if found, otherwise an empty list.</returns>
-        public static List<CakeDTO> GetCakesByCategory(string categoryName)
+        public static List<CakeDTO> GetCakesByCategory(int categoryId)
         {
             return DataAccessHelper.GetAll(
-                $"sp_GetAll{categoryName}Cakes", 
+                "sp_GetCakesByCategory", // Adjust this stored procedure name if necessary
                 reader => new CakeDTO(
                     CakeID: (int)reader["CakeID"],
                     CakeName: reader["CakeName"].ToString(),
                     Description: reader["Description"].ToString(),
                     Price: (decimal)reader["Price"],
                     StockQuantity: (int)reader["StockQuantity"],
-                    Category: reader["Category"].ToString(),
+                    CategoryID: (int)reader["CategoryID"],  // Changed to CategoryID
                     ImageUrl: reader["ImageUrl"].ToString()
                 )
             );
         }
     }
+
 }
