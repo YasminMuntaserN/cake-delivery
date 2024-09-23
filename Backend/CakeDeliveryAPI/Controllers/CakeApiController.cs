@@ -43,7 +43,6 @@ public class CakeApiController : ControllerBase
     }
 
 
-
     [HttpGet("name/{cakeName}", Name = "GetCakeByName")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -128,16 +127,18 @@ public class CakeApiController : ControllerBase
         return NotFound($"Cake with ID {id} not found. No rows deleted!");
     }
 
-    //[HttpGet("category/{category}", Name = "GetCakesByCategory")]
-    //[ProducesResponseType(StatusCodes.Status200OK)]
-    //[ProducesResponseType(StatusCodes.Status404NotFound)]
-    //public ActionResult<IEnumerable<CakeDTO>> GetCakesByCategory(string category)
-    //{
-    //    List<CakeDTO> cakesList = clsCake.All(category);
-    //    if (cakesList.Count == 0)
-    //    {
-    //        return NotFound($"No Cakes found in category '{category}'!");
-    //    }
-    //    return Ok(cakesList);
-    //}
+   
+    
+    [HttpGet("category/{category}", Name = "GetCakesByCategory")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<IEnumerable<CakeDTO>> GetCakesByCategory(string category)
+    {
+        List<CakeDTO> cakesList = clsCake.All(category);
+        if (cakesList.Count == 0)
+        {
+            return NotFound($"No Cakes found in category '{category}'!");
+        }
+        return Ok(cakesList);
+    }
 }
