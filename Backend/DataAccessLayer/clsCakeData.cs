@@ -134,7 +134,7 @@ namespace DataAccessLayer
                     Description: reader["Description"].ToString(),
                     Price: (decimal)reader["Price"],
                     StockQuantity: (int)reader["StockQuantity"],
-                    Category: reader["CategoryID"].ToString(),  // Adjust based on your needs
+                    CategoryID: (int)reader["CategoryID"],  // Adjust based on your needs
                     ImageUrl: reader["ImageUrl"].ToString()
                 )
             );
@@ -157,7 +157,7 @@ namespace DataAccessLayer
                     Description: reader["Description"].ToString(),
                     Price: (decimal)reader["Price"],
                     StockQuantity: (int)reader["StockQuantity"],
-                    Category: reader["CategoryID"].ToString(), // Adjust based on your needs
+                    CategoryID: (int)reader["CategoryID"], 
                     ImageUrl: reader["ImageUrl"].ToString()
                 )
             );

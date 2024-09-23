@@ -39,11 +39,11 @@ namespace Business_Layer
 
         // Convert to DTO
         public CakeDTO ToCakeDto() =>
-            new CakeDTO(this.CakeID, this.CakeName, this.Description, this.Price, this.StockQuantity, this.CategoryID.ToString(), this.ImageUrl);
+            new CakeDTO(this.CakeID, this.CakeName, this.Description, this.Price, this.StockQuantity, this.CategoryID, this.ImageUrl);
 
         private bool _Add()
         {
-            CakeID = clsCakeData.Add(new CakeCreateDto(this.CakeName, this.Description, this.Price, this.StockQuantity, this.CategoryID.ToString(), this.ImageUrl));
+            CakeID = clsCakeData.Add(new CakeCreateDto(this.CakeName, this.Description, this.Price, this.StockQuantity, this.CategoryID, this.ImageUrl));
             return (CakeID.HasValue);
         }
 

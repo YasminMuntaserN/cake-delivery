@@ -15,7 +15,7 @@ namespace CakeDeliveryDTO.CakeDTOs
         string Description,
         decimal Price,
         int StockQuantity,
-        int CategoryID,  // Changed to CategoryID
+        int CategoryID,  
         string ImageUrl
     );
 

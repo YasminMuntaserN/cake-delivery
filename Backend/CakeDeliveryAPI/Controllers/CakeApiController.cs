@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-[Route("api/[controller]")]
+[Route("api/cakes")]
 [ApiController]
 public class CakeApiController : ControllerBase
 {
@@ -21,6 +21,7 @@ public class CakeApiController : ControllerBase
         return Ok(cakesList);
     }
 
+ 
     [HttpGet("{id}", Name = "GetCakeById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -41,6 +42,7 @@ public class CakeApiController : ControllerBase
         return Ok(cake);
     }
 
+   
     [HttpGet("name/{cakeName}", Name = "GetCakeByName")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -54,6 +56,7 @@ public class CakeApiController : ControllerBase
         return Ok(cake);
     }
 
+   
     [HttpPost(Name = "AddCake")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -65,7 +68,7 @@ public class CakeApiController : ControllerBase
         }
 
         clsCake cakeInstance = new clsCake(
-            new CakeDTO(null, newCakeDTO.CakeName, newCakeDTO.Description, newCakeDTO.Price, newCakeDTO.StockQuantity, newCakeDTO.Category, newCakeDTO.ImageUrl),
+            new CakeDTO(null, newCakeDTO.CakeName, newCakeDTO.Description, newCakeDTO.Price, newCakeDTO.StockQuantity, newCakeDTO.CategoryID, newCakeDTO.ImageUrl),
             clsCake.enMode.AddNew
         );
 
@@ -76,11 +79,12 @@ public class CakeApiController : ControllerBase
         return BadRequest("Unable to create cake.");
     }
 
+ 
     [HttpPut("{id}", Name = "UpdateCake")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<CakeDTO> UpdateCake(int id, [FromBody] CakeDTO updatedCake)
+    public ActionResult<CakeDTO> UpdateCake(int id, CakeDTO updatedCake)
     {
         if (id < 1 || updatedCake == null || string.IsNullOrEmpty(updatedCake.CakeName))
         {
@@ -102,6 +106,7 @@ public class CakeApiController : ControllerBase
         return StatusCode(500, new { message = "Error updating cake." });
     }
 
+   
     [HttpDelete("{id}", Name = "DeleteCake")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -120,6 +125,7 @@ public class CakeApiController : ControllerBase
         return NotFound($"Cake with ID {id} not found. No rows deleted!");
     }
 
+ 
     [HttpGet("category/{category}", Name = "GetCakesByCategory")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -132,6 +138,7 @@ public class CakeApiController : ControllerBase
         }
         return Ok(cakesList);
     }
+
 
     [HttpGet("category/name/{categoryName}", Name = "GetCakesByCategoryName")]
     [ProducesResponseType(StatusCodes.Status200OK)]
