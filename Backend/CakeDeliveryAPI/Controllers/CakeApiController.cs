@@ -21,7 +21,6 @@ public class CakeApiController : ControllerBase
         return Ok(cakesList);
     }
 
-
     [HttpGet("{id}", Name = "GetCakeById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -42,7 +41,6 @@ public class CakeApiController : ControllerBase
         return Ok(cake);
     }
 
-
     [HttpGet("name/{cakeName}", Name = "GetCakeByName")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,8 +53,6 @@ public class CakeApiController : ControllerBase
         }
         return Ok(cake);
     }
-
-
 
     [HttpPost(Name = "AddCake")]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -79,8 +75,6 @@ public class CakeApiController : ControllerBase
         }
         return BadRequest("Unable to create cake.");
     }
-
-
 
     [HttpPut("{id}", Name = "UpdateCake")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -108,7 +102,6 @@ public class CakeApiController : ControllerBase
         return StatusCode(500, new { message = "Error updating cake." });
     }
 
-   
     [HttpDelete("{id}", Name = "DeleteCake")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -127,17 +120,28 @@ public class CakeApiController : ControllerBase
         return NotFound($"Cake with ID {id} not found. No rows deleted!");
     }
 
-   
-    
     [HttpGet("category/{category}", Name = "GetCakesByCategory")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<IEnumerable<CakeDTO>> GetCakesByCategory(string category)
+    public ActionResult<IEnumerable<CakeDTO>> GetCakesByCategory(int category)
     {
-        List<CakeDTO> cakesList = clsCake.All(category);
+        List<CakeDTO> cakesList = clsCake.AllByCategoryID(category);
         if (cakesList.Count == 0)
         {
-            return NotFound($"No Cakes found in category '{category}'!");
+            return NotFound($"No Cakes found in category ID '{category}'!");
+        }
+        return Ok(cakesList);
+    }
+
+    [HttpGet("category/name/{categoryName}", Name = "GetCakesByCategoryName")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<IEnumerable<CakeDTO>> GetCakesByCategoryName(string categoryName)
+    {
+        List<CakeDTO> cakesList = clsCake.AllByCategoryName(categoryName);
+        if (cakesList.Count == 0)
+        {
+            return NotFound($"No Cakes found in category name '{categoryName}'!");
         }
         return Ok(cakesList);
     }
