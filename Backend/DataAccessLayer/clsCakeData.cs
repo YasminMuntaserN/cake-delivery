@@ -125,14 +125,39 @@ namespace DataAccessLayer
         public static List<CakeDTO> GetCakesByCategory(int categoryId)
         {
             return DataAccessHelper.GetAll(
-                "sp_GetCakesByCategory", // Adjust this stored procedure name if necessary
+                "sp_GetCakesByCategory",  // Stored procedure name
+                "CategoryID",             // Parameter name
+                categoryId,               // Value for the parameter
                 reader => new CakeDTO(
                     CakeID: (int)reader["CakeID"],
                     CakeName: reader["CakeName"].ToString(),
                     Description: reader["Description"].ToString(),
                     Price: (decimal)reader["Price"],
                     StockQuantity: (int)reader["StockQuantity"],
-                    CategoryID: (int)reader["CategoryID"],  // Changed to CategoryID
+                    Category: reader["CategoryID"].ToString(),  // Adjust based on your needs
+                    ImageUrl: reader["ImageUrl"].ToString()
+                )
+            );
+        }
+
+        /// <summary>
+        /// Retrieves all cakes belonging to a specified category.
+        /// </summary>
+        /// <param name="categoryName">The Name of the category to filter cakes.</param>
+        /// <returns>A list of CakeDTO objects if found, otherwise an empty list.</returns>
+        public static List<CakeDTO> GetCakesByCategoryName(string categoryName)
+        {
+            return DataAccessHelper.GetAll(
+                "sp_GetCakesByCategoryName", // Stored procedure name
+                "CategoryName",               // Parameter name
+                categoryName,                 // Value for the parameter
+                reader => new CakeDTO(
+                    CakeID: (int)reader["CakeID"],
+                    CakeName: reader["CakeName"].ToString(),
+                    Description: reader["Description"].ToString(),
+                    Price: (decimal)reader["Price"],
+                    StockQuantity: (int)reader["StockQuantity"],
+                    Category: reader["CategoryID"].ToString(), // Adjust based on your needs
                     ImageUrl: reader["ImageUrl"].ToString()
                 )
             );
