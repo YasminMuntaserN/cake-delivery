@@ -128,7 +128,42 @@ namespace DataAccessLayer
 
             return default; // Return default value if no result found
         }
+        
+        // Retrieve a All records
+        public static List<T> GetAll<T>(string storedProcedureName ,string parameterName, object? value, Func<IDataRecord, T> mapFunction)
+        {
+            var list = new List<T>();
 
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add parameter with dynamic type
+                        command.Parameters.AddWithValue($"@{parameterName}", value ?? DBNull.Value);
+
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var item = mapFunction(reader);
+                                list.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            return list;
+        }
 
         // Retrieve a All records
         public static List<T> GetAll<T>(string storedProcedureName, Func<IDataRecord, T> mapFunction)
