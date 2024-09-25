@@ -1,5 +1,4 @@
 ﻿using CakeDeliveryDTO.CakeDTOs;
-using DTOs;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,11 +11,11 @@ namespace DataAccessLayer
     public class clsCakeData
     {
         /// <summary>
-        /// Adds a new Order to the database.
+        /// Adds a new Cake to the database.
         /// </summary>
-        /// <param name="Order">OrderCreateDto with Order data.</param>
-        /// <returns>The new OrderID if successful, otherwise null.</returns>
-        public static int? Add(OrderCreateDTO cake)
+        /// <param name="Cake">CakeCreateDto with Cake data.</param>
+        /// <returns>The new CakeID if successful, otherwise null.</returns>
+        public static int? Add(CakeCreateDto cake)
         {
             return DataAccessHelper.Add(
                 "sp_AddCake",  // Stored procedure name for inserting a cake
