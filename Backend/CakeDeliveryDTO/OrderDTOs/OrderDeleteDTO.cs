@@ -11,7 +11,7 @@ namespace DTOs
     /// </summary>
     /// 
     public record OrderDeleteDTO(
-        int OrderID
+        int? OrderID
     );
 
 }

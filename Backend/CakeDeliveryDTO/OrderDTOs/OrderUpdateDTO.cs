@@ -11,8 +11,8 @@ namespace DTOs
     /// </summary>
     /// 
     public record OrderUpdateDTO(
-        int OrderID,
-        int CustomerID,
+        int? OrderID,
+        int? CustomerID,
         decimal TotalAmount,
         string PaymentStatus,
         string DeliveryStatus
