@@ -11,7 +11,7 @@ namespace DTOs
     /// </summary>
     /// 
 
-    public record OrderResponseDTO(
+    public record OrderDTO(
         int OrderID,
         int CustomerID,
         DateTime OrderDate,

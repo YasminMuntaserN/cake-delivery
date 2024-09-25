@@ -10,7 +10,7 @@ namespace DTOs
     /// DTO Used for updating an existing order in this dto there is no need to get  OrderDate it will be updated automatically in the database
     /// </summary>
     /// 
-    public record OrderUpdateRequestDTO(
+    public record OrderUpdateDTO(
         int OrderID,
         int CustomerID,
         decimal TotalAmount,
