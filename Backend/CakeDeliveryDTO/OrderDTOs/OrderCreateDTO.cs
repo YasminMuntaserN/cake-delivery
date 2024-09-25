@@ -10,7 +10,7 @@ namespace DTOs
     /// DTO Used for creating a new order
     /// </summary>
     /// 
-    public record OrderCreateRequestDTO(
+    public record OrderCreateDTO(
      int CustomerID,
      decimal TotalAmount,
      string PaymentStatus,
