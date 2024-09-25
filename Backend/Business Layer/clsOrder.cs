@@ -107,7 +107,6 @@ namespace BusinessLayer
             return false;
         }
 
-        public static List<OrderDTO> GetOrdersByCustomerId(int customerId)
             => clsOrderData.GetOrdersByCustomerId(customerId);
     }
 }
