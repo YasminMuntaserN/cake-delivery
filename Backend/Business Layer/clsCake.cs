@@ -90,7 +90,7 @@ namespace Business_Layer
             => clsCakeData.DeleteCake(cakeID);
 
         
-        public static bool Exists(object data, enFindBy findBy)
+        public static bool Exists<T>(T data, enFindBy findBy)
         {
             switch (findBy)
             {

@@ -47,7 +47,29 @@ namespace DataAccessLayer
             );
         }
 
-     
+        /// <summary>
+        /// Retrieves an order by its customerID.
+        /// </summary>
+        /// <param name="customerID">The customerID of the order to find.</param>
+        /// <returns>OrderDTO if found, otherwise null.</returns>
+        public static OrderDTO? GetOrderByCustomerId(int? customerID)
+        {
+            return DataAccessHelper.GetByParameter<OrderDTO>(
+                "sp_GetOrderByCustomerId",
+                "CustomerID",
+                customerID,
+                reader => new OrderDTO(
+                    OrderID: (int)reader["OrderID"],
+                    CustomerID: (int)reader["CustomerID"],
+                    OrderDate: (DateTime)reader["OrderDate"],
+                    TotalAmount: (decimal)reader["TotalAmount"],
+                    PaymentStatus: reader["PaymentStatus"].ToString(),
+                    DeliveryStatus: reader["DeliveryStatus"].ToString()
+                )
+            );
+        }
+
+
         /// <summary>
         /// Updates an existing order in the database.
         /// </summary>

@@ -83,7 +83,7 @@ namespace BusinessLayer
         public static bool Delete(int? orderID)
             => clsOrderData.DeleteOrder(orderID);
 
-        public static bool Exists(object data, enFindBy findBy)
+        public static bool Exists<T>(T data, enFindBy findBy)
         {
             switch (findBy)
             {
@@ -98,8 +98,8 @@ namespace BusinessLayer
                 case enFindBy.CustomerID:
                     if (data is int customerId)
                     {
-                        var orders = clsOrderData.GetOrdersByCustomerId(customerId);
-                        return orders.Any();
+                        var order = clsOrderData.GetOrderByCustomerId(customerId);
+                        return order != null;
                     }
                     break;
             }
@@ -107,7 +107,6 @@ namespace BusinessLayer
             return false;
         }
 
-            => clsOrderData.GetOrdersByCustomerId(customerId);
     }
 }
 
