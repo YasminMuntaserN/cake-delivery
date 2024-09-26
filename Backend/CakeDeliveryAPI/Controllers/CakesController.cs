@@ -1,4 +1,5 @@
 ﻿using Business_Layer.Cake;
+using Business_Layer.Order;
 using CakeDeliveryDTO.CakeDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,8 @@ using System.Collections.Generic;
 [ApiController]
 public class CakesController : ControllerBase
 {
+    private readonly clsCakeValidator _validator = new clsCakeValidator();
+
     [HttpGet("All", Name = "GetAllCakes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -72,6 +75,18 @@ public class CakesController : ControllerBase
             clsCake.enMode.AddNew
         );
 
+        // Validate the cake instance
+        var validationResult = _validator.Validate(cakeInstance);
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(new
+            {
+                Success = false,
+                Errors = validationResult.Errors
+            });
+        }
+
+
         if (cakeInstance.Save())
         {
             return CreatedAtRoute("GetCakeById", new { id = cakeInstance.CakeID }, newCakeDTO);
@@ -98,6 +113,18 @@ public class CakesController : ControllerBase
         }
 
         clsCake cakeInstance = new clsCake(updatedCake, clsCake.enMode.Update);
+
+        // Validate the cake instance
+        var validationResult = _validator.Validate(cakeInstance);
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(new
+            {
+                Success = false,
+                Errors = validationResult.Errors
+            });
+
+        }
         if (cakeInstance.Save())
         {
             return Ok(cakeInstance.ToCakeDto());
