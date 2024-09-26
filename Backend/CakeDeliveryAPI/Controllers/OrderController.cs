@@ -1,14 +1,18 @@
-﻿using BusinessLayer;
+﻿using Business_Layer.Order;
 using DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CakeDeliveryAPI.Controllers
 {
+
     [Route("api/orders")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
+        private readonly clsOrderValidator _validator = new clsOrderValidator () ;
+
+
         // GET: api/orders/all
         [HttpGet("all", Name = "GetAllOrders")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -23,7 +27,7 @@ namespace CakeDeliveryAPI.Controllers
             return Ok(ordersList);
         }
 
-    
+     
         // GET: api/orders/{id}
         [HttpGet("{id}", Name = "GetOrderById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -45,7 +49,7 @@ namespace CakeDeliveryAPI.Controllers
             return Ok(order);
         }
 
-    
+     
         // POST: api/orders
         [HttpPost(Name = "AddOrder")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -58,9 +62,20 @@ namespace CakeDeliveryAPI.Controllers
             }
 
             clsOrder orderInstance = new clsOrder(
-                new OrderDTO(null, newOrderDTO.CustomerID,DateTime.Now, newOrderDTO.TotalAmount, newOrderDTO.PaymentStatus, newOrderDTO.DeliveryStatus),
+                new OrderDTO(null, newOrderDTO.CustomerID, DateTime.Now, newOrderDTO.TotalAmount, newOrderDTO.PaymentStatus, newOrderDTO.DeliveryStatus),
                 clsOrder.enMode.AddNew
             );
+
+            // Validate the order instance
+            var validationResult = _validator.Validate(orderInstance);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Errors = validationResult.Errors
+                });
+            }
 
             if (orderInstance.Save())
             {
@@ -69,7 +84,7 @@ namespace CakeDeliveryAPI.Controllers
             return BadRequest("Unable to create order.");
         }
 
-     
+      
         // PUT: api/orders/{id}
         [HttpPut("{id}", Name = "UpdateOrder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -89,6 +104,18 @@ namespace CakeDeliveryAPI.Controllers
             }
 
             clsOrder orderInstance = new clsOrder(updatedOrder, clsOrder.enMode.Update);
+
+            // Validate the order instance
+            var validationResult = _validator.Validate(orderInstance);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Errors = validationResult.Errors
+                });
+            }
+
             if (orderInstance.Save())
             {
                 return Ok(orderInstance.ToOrderDto());
@@ -97,7 +124,7 @@ namespace CakeDeliveryAPI.Controllers
             return StatusCode(500, new { message = "Error updating order." });
         }
 
-      
+  
         // DELETE: api/orders/{id}
         [HttpDelete("{id}", Name = "DeleteOrder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -138,5 +165,4 @@ namespace CakeDeliveryAPI.Controllers
             return Ok(order);
         }
     }
-
 }
