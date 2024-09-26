@@ -103,7 +103,7 @@ namespace Business_Layer.Order
                 case enFindBy.CustomerID:
                     if (data is int customerId)
                     {
-                        var order = clsOrderData.GetOrderByCustomerId(customerId);
+                        var order = clsOrderData.GetOrdersByCustomerId(customerId);
                         return order != null;
                     }
                     break;

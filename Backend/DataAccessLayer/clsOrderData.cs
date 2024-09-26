@@ -60,7 +60,7 @@ namespace DataAccessLayer
             }
 
             return DataAccessHelper.GetAll<OrderDTO>(
-                "sp_GetOrdersByCustomerId",
+                "sp_GetOrderByCustomerId",
                 "CustomerID",
                 customerID,
                 reader => new OrderDTO(

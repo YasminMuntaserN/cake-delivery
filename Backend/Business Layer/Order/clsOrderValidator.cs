@@ -20,8 +20,11 @@ namespace Business_Layer.Order
             if (!HasValidTotalAmount(order.TotalAmount))
                 AddError("TotalAmount must be greater than zero.");
 
-            if (!IsValidStatus(order.PaymentStatus, order.DeliveryStatus))
-                AddError("Invalid PaymentStatus or DeliveryStatus.");
+            if (!IsValidDeliveryStatus( order.DeliveryStatus))
+                AddError("Invalid DeliveryStatus.");
+
+            if (!IsValidPaymentStatus(order.PaymentStatus))
+                AddError("Invalid PaymentStatus ");
 
             return Result;
         }
@@ -32,10 +35,16 @@ namespace Business_Layer.Order
 
         private bool HasValidTotalAmount(decimal totalAmount) => totalAmount > 0;
 
-        private bool IsValidStatus(string paymentStatus, string deliveryStatus)
+        private bool IsValidDeliveryStatus( string deliveryStatus)
+        {
+            return !string.IsNullOrWhiteSpace(deliveryStatus) &&
+             (deliveryStatus == "Cancelled" || deliveryStatus == "Delivered" || deliveryStatus == "In Transit" || deliveryStatus == "Pending");
+        }
+
+        private bool IsValidPaymentStatus(string paymentStatus)
         {
             return !string.IsNullOrWhiteSpace(paymentStatus) &&
-                   (deliveryStatus == "Pending" || deliveryStatus == "Delivered");
+             (paymentStatus == "Failed" || paymentStatus == "Completed" || paymentStatus == "Pending");
         }
     }
 }
