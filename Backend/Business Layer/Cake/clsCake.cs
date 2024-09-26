@@ -1,7 +1,7 @@
 ﻿using CakeDeliveryDTO.CakeDTOs;
 using DataAccessLayer;
 
-namespace Business_Layer
+namespace Business_Layer.Cake
 {
     public class clsCake
     {
@@ -21,7 +21,7 @@ namespace Business_Layer
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
-        public int CategoryID { get; set; } 
+        public int CategoryID { get; set; }
         public string ImageUrl { get; set; }
 
         public clsCake(CakeDTO cakeDto, enMode mode = enMode.AddNew)
@@ -31,7 +31,7 @@ namespace Business_Layer
             Description = cakeDto.Description;
             Price = cakeDto.Price;
             StockQuantity = cakeDto.StockQuantity;
-            CategoryID = cakeDto.CategoryID; 
+            CategoryID = cakeDto.CategoryID;
             ImageUrl = cakeDto.ImageUrl;
 
             Mode = mode;
@@ -39,21 +39,21 @@ namespace Business_Layer
 
         // Convert to DTO
         public CakeDTO ToCakeDto() =>
-            new CakeDTO(this.CakeID, this.CakeName, this.Description, this.Price, this.StockQuantity, this.CategoryID, this.ImageUrl);
+            new CakeDTO(CakeID, CakeName, Description, Price, StockQuantity, CategoryID, ImageUrl);
 
         private bool _Add()
         {
-            CakeID = clsCakeData.Add(new CakeCreateDto(this.CakeName, this.Description, this.Price, this.StockQuantity, this.CategoryID, this.ImageUrl));
-            return (CakeID.HasValue);
+            CakeID = clsCakeData.Add(new CakeCreateDto(CakeName, Description, Price, StockQuantity, CategoryID, ImageUrl));
+            return CakeID.HasValue;
         }
 
-       
+
         private bool _Update()
         {
-            return clsCakeData.UpdateCake(this.ToCakeDto());
+            return clsCakeData.UpdateCake(ToCakeDto());
         }
 
-       
+
         public bool Save()
         {
             switch (Mode)
@@ -73,23 +73,23 @@ namespace Business_Layer
             return false;
         }
 
-       
+
         public static CakeDTO? FindCakeById(int? cakeId)
         {
             return clsCakeData.GetCakeById(cakeId);
         }
 
-        
+
         public static CakeDTO? FindCakeByName(string cakeName)
         {
             return clsCakeData.GetCakeByName(cakeName);
         }
 
-        
+
         public static bool Delete(int? cakeID)
             => clsCakeData.DeleteCake(cakeID);
 
-        
+
         public static bool Exists<T>(T data, enFindBy findBy)
         {
             switch (findBy)
@@ -114,16 +114,16 @@ namespace Business_Layer
             return false;
         }
 
-        
+
         public static List<CakeDTO> All()
             => clsCakeData.GetAllCakes();
 
-        
-        public static List<CakeDTO> AllByCategoryID(int categoryId) // New method to get cakes by CategoryID
-            => clsCakeData.GetCakesByCategory(categoryId); 
 
-        
-        public static List<CakeDTO> AllByCategoryName(string categoryName) 
-            => clsCakeData.GetCakesByCategoryName(categoryName); 
+        public static List<CakeDTO> AllByCategoryID(int categoryId) // New method to get cakes by CategoryID
+            => clsCakeData.GetCakesByCategory(categoryId);
+
+
+        public static List<CakeDTO> AllByCategoryName(string categoryName)
+            => clsCakeData.GetCakesByCategoryName(categoryName);
     }
 }
