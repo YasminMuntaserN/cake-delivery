@@ -10,7 +10,7 @@ namespace CakeDeliveryAPI.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly clsOrderValidator _validator = new clsOrderValidator () ;
+        private readonly clsOrderValidator _validator = new clsOrderValidator();
 
 
         // GET: api/orders/all
@@ -27,7 +27,7 @@ namespace CakeDeliveryAPI.Controllers
             return Ok(ordersList);
         }
 
-     
+
         // GET: api/orders/{id}
         [HttpGet("{id}", Name = "GetOrderById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -49,7 +49,7 @@ namespace CakeDeliveryAPI.Controllers
             return Ok(order);
         }
 
-     
+
         // POST: api/orders
         [HttpPost(Name = "AddOrder")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -84,7 +84,7 @@ namespace CakeDeliveryAPI.Controllers
             return BadRequest("Unable to create order.");
         }
 
-      
+
         // PUT: api/orders/{id}
         [HttpPut("{id}", Name = "UpdateOrder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -124,7 +124,7 @@ namespace CakeDeliveryAPI.Controllers
             return StatusCode(500, new { message = "Error updating order." });
         }
 
-  
+
         // DELETE: api/orders/{id}
         [HttpDelete("{id}", Name = "DeleteOrder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -144,25 +144,25 @@ namespace CakeDeliveryAPI.Controllers
             return NotFound($"Order with ID {id} not found. No rows deleted!");
         }
 
-    
+
         // GET: api/orders/customer/{customerId}
         [HttpGet("customer/{customerId}", Name = "GetOrdersByCustomerId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<OrderDTO> GetOrderByCustomerId(int customerId)
+        public ActionResult<List<OrderDTO>> GetOrdersByCustomerId(int customerId)
         {
             if (customerId < 1)
             {
                 return BadRequest($"Not accepted customerId {customerId}");
             }
 
-            OrderDTO? order = clsOrder.FindOrderByCustomerId(customerId);
-            if (order == null)
+            var orders = clsOrder.FindOrdersByCustomerId(customerId);
+            if (orders == null || orders.Count == 0)
             {
-                return NotFound($"Order with customer Id {customerId} not found.");
+                return NotFound($"No orders found for customer ID {customerId}.");
             }
 
-            return Ok(order);
+            return Ok(orders);
         }
     }
 }

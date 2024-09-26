@@ -48,14 +48,19 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// Retrieves an order by its customerID.
+        /// Retrieves a list of orders by the customerID.
         /// </summary>
-        /// <param name="customerID">The customerID of the order to find.</param>
-        /// <returns>OrderDTO if found, otherwise null.</returns>
-        public static OrderDTO? GetOrderByCustomerId(int? customerID)
+        /// <param name="customerID">The customerID of the orders to find.</param>
+        /// <returns>List of OrderDTOs if found, otherwise an empty list.</returns>
+        public static List<OrderDTO> GetOrdersByCustomerId(int? customerID)
         {
-            return DataAccessHelper.GetByParameter<OrderDTO>(
-                "sp_GetOrderByCustomerId",
+            if (!customerID.HasValue || customerID <= 0)
+            {
+                return new List<OrderDTO>(); // Return an empty list if customerID is not valid
+            }
+
+            return DataAccessHelper.GetAll<OrderDTO>(
+                "sp_GetOrdersByCustomerId",
                 "CustomerID",
                 customerID,
                 reader => new OrderDTO(
