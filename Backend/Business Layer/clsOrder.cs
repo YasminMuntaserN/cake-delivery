@@ -77,6 +77,11 @@ namespace BusinessLayer
             return clsOrderData.GetOrderById(orderId);
         }
 
+        public static OrderDTO? FindOrderByCustomerId(int? customerId)
+        {
+            return clsOrderData.GetOrderByCustomerId(customerId);
+        }
+
         public static List<OrderDTO> All()
             => clsOrderData.GetAllOrders();
 
