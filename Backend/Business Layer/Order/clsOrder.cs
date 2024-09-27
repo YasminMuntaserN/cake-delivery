@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business_Layer.Order
 {
-    public class clsOrder
+    public class clsCustomer
     {
         public enum enFindBy
         {
@@ -26,7 +26,7 @@ namespace Business_Layer.Order
         public string PaymentStatus { get; set; }
         public string DeliveryStatus { get; set; }
 
-        public clsOrder(OrderDTO orderDto, enMode mode = enMode.AddNew)
+        public clsCustomer(OrderDTO orderDto, enMode mode = enMode.AddNew)
         {
             OrderID = orderDto.OrderID;
             CustomerID = orderDto.CustomerID;

@@ -5,15 +5,17 @@
     /// </summary>
     /// 
     public record CustomerDTO(
-        int CustomerID,
+        int? CustomerID,
         string FirstName,
         string LastName,
+        string FullName,
         string Email,
         string PhoneNumber,
         string Address,
         string City,
         string PostalCode,
-        string Country
+        string Country,
+        DateTime CreatedAt
     );
 
 
