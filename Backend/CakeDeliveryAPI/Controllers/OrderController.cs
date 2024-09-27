@@ -10,7 +10,7 @@ namespace CakeDeliveryAPI.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly clsOrderValidator _validator = new clsOrderValidator();
+        private readonly clsCustomerValidator _validator = new clsCustomerValidator();
 
 
         // GET: api/orders/all
@@ -19,7 +19,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<OrderDTO>> GetAllOrders()
         {
-            List<OrderDTO> ordersList = clsOrder.All();
+            List<OrderDTO> ordersList = clsCustomer.All();
             if (ordersList.Count == 0)
             {
                 return NotFound("No Orders Found!");
@@ -40,7 +40,7 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest($"Not accepted ID {id}");
             }
 
-            OrderDTO? order = clsOrder.FindOrderById(id);
+            OrderDTO? order = clsCustomer.FindOrderById(id);
             if (order == null)
             {
                 return NotFound($"Order with ID {id} not found.");
@@ -61,9 +61,9 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid order data.");
             }
 
-            clsOrder orderInstance = new clsOrder(
+            clsCustomer orderInstance = new clsOrder(
                 new OrderDTO(null, newOrderDTO.CustomerID, DateTime.Now, newOrderDTO.TotalAmount, newOrderDTO.PaymentStatus, newOrderDTO.DeliveryStatus),
-                clsOrder.enMode.AddNew
+                clsCustomer.enMode.AddNew
             );
 
             // Validate the order instance
@@ -97,13 +97,13 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid order data.");
             }
 
-            OrderDTO? existingOrder = clsOrder.FindOrderById(id);
+            OrderDTO? existingOrder = clsCustomer.FindOrderById(id);
             if (existingOrder == null)
             {
                 return NotFound($"Order with ID {id} not found.");
             }
 
-            clsOrder orderInstance = new clsOrder(updatedOrder, clsOrder.enMode.Update);
+            clsCustomer orderInstance = new clsOrder(updatedOrder, clsCustomer.enMode.Update);
 
             // Validate the order instance
             var validationResult = _validator.Validate(orderInstance);
@@ -136,7 +136,7 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest($"Not accepted ID {id}");
             }
 
-            if (clsOrder.Delete(id))
+            if (clsCustomer.Delete(id))
             {
                 return Ok($"Order with ID {id} has been deleted.");
             }
@@ -156,7 +156,7 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest($"Not accepted customerId {customerId}");
             }
 
-            var orders = clsOrder.FindOrdersByCustomerId(customerId);
+            var orders = clsCustomer.FindOrdersByCustomerId(customerId);
             if (orders == null || orders.Count == 0)
             {
                 return NotFound($"No orders found for customer ID {customerId}.");
