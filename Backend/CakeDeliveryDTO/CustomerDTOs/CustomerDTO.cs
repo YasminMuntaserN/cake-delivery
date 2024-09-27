@@ -4,7 +4,7 @@
     /// DTO  Used when updating an existing customer's details or retrieving customer details.
     /// </summary>
     /// 
-    public record CustomerUpdateFindRequestDTO(
+    public record CustomerDTO(
         int CustomerID,
         string FirstName,
         string LastName,
