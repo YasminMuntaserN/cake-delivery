@@ -1,4 +1,5 @@
-﻿using CakeDeliveryDTO.CustomerDTOs;
+﻿using CakeDeliveryDTO.CakeDTOs;
+using CakeDeliveryDTO.CustomerDTOs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,11 +11,19 @@ namespace DataAccessLayer
 {
     public class clsMappings
     {
-        /// <summary>
-        /// Maps an IDataReader to a CustomerDTO object.
-        /// </summary>
-        /// <param name="reader">The IDataReader instance containing Customer data.</param>
-        /// <returns>CustomerDTO object.</returns>
+        public static CakeDTO MapCakeDTOFromReader(IDataReader reader)
+        {
+            return new CakeDTO(
+                CakeID: (int)reader["CakeID"],
+                CakeName: reader["CakeName"].ToString() ?? string.Empty,
+                Description: reader["Description"].ToString() ?? string.Empty,
+                Price: (decimal)reader["Price"],
+                StockQuantity: (int)reader["StockQuantity"],
+                CategoryID: (int)reader["CategoryID"],
+                ImageUrl: reader["ImageUrl"].ToString() ?? string.Empty
+            );
+        }
+
         public static CustomerDTO MapCustomerDTOFromReader(IDataReader reader)
         {
             return new CustomerDTO(
@@ -32,5 +41,4 @@ namespace DataAccessLayer
             );
         }
     }
-}
 }
