@@ -7,12 +7,12 @@ using Validation;
 
 namespace Business_Layer.Order
 {
-    public class clsCustomerValidator : BaseValidator<clsCustomer>
+    public class clsOrderValidator : BaseValidator<clsOrder>
     {
-        public override ValidationResult Validate(clsCustomer order)
+        public override ValidationResult Validate(clsOrder order)
         {
-            if (!HasValidCustomerID(order.CustomerID))
-                AddError("CustomerID is invalid.");
+            if (!HasValidOrderID(order.OrderID))
+                AddError("OrderID is invalid.");
 
             if (!HasValidOrderDate(order.OrderDate))
                 AddError("OrderDate cannot be in the future.");
@@ -29,7 +29,7 @@ namespace Business_Layer.Order
             return Result;
         }
 
-        private bool HasValidCustomerID(int? customerID) => customerID.HasValue && customerID > 0;
+        private bool HasValidOrderID(int? OrderID) => OrderID.HasValue && OrderID > 0;
 
         private bool HasValidOrderDate(DateTime orderDate) => orderDate <= DateTime.Now;
 
