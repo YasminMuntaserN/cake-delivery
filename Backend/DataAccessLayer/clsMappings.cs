@@ -1,5 +1,6 @@
 ﻿using CakeDeliveryDTO.CakeDTOs;
 using CakeDeliveryDTO.CustomerDTOs;
+using DTOs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -38,6 +39,18 @@ namespace DataAccessLayer
                 PostalCode: reader["PostalCode"]?.ToString() ?? string.Empty,
                 Country: reader["Country"]?.ToString() ?? string.Empty,
                 CreatedAt: (DateTime)reader["CreatedAt"]
+            );
+        }
+
+        public static OrderDTO MapOrderDTOFromReader(IDataReader reader)
+        {
+            return new OrderDTO(
+                OrderID: (int)reader["OrderID"],
+                CustomerID: (int)reader["CustomerID"],
+                OrderDate: (DateTime)reader["OrderDate"],
+                TotalAmount: (decimal)reader["TotalAmount"],
+                PaymentStatus: reader["PaymentStatus"].ToString() ?? string.Empty,
+                DeliveryStatus: reader["DeliveryStatus"].ToString() ?? string.Empty
             );
         }
     }

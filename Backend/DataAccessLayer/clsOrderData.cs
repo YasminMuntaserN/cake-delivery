@@ -36,14 +36,7 @@ namespace DataAccessLayer
                 "sp_GetOrderById",
                 "OrderID",
                 orderId,
-                reader => new OrderDTO(
-                    OrderID: (int)reader["OrderID"],
-                    CustomerID: (int)reader["CustomerID"],
-                    OrderDate: (DateTime)reader["OrderDate"],
-                    TotalAmount: (decimal)reader["TotalAmount"],
-                    PaymentStatus: reader["PaymentStatus"].ToString(),
-                    DeliveryStatus: reader["DeliveryStatus"].ToString()
-                )
+                clsMappings.MapOrderDTOFromReader
             );
         }
 
@@ -63,14 +56,7 @@ namespace DataAccessLayer
                 "sp_GetOrderByCustomerId",
                 "CustomerID",
                 customerID,
-                reader => new OrderDTO(
-                    OrderID: (int)reader["OrderID"],
-                    CustomerID: (int)reader["CustomerID"],
-                    OrderDate: (DateTime)reader["OrderDate"],
-                    TotalAmount: (decimal)reader["TotalAmount"],
-                    PaymentStatus: reader["PaymentStatus"].ToString(),
-                    DeliveryStatus: reader["DeliveryStatus"].ToString()
-                )
+                clsMappings.MapOrderDTOFromReader
             );
         }
 
@@ -112,14 +98,7 @@ namespace DataAccessLayer
         {
             return DataAccessHelper.GetAll(
                 "sp_GetAllOrders", // Stored procedure name to get all orders
-                reader => new OrderDTO(
-                    OrderID: (int)reader["OrderID"],
-                    CustomerID: (int)reader["CustomerID"],
-                    OrderDate: (DateTime)reader["OrderDate"],
-                    TotalAmount: (decimal)reader["TotalAmount"],
-                    PaymentStatus: reader["PaymentStatus"].ToString(),
-                    DeliveryStatus: reader["DeliveryStatus"].ToString()
-                )
+                clsMappings.MapOrderDTOFromReader
             );
         }
     }
