@@ -18,12 +18,13 @@ namespace DataAccessLayer
         public static int? Add(CakeCreateDto cake)
         {
             return DataAccessHelper.Add(
-                "sp_AddCake",  // Stored procedure name for inserting a cake
-                "NewCakeID",   // Output parameter
-                cake           // Cake data DTO
+                "sp_AddCake",  
+                "NewCakeID",   
+                cake           
             );
         }
 
+       
         /// <summary>
         /// Retrieves a cake by its ID.
         /// </summary>
@@ -41,12 +42,13 @@ namespace DataAccessLayer
                     Description: reader["Description"].ToString(),
                     Price: (decimal)reader["Price"],
                     StockQuantity: (int)reader["StockQuantity"],
-                    CategoryID: (int)reader["CategoryID"],  // Changed to CategoryID
+                    CategoryID: (int)reader["CategoryID"],  
                     ImageUrl: reader["ImageUrl"].ToString()
                 )
             );
         }
 
+      
         /// <summary>
         /// Retrieves a cake by its name.
         /// </summary>
@@ -64,12 +66,13 @@ namespace DataAccessLayer
                     Description: reader["Description"].ToString(),
                     Price: (decimal)reader["Price"],
                     StockQuantity: (int)reader["StockQuantity"],
-                    CategoryID: (int)reader["CategoryID"],  // Changed to CategoryID
+                    CategoryID: (int)reader["CategoryID"], 
                     ImageUrl: reader["ImageUrl"].ToString()
                 )
             );
         }
 
+       
         /// <summary>
         /// Updates an existing cake in the database.
         /// </summary>
@@ -83,6 +86,7 @@ namespace DataAccessLayer
             );
         }
 
+      
         /// <summary>
         /// Deletes a cake by its ID.
         /// </summary>
@@ -97,6 +101,7 @@ namespace DataAccessLayer
             );
         }
 
+      
         /// <summary>
         /// Retrieves all cakes from the database.
         /// </summary>
@@ -111,12 +116,13 @@ namespace DataAccessLayer
                     Description: reader["Description"].ToString(),
                     Price: (decimal)reader["Price"],
                     StockQuantity: (int)reader["StockQuantity"],
-                    CategoryID: (int)reader["CategoryID"],  // Changed to CategoryID
+                    CategoryID: (int)reader["CategoryID"],  
                     ImageUrl: reader["ImageUrl"].ToString()
                 )
             );
         }
 
+     
         /// <summary>
         /// Retrieves all cakes belonging to a specified category.
         /// </summary>
@@ -125,9 +131,9 @@ namespace DataAccessLayer
         public static List<CakeDTO> GetCakesByCategory(int categoryId)
         {
             return DataAccessHelper.GetAll(
-                "sp_GetCakesByCategory",  // Stored procedure name
-                "CategoryID",             // Parameter name
-                categoryId,               // Value for the parameter
+                "sp_GetCakesByCategory",  
+                "CategoryID",             
+                categoryId,               
                 reader => new CakeDTO(
                     CakeID: (int)reader["CakeID"],
                     CakeName: reader["CakeName"].ToString(),
@@ -140,6 +146,7 @@ namespace DataAccessLayer
             );
         }
 
+     
         /// <summary>
         /// Retrieves all cakes belonging to a specified category.
         /// </summary>
@@ -148,9 +155,9 @@ namespace DataAccessLayer
         public static List<CakeDTO> GetCakesByCategoryName(string categoryName)
         {
             return DataAccessHelper.GetAll(
-                "sp_GetCakesByCategoryName", // Stored procedure name
-                "CategoryName",               // Parameter name
-                categoryName,                 // Value for the parameter
+                "sp_GetCakesByCategoryName", 
+                "CategoryName",              
+                categoryName,                
                 reader => new CakeDTO(
                     CakeID: (int)reader["CakeID"],
                     CakeName: reader["CakeName"].ToString(),

@@ -4,7 +4,7 @@
     /// DTO for Create a new customer.
     /// </summary>
     /// 
-    public record CustomerCreateRequestDTO(
+    public record CustomerCreateDTO(
     string FirstName,
     string LastName,
     string Email,

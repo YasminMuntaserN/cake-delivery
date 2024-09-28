@@ -1,4 +1,5 @@
-﻿using Business_Layer.Order;
+﻿using Business_Layer;
+using Business_Layer.Order;
 using DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace CakeDeliveryAPI.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly clsCustomerValidator _validator = new clsCustomerValidator();
+        private readonly clsOrderValidator _validator = new clsOrderValidator();
 
 
         // GET: api/orders/all
@@ -19,7 +20,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<OrderDTO>> GetAllOrders()
         {
-            List<OrderDTO> ordersList = clsCustomer.All();
+            List<OrderDTO> ordersList = clsOrder.All();
             if (ordersList.Count == 0)
             {
                 return NotFound("No Orders Found!");
@@ -40,7 +41,7 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest($"Not accepted ID {id}");
             }
 
-            OrderDTO? order = clsCustomer.FindOrderById(id);
+            OrderDTO? order = clsOrder.FindOrderById(id);
             if (order == null)
             {
                 return NotFound($"Order with ID {id} not found.");
@@ -61,9 +62,9 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid order data.");
             }
 
-            clsCustomer orderInstance = new clsOrder(
+            clsOrder orderInstance = new clsOrder(
                 new OrderDTO(null, newOrderDTO.CustomerID, DateTime.Now, newOrderDTO.TotalAmount, newOrderDTO.PaymentStatus, newOrderDTO.DeliveryStatus),
-                clsCustomer.enMode.AddNew
+                clsOrder.enMode.AddNew
             );
 
             // Validate the order instance
@@ -92,18 +93,18 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<OrderDTO> UpdateOrder(int id, OrderDTO updatedOrder)
         {
-            if (id < 1 || updatedOrder == null || updatedOrder.CustomerID < 1)
+            if (id < 1 || updatedOrder == null || updatedOrder.OrderID < 1)
             {
                 return BadRequest("Invalid order data.");
             }
 
-            OrderDTO? existingOrder = clsCustomer.FindOrderById(id);
+            OrderDTO? existingOrder = clsOrder.FindOrderById(id);
             if (existingOrder == null)
             {
                 return NotFound($"Order with ID {id} not found.");
             }
 
-            clsCustomer orderInstance = new clsOrder(updatedOrder, clsCustomer.enMode.Update);
+            clsOrder orderInstance = new clsOrder(updatedOrder, clsOrder.enMode.Update);
 
             // Validate the order instance
             var validationResult = _validator.Validate(orderInstance);
@@ -136,7 +137,7 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest($"Not accepted ID {id}");
             }
 
-            if (clsCustomer.Delete(id))
+            if (clsOrder.Delete(id))
             {
                 return Ok($"Order with ID {id} has been deleted.");
             }
@@ -145,21 +146,21 @@ namespace CakeDeliveryAPI.Controllers
         }
 
 
-        // GET: api/orders/customer/{customerId}
-        [HttpGet("customer/{customerId}", Name = "GetOrdersByCustomerId")]
+        // GET: api/orders/Order/{OrderId}
+        [HttpGet("Order/{OrderId}", Name = "GetOrdersByOrderId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<OrderDTO>> GetOrdersByCustomerId(int customerId)
+        public ActionResult<List<OrderDTO>> GetOrdersByOrderId(int OrderId)
         {
-            if (customerId < 1)
+            if (OrderId < 1)
             {
-                return BadRequest($"Not accepted customerId {customerId}");
+                return BadRequest($"Not accepted OrderId {OrderId}");
             }
 
-            var orders = clsCustomer.FindOrdersByCustomerId(customerId);
+            var orders = clsOrder.FindOrdersByCustomerId(OrderId);
             if (orders == null || orders.Count == 0)
             {
-                return NotFound($"No orders found for customer ID {customerId}.");
+                return NotFound($"No orders found for Order ID {OrderId}.");
             }
 
             return Ok(orders);
