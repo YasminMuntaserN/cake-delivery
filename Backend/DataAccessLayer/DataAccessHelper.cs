@@ -14,7 +14,7 @@ namespace DataAccessLayer
     public class DataAccessHelper
     {
         // Create an instance of clsErrorLogger
-        private static  clsErrorLogger _logger = new clsErrorLogger(clsErrorLogger.LogToEventViewer);
+        private static clsErrorLogger _logger = new clsErrorLogger(clsErrorLogger.LogToEventViewer);
 
         // Method to handle exceptions and log them
         private static void HandleException(Exception ex)
@@ -97,7 +97,7 @@ namespace DataAccessLayer
         }
 
         // Retrieve a single record by any parameter (ID, string, etc.)
-        public static T? GetByParameter<T>(string storedProcedureName, string parameterName, object? value, Func<IDataRecord, T> mapFunction)
+        public static T? GetByParameter<T>(string storedProcedureName, string parameterName, object? value, Func<IDataReader, T> mapFunction)
         {
             try
             {
@@ -115,7 +115,8 @@ namespace DataAccessLayer
                         {
                             if (reader.Read())
                             {
-                                return mapFunction(reader); 
+                                // Pass the reader to your mapping function
+                                return mapFunction(reader);
                             }
                         }
                     }
@@ -123,14 +124,14 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                HandleException(ex);  
+                HandleException(ex);
             }
 
             return default; // Return default value if no result found
         }
-        
-        // Retrieve a All records
-        public static List<T> GetAll<T>(string storedProcedureName ,string parameterName, object? value, Func<IDataRecord, T> mapFunction)
+
+        // Retrieve all records with a parameter
+        public static List<T> GetAll<T>(string storedProcedureName, string parameterName, object? value, Func<IDataReader, T> mapFunction)
         {
             var list = new List<T>();
 
@@ -150,6 +151,7 @@ namespace DataAccessLayer
                         {
                             while (reader.Read())
                             {
+                                // Pass the reader to your mapping function
                                 var item = mapFunction(reader);
                                 list.Add(item);
                             }
@@ -165,8 +167,8 @@ namespace DataAccessLayer
             return list;
         }
 
-        // Retrieve a All records
-        public static List<T> GetAll<T>(string storedProcedureName, Func<IDataRecord, T> mapFunction)
+        // Retrieve all records without any parameter
+        public static List<T> GetAll<T>(string storedProcedureName, Func<IDataReader, T> mapFunction)
         {
             var list = new List<T>();
 
@@ -183,6 +185,7 @@ namespace DataAccessLayer
                         {
                             while (reader.Read())
                             {
+                                // Pass the reader to your mapping function
                                 var item = mapFunction(reader);
                                 list.Add(item);
                             }
@@ -198,7 +201,7 @@ namespace DataAccessLayer
             return list;
         }
 
-        // Delete record 
+        // Delete a record
         public static bool Delete(string storedProcedureName, string parameterName, object? value)
         {
             int rowsAffected = 0;
@@ -228,10 +231,9 @@ namespace DataAccessLayer
             return (rowsAffected > 0);
         }
 
-
         // Add parameters from a DTO object to a SqlCommand
         /// <summary>
-        /// a helper method that dynamically adds parameters to a SqlCommand based on the properties of
+        /// A helper method that dynamically adds parameters to a SqlCommand based on the properties of
         /// a given object (dto). This method uses reflection to inspect the properties of the object and 
         /// automatically create SQL parameters for each property. The parameters are then added to the
         /// SqlCommand, which is used in database operations like inserts, updates, etc.
