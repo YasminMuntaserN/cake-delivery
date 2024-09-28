@@ -56,13 +56,13 @@ namespace Business_Layer.Customer
 
         private bool _Add()
         {
-            CustomerID = clsCustomerData.Add(new OrderCreateDTO(CustomerID, TotalAmount, PaymentStatus, DeliveryStatus));
-            return OrderID.HasValue;
+            CustomerID = clsCustomerData.Add(new CustomerCreateDTO(FirstName, LastName, Email, PhoneNumber, Address, City, PostalCode, Country));
+            return CustomerID.HasValue;
         }
 
         private bool _Update()
         {
-            return clsOrderData.UpdateOrder(new OrderUpdateDTO(OrderID, CustomerID, TotalAmount, PaymentStatus, DeliveryStatus));
+            return clsCustomerData.UpdateCustomer(new CustomerDTO(CustomerID, FirstName, LastName, FullName, Email, PhoneNumber, Address, City, PostalCode, Country, CreatedAt));
         }
 
         public bool Save()
@@ -84,39 +84,39 @@ namespace Business_Layer.Customer
             return false;
         }
 
-        public static customerDto? FindOrderById(int? orderId)
+        public static CustomerDTO? FindCustomerById(int? CustomerId)
         {
-            return clsOrderData.GetOrderById(orderId);
+            return clsCustomerData.GetCustomerById(CustomerId);
         }
 
-        public static List<customerDto> FindOrdersByCustomerId(int? customerID)
+        public static CustomerDTO? FindCustomerByName(string Name)
         {
-            return clsOrderData.GetOrdersByCustomerId(customerID);
+            return clsCustomerData.GetCustomerByName(Name);
         }
 
-        public static List<customerDto> All()
-            => clsOrderData.GetAllOrders();
+        public static List<CustomerDTO> All()
+            => clsCustomerData.GetAllCustomers();
 
-        public static bool Delete(int? orderID)
-            => clsOrderData.DeleteOrder(orderID);
+        public static bool Delete(int? CustomerID)
+            => clsCustomerData.DeleteCustomer(CustomerID);
 
         public static bool Exists<T>(T data, enFindBy findBy)
         {
             switch (findBy)
             {
-                case enFindBy.OrderID:
-                    if (data is int orderId)
+                case enFindBy.CustomerID:
+                    if (data is int CustomerId)
                     {
-                        var order = clsOrderData.GetOrderById(orderId);
-                        return order != null;
+                        var Customer = clsCustomerData.GetCustomerById(CustomerId);
+                        return Customer != null;
                     }
                     break;
 
-                case enFindBy.CustomerID:
-                    if (data is int customerId)
+                case enFindBy.Name:
+                    if (data is string Name)
                     {
-                        var order = clsOrderData.GetOrdersByCustomerId(customerId);
-                        return order != null;
+                        var Customer = clsCustomerData.GetCustomerByName(Name);
+                        return Customer != null;
                     }
                     break;
             }
