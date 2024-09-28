@@ -40,19 +40,7 @@ namespace DataAccessLayer
                 "sp_GetCustomerById",                                                    
                 "CustomerID",
                 CustomerId,
-                reader => new CustomerDTO(
-                CustomerID: (int)reader["CustomerID"],
-                FirstName: reader["FirstName"]?.ToString() ?? string.Empty,
-                LastName: reader["LastName"]?.ToString() ?? string.Empty,
-                FullName: string.Concat(reader["FirstName"]?.ToString(), " ", reader["LastName"]?.ToString()),
-                Email: reader["Email"]?.ToString() ?? string.Empty,
-                PhoneNumber: reader["PhoneNumber"]?.ToString() ?? string.Empty, 
-                Address: reader["Address"]?.ToString() ?? string.Empty,
-                City: reader["City"]?.ToString() ?? string.Empty,
-                PostalCode: reader["PostalCode"]?.ToString() ?? string.Empty,
-                Country: reader["Country"]?.ToString() ?? string.Empty,
-                CreatedAt: (DateTime)reader["CreatedAt"]
-            )
+                clsMappings.MapCustomerDTOFromReader
           );
       }
 
@@ -68,19 +56,7 @@ namespace DataAccessLayer
                 "sp_GetCustomerByName",
                 "FullName",
                 Name,
-                reader => new CustomerDTO(
-                CustomerID: (int)reader["CustomerID"],
-                FirstName: reader["FirstName"]?.ToString() ?? string.Empty,
-                LastName: reader["LastName"]?.ToString() ?? string.Empty,
-                FullName: string.Concat(reader["FirstName"]?.ToString(), " ", reader["LastName"]?.ToString()),
-                Email: reader["Email"]?.ToString() ?? string.Empty,
-                PhoneNumber: reader["PhoneNumber"]?.ToString() ?? string.Empty, 
-                Address: reader["Address"]?.ToString() ?? string.Empty,
-                City: reader["City"]?.ToString() ?? string.Empty,
-                PostalCode: reader["PostalCode"]?.ToString() ?? string.Empty,
-                Country: reader["Country"]?.ToString() ?? string.Empty,
-                CreatedAt: (DateTime)reader["CreatedAt"]
-            )
+                clsMappings.MapCustomerDTOFromReader
           );
         }
 
@@ -122,19 +98,7 @@ namespace DataAccessLayer
         {
             return DataAccessHelper.GetAll(
                 "sp_GetAllCustomers",
-                 reader => new CustomerDTO(
-                CustomerID: (int)reader["CustomerID"],
-                FirstName: reader["FirstName"]?.ToString() ?? string.Empty,
-                LastName: reader["LastName"]?.ToString() ?? string.Empty,
-                FullName: string.Concat(reader["FirstName"]?.ToString(), " ", reader["LastName"]?.ToString()),
-                Email: reader["Email"]?.ToString() ?? string.Empty,
-                PhoneNumber: reader["PhoneNumber"]?.ToString() ?? string.Empty,
-                Address: reader["Address"]?.ToString() ?? string.Empty,
-                City: reader["City"]?.ToString() ?? string.Empty,
-                PostalCode: reader["PostalCode"]?.ToString() ?? string.Empty,
-                Country: reader["Country"]?.ToString() ?? string.Empty,
-                CreatedAt: (DateTime)reader["CreatedAt"]
-            )
+                clsMappings.MapCustomerDTOFromReader
                  );
         }
     }
