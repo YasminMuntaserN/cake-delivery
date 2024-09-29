@@ -1,7 +1,10 @@
 ﻿using Business_Layer;
+using Business_Layer.Cake;
 using Business_Layer.Order;
+using CakeDeliveryDTO.CakeDTOs;
 using DTOs;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CakeDeliveryAPI.Controllers
@@ -9,7 +12,7 @@ namespace CakeDeliveryAPI.Controllers
 
     [Route("api/orders")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrdersController : BaseController
     {
         private readonly clsOrderValidator _validator = new clsOrderValidator();
 
@@ -19,14 +22,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<OrderDTO>> GetAllOrders()
-        {
-            List<OrderDTO> ordersList = clsOrder.All();
-            if (ordersList.Count == 0)
-            {
-                return NotFound("No Orders Found!");
-            }
-            return Ok(ordersList);
-        }
+            => GetAllEntities(() => clsOrder.All());
 
 
         // GET: api/orders/{id}
@@ -35,20 +31,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<OrderDTO> GetOrderById(int id)
-        {
-            if (id < 1)
-            {
-                return BadRequest($"Not accepted ID {id}");
-            }
-
-            OrderDTO? order = clsOrder.FindOrderById(id);
-            if (order == null)
-            {
-                return NotFound($"Order with ID {id} not found.");
-            }
-
-            return Ok(order);
-        }
+        => GetEntityByIdentifier(id, clsOrder.FindOrderById, entity => Ok(entity));
 
 
         // POST: api/orders
@@ -66,7 +49,6 @@ namespace CakeDeliveryAPI.Controllers
                 new OrderDTO(null, newOrderDTO.CustomerID, DateTime.Now, newOrderDTO.TotalAmount, newOrderDTO.PaymentStatus, newOrderDTO.DeliveryStatus),
                 clsOrder.enMode.AddNew
             );
-
             // Validate the order instance
             var validationResult = _validator.Validate(orderInstance);
             if (!validationResult.IsValid)
@@ -77,6 +59,7 @@ namespace CakeDeliveryAPI.Controllers
                     Errors = validationResult.Errors
                 });
             }
+
 
             if (orderInstance.Save())
             {
@@ -132,38 +115,25 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult DeleteOrder(int id)
         {
-            if (id < 1)
-            {
-                return BadRequest($"Not accepted ID {id}");
-            }
-
-            if (clsOrder.Delete(id))
-            {
-                return Ok($"Order with ID {id} has been deleted.");
-            }
-
-            return NotFound($"Order with ID {id} not found. No rows deleted!");
+            return DeleteEntity<clsOrder>(
+                id,
+                clsOrder.Delete,
+                "Order"
+            );
         }
 
 
-        // GET: api/orders/Order/{OrderId}
-        [HttpGet("Order/{OrderId}", Name = "GetOrdersByOrderId")]
+
+        [HttpGet("Order/{customerId}", Name = "GetOrdersByCustomerId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<OrderDTO>> GetOrdersByOrderId(int OrderId)
+        public ActionResult<List<OrderDTO>> GetOrdersByCustomerID(int customerId)
         {
-            if (OrderId < 1)
-            {
-                return BadRequest($"Not accepted OrderId {OrderId}");
-            }
-
-            var orders = clsOrder.FindOrdersByCustomerId(OrderId);
-            if (orders == null || orders.Count == 0)
-            {
-                return NotFound($"No orders found for Order ID {OrderId}.");
-            }
-
-            return Ok(orders);
+            return GetAllEntitiesBy<clsOrder, OrderDTO, int>(
+                customerId,
+                clsOrder.FindOrdersByCustomerId,
+                "Order"
+            );
         }
     }
 }

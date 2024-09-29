@@ -179,12 +179,14 @@ namespace DataAccessLayer
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-
+                        Console.WriteLine("in the command");
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
+                                Console.WriteLine("in the Read");
+
                                 // Pass the reader to your mapping function
                                 var item = mapFunction(reader);
                                 list.Add(item);
@@ -195,9 +197,9 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
+                Console.WriteLine("the problem here in helper"+ ex.Message);
                 HandleException(ex);
             }
-
             return list;
         }
 

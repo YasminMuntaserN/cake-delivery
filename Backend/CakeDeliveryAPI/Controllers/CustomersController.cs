@@ -1,4 +1,5 @@
-﻿using Business_Layer.Customer;
+﻿using Business_Layer.Cake;
+using Business_Layer.Customer;
 using CakeDeliveryDTO.CustomerDTOs;
 using DTOs;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,6 @@ namespace CakeDeliveryAPI.Controllers
     {
         private readonly clsCustomerValidator _validator = new clsCustomerValidator();
 
-
         // GET: api/customers/all
         [HttpGet("all", Name = "GetAllcustomers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -25,16 +25,17 @@ namespace CakeDeliveryAPI.Controllers
         public ActionResult<IEnumerable<CustomerDTO>> GetAllcustomers()
         {
             List<CustomerDTO> customersList = clsCustomer.All();
-            if (customersList.Count == 0)
+            if (!customersList.Any())
             {
+                Console.WriteLine("the problem here in contoller");
                 return NotFound("No customers Found!");
             }
             return Ok(customersList);
         }
 
-
+        
         // GET: api/customers/{id}
-        [HttpGet("{id}", Name = "GetcustomerById")]
+        [HttpGet("{id:int}", Name = "GetcustomerById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -54,29 +55,30 @@ namespace CakeDeliveryAPI.Controllers
             return Ok(customer);
         }
 
-
-        // GET: api/customers/{Name}
-        [HttpGet("{Name}", Name = "GetcustomerByName")]
+      
+        // GET: api/customers/search?name={name}
+        [HttpGet("search", Name = "GetcustomerByName")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<CustomerDTO> GetcustomerByName(string Name)
+        public ActionResult<CustomerDTO> GetcustomerByName( string name)
         {
-            if (string.IsNullOrEmpty(Name))
+            if (string.IsNullOrEmpty(name))
             {
-                return BadRequest($"Not accepted Name {Name}");
+                return BadRequest("Name cannot be empty.");
             }
 
-            CustomerDTO? customer = clsCustomer.FindCustomerByName(Name);
+            CustomerDTO? customer = clsCustomer.FindCustomerByName(name);
             if (customer == null)
             {
-                return NotFound($"customer with Name {Name} not found.");
+                return NotFound($"Customer with Name '{name}' not found.");
             }
 
             return Ok(customer);
         }
 
 
+      
         // POST: api/customers
         [HttpPost(Name = "Addcustomer")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -89,7 +91,7 @@ namespace CakeDeliveryAPI.Controllers
             }
             clsCustomer customerInstance = new clsCustomer(
                 new CustomerDTO(null, newCustomerDTO.FirstName, newCustomerDTO.LastName,string.Concat(newCustomerDTO.FirstName, " ", newCustomerDTO.LastName)
-                , newCustomerDTO.Email, newCustomerDTO.PhoneNumber, newCustomerDTO.Address, newCustomerDTO.City, newCustomerDTO.PostalCode, newCustomerDTO.Country, DateTime.Now),
+                , newCustomerDTO.Email, newCustomerDTO.PhoneNumber, newCustomerDTO.Address, newCustomerDTO.City, newCustomerDTO.PostalCode, newCustomerDTO.Country),
             clsCustomer.enMode.AddNew
             );
 

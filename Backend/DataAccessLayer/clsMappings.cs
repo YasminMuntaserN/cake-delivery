@@ -37,8 +37,7 @@ namespace DataAccessLayer
                 Address: reader["Address"]?.ToString() ?? string.Empty,
                 City: reader["City"]?.ToString() ?? string.Empty,
                 PostalCode: reader["PostalCode"]?.ToString() ?? string.Empty,
-                Country: reader["Country"]?.ToString() ?? string.Empty,
-                CreatedAt: (DateTime)reader["CreatedAt"]
+                Country: reader["Country"]?.ToString() ?? string.Empty
             );
         }
 

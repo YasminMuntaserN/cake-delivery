@@ -14,8 +14,7 @@
         string Address,
         string City,
         string PostalCode,
-        string Country,
-        DateTime CreatedAt
+        string Country
     );
 
 

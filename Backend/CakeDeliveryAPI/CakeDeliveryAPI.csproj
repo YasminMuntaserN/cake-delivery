@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Business Layer\Business Layer.csproj" />
     <ProjectReference Include="..\CakeDeliveryDTO\CakeDeliveryDTO.csproj" />
+    <ProjectReference Include="..\Validation\Validation.csproj" />
   </ItemGroup>
 
 </Project>
