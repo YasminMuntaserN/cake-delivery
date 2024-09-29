@@ -11,7 +11,7 @@ namespace Business_Layer.Order
     {
         public override ValidationResult Validate(clsOrder order)
         {
-            if (!HasValidOrderID(order.OrderID))
+            if (!HasValidOrderID(order.CustomerID))
                 AddError("OrderID is invalid.");
 
             if (!HasValidOrderDate(order.OrderDate))
@@ -29,7 +29,7 @@ namespace Business_Layer.Order
             return Result;
         }
 
-        private bool HasValidOrderID(int? OrderID) => OrderID.HasValue && OrderID > 0;
+        private bool HasValidOrderID(int? CustomerID) => CustomerID.HasValue && CustomerID > 0;
 
         private bool HasValidOrderDate(DateTime orderDate) => orderDate <= DateTime.Now;
 

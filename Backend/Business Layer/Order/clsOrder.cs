@@ -72,12 +72,12 @@ namespace Business_Layer.Order
             return false;
         }
 
-        public static OrderDTO? FindOrderById(int? orderId)
+        public static OrderDTO? FindOrderById(int orderId)
         {
             return clsOrderData.GetOrderById(orderId);
         }
 
-        public static List<OrderDTO> FindOrdersByCustomerId(int? customerID)
+        public static List<OrderDTO> FindOrdersByCustomerId(int customerID)
         {
             return clsOrderData.GetOrdersByCustomerId(customerID);
         }
@@ -85,7 +85,7 @@ namespace Business_Layer.Order
         public static List<OrderDTO> All()
             => clsOrderData.GetAllOrders();
 
-        public static bool Delete(int? orderID)
+        public static bool Delete(int orderID)
             => clsOrderData.DeleteOrder(orderID);
 
         public static bool Exists<T>(T data, enFindBy findBy)
