@@ -45,14 +45,13 @@ namespace Business_Layer.Customer
             City = customerDto.City;
             PostalCode = customerDto.PostalCode;
             Country = customerDto.Country;
-            CreatedAt = customerDto.CreatedAt;
 
             Mode = mode;
         }
 
         // Convert to DTO
         public CustomerDTO TocustomerDto() =>
-            new CustomerDTO(CustomerID, FirstName, LastName,FullName, Email, PhoneNumber, Address, City, PostalCode, Country , CreatedAt);
+            new CustomerDTO(CustomerID, FirstName, LastName,FullName, Email, PhoneNumber, Address, City, PostalCode, Country );
 
         private bool _Add()
         {
@@ -62,7 +61,7 @@ namespace Business_Layer.Customer
 
         private bool _Update()
         {
-            return clsCustomerData.UpdateCustomer(new CustomerDTO(CustomerID, FirstName, LastName, FullName, Email, PhoneNumber, Address, City, PostalCode, Country, CreatedAt));
+            return clsCustomerData.UpdateCustomer(new CustomerDTO(CustomerID, FirstName, LastName, FirstName +" "+ LastName, Email, PhoneNumber, Address, City, PostalCode, Country));
         }
 
         public bool Save()
