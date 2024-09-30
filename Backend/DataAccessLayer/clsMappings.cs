@@ -1,4 +1,5 @@
-﻿using CakeDeliveryDTO.CakeDTOs;
+﻿using CakeDeliveryDTO;
+using CakeDeliveryDTO.CakeDTOs;
 using CakeDeliveryDTO.CustomerDTOs;
 using CakeDeliveryDTO.DeliveryDTO;
 using DTOs;
@@ -67,6 +68,19 @@ namespace DataAccessLayer
                 DeliveryStatus: reader["DeliveryStatus"].ToString() ?? string.Empty
             );
         }
+
+        public static PaymentDTO MapPaymentDTOFromReader(IDataReader reader)
+        {
+            return new PaymentDTO(
+                PaymentID: (int)reader["PaymentID"],
+                OrderID: (int)reader["OrderID"],
+                PaymentMethod: reader["PaymentMethod"].ToString() ?? string.Empty,
+                PaymentDate: (DateTime)reader["PaymentDate"],
+                AmountPaid: (decimal)reader["AmountPaid"],
+                PaymentStatus: reader["PaymentStatus"].ToString() ?? string.Empty
+            );
+        }
+
 
     }
 }

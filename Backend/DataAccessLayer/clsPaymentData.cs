@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CakeDeliveryDTO;
+using CakeDeliveryDTO.PaymentDTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +18,9 @@ namespace DataAccessLayer
         public static int? Add(PaymentCreateDTO payment)
         {
             return DataAccessHelper.Add(
-                "sp_AddPayment",  // Stored procedure name for inserting a payment
-                "NewPaymentID",   // Output parameter
-                payment           // Payment data DTO
+                "sp_AddPayment",  
+                "NewPaymentID",   
+                payment           
             );
         }
 
@@ -37,6 +39,7 @@ namespace DataAccessLayer
             );
         }
 
+      
         /// <summary>
         /// Retrieves a list of payments by the order ID.
         /// </summary>
@@ -57,12 +60,13 @@ namespace DataAccessLayer
             );
         }
 
+       
         /// <summary>
         /// Updates an existing payment in the database.
         /// </summary>
         /// <param name="paymentToUpdate">PaymentUpdateDTO with updated payment data.</param>
         /// <returns>True if successful, otherwise false.</returns>
-        public static bool UpdatePayment(PaymentUpdateDTO paymentToUpdate)
+        public static bool UpdatePayment(PaymentDTO paymentToUpdate)
         {
             return DataAccessHelper.Update(
                 "sp_UpdatePayment",   // Stored procedure for updating a payment
@@ -84,6 +88,7 @@ namespace DataAccessLayer
             );
         }
 
+        
         /// <summary>
         /// Retrieves all payments from the database.
         /// </summary>
