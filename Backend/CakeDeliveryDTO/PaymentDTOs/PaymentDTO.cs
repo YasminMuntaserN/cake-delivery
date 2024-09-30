@@ -7,7 +7,7 @@
     int ? PaymentID,
     int? OrderID,
     string PaymentMethod,
-    DateTime PaymentDate,
+    DateTime PaymentDates,
     decimal AmountPaid,
     string PaymentStatus
 );

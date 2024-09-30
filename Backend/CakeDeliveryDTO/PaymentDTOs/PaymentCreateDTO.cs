@@ -4,7 +4,7 @@
     /// </summary>
     /// 
     public record PaymentCreateDTO(
-    int OrderID,
+    int? OrderID,
     string PaymentMethod,
     DateTime PaymentDate,
     decimal AmountPaid,
