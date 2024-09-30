@@ -5,7 +5,7 @@
     /// </summary>
     /// 
     public record DeliveryDTO(
-        int DeliveryID,
+        int? DeliveryID,
         int OrderID,
         string DeliveryAddress,
         string DeliveryCity,
