@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business_Layer.Delivery;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,40 +8,51 @@ using Validation;
 
 namespace Business_Layer.Customer
 {
-    public class clsDeliveryValidator : BaseValidator<clsCustomer>
+    public class clsDeliveryValidator : BaseValidator<clsDelivery>
     {
-        public override ValidationResult Validate(clsCustomer customer)
+        public override ValidationResult Validate(clsDelivery delivery)
         {
-            if (!HasValidCustomerID(customer.CustomerID))
-                AddError("CustomerID must be a positive integer.");
+            if (!HasValidOrderID(delivery.OrderID))
+                AddError("OrderID is invalid.");
 
-            if (!HasValidFirstName(customer.FirstName))
-                AddError("FirstName is required.");
+            if (!HasValidDelivery(delivery.DeliveryAddress))
+                AddError("DeliveryAddress is invalid.");
 
-            if (!HasValidLastName(customer.LastName))
-                AddError("LastName is required.");
+            if (!HasValidDelivery(delivery.DeliveryCity))
+                AddError("DeliveryCity is invalid.");
 
-            if (!HasValidEmail(customer.Email))
-                AddError("Email is not valid.");
+            if (!HasValidDelivery(delivery.DeliveryPostalCode))
+                AddError("DeliveryPostalCode is invalid.");
 
-            if (!HasValidPhoneNumber(customer.PhoneNumber))
-                AddError("PhoneNumber must be a valid phone number.");
+            if (!HasValidDelivery(delivery.DeliveryCountry))
+                AddError("DeliveryCountry is invalid.");
+
+            if (!HasValidDeliveryDate(delivery.DeliveryDate))
+                AddError("DeliveryDate cannot be in the future.");
+
+            if (!IsValidDeliveryStatus(delivery.DeliveryStatus))
+                AddError("Invalid DeliveryStatus.");
 
             return Result;
         }
 
-        private bool HasValidCustomerID(int? customerID) => !customerID.HasValue || customerID > 0;
+        private bool HasValidOrderID(int? orderID) => orderID.HasValue && orderID > 0;
 
-        private bool HasValidFirstName(string firstName) => !string.IsNullOrWhiteSpace(firstName);
+        private bool HasValidDelivery(string value)
+            => !string.IsNullOrWhiteSpace(value) ;
 
-        private bool HasValidLastName(string lastName) => !string.IsNullOrWhiteSpace(lastName);
+        private bool HasValidDeliveryDate(DateTime deliveryDate)
+            => deliveryDate <= DateTime.Now;
 
-        private bool HasValidEmail(string email)
-            => !string.IsNullOrWhiteSpace(email) && email.Contains("@") && email.Contains(".");
-
-        private bool HasValidPhoneNumber(string phoneNumber)
-            => !string.IsNullOrWhiteSpace(phoneNumber) && phoneNumber.All(char.IsDigit); // Basic validation for digits only
-
+        private bool IsValidDeliveryStatus(string deliveryStatus)
+        {
+            return !string.IsNullOrWhiteSpace(deliveryStatus) &&
+                   (deliveryStatus == "Scheduled" ||
+                    deliveryStatus == "In Transit" ||
+                    deliveryStatus == "Delivered" ||
+                    deliveryStatus == "Cancelled");
+        }
     }
+
 
 }

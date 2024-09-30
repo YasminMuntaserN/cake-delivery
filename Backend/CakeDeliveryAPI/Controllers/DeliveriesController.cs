@@ -5,6 +5,7 @@ using CakeDeliveryDTO.DeliveryDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Business_Layer.Customer;
 
 namespace CakeDeliveryAPI.Controllers
 {
@@ -21,6 +22,7 @@ namespace CakeDeliveryAPI.Controllers
         public ActionResult<IEnumerable<DeliveryDTO>> GetAllDeliveries()
             => GetAllEntities(() => clsDelivery.All());
 
+     
         // GET: api/deliveries/{id}
         [HttpGet("{id}", Name = "GetDeliveryById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -29,6 +31,7 @@ namespace CakeDeliveryAPI.Controllers
         public ActionResult<DeliveryDTO> GetDeliveryById(int id)
             => GetEntityByIdentifier(id, clsDelivery.FindDeliveryById, delivery => Ok(delivery));
 
+     
         // POST: api/deliveries
         [HttpPost(Name = "AddDelivery")]
         [ProducesResponseType(StatusCodes.Status201Created)]
