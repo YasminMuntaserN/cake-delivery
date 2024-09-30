@@ -17,12 +17,12 @@ namespace CakeDeliveryAPI.Controllers
             return Ok(entities);
         }
 
+      
         protected ActionResult<TDto> GetEntityByIdentifier<TDto, TKey>(
         TKey identifier,
         Func<TKey, TDto?> findEntity,
         Func<TDto, ActionResult<TDto>> createResponse)
         {
-            // Check if the identifier is valid (customize the check based on your needs)
             if (identifier == null || (identifier is int id && id < 1))
             {
                 return BadRequest($"Not accepted identifier {identifier}");
@@ -55,7 +55,6 @@ namespace CakeDeliveryAPI.Controllers
         }
 
 
-        // Generalized method for retrieving entities by different types of criteria
         protected ActionResult<List<TDto>> GetAllEntitiesBy<TEntity, TDto, Tvalue>(
             Tvalue value,
             Func<Tvalue, List<TDto>> findEntitiesFunc,
@@ -75,7 +74,9 @@ namespace CakeDeliveryAPI.Controllers
             return Ok(entities);
         }
     }
-    /* protected ActionResult<T> AddEntity<TCreateDto, T>(
+   
+    
+       /* protected ActionResult<T> AddEntity<TCreateDto, T>(
     TCreateDto createDto,
     Func<TCreateDto, T> createEntityFunc,
     Func<T, bool> saveEntityFunc,

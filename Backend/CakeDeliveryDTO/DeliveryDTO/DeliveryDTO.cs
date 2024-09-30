@@ -4,7 +4,7 @@
     /// DTO Used to update an existing delivery or retrieve details of a delivery.
     /// </summary>
     /// 
-    public record DeliveryUpdateFindRequestDTO(
+    public record DeliveryDTO(
         int DeliveryID,
         int OrderID,
         string DeliveryAddress,

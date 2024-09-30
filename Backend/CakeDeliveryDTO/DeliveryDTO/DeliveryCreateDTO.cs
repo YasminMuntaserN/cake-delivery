@@ -4,7 +4,7 @@
     /// DTO Used to create a new delivery
     /// </summary>
     /// 
-    public record DeliveryCreateRequestDTO(
+    public record DeliveryCreateDTO(
      int OrderID,
      string DeliveryAddress,
      string DeliveryCity,

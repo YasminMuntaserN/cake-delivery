@@ -86,7 +86,7 @@ namespace Business_Layer.Cake
         }
 
 
-        public static bool Delete(int? cakeID)
+        public static bool Delete(int cakeID)
             => clsCakeData.DeleteCake(cakeID);
 
 

@@ -119,6 +119,7 @@ public class CakesController : BaseController
     public ActionResult DeleteCake(int id)
       => DeleteEntity<clsOrder>(id, clsCake.Delete, "Order");
 
+   
     // GET: api/cakes/category/{category}
     [HttpGet("category/{category}", Name = "GetCakesByCategory")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -132,7 +133,5 @@ public class CakesController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<List<CakeDTO>> GetCakesByCategoryName(string categoryName)
-    {
-        return GetAllEntitiesBy<string, CakeDTO, string>(categoryName, clsCake.AllByCategoryName, "Cake");
-    }
+        => GetAllEntitiesBy<string, CakeDTO, string>(categoryName, clsCake.AllByCategoryName, "Cake");
 }
