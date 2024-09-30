@@ -74,7 +74,7 @@ namespace Business_Layer.Cake
         }
 
 
-        public static CakeDTO? FindCakeById(int? cakeId)
+        public static CakeDTO? FindCakeById(int cakeId)
         {
             return clsCakeData.GetCakeById(cakeId);
         }

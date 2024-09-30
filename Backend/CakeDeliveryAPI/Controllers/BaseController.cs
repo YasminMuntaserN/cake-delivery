@@ -38,40 +38,6 @@ namespace CakeDeliveryAPI.Controllers
         }
 
 
-        /* protected ActionResult<T> AddEntity<TCreateDto, T>(
-        TCreateDto createDto,
-        Func<TCreateDto, T> createEntityFunc,
-        Func<T, bool> saveEntityFunc,
-        BaseValidator<T> validator,
-        string routeName,
-        object routeValues)
-         {
-             if (createDto == null)
-             {
-                 return BadRequest("Invalid data.");
-             }
-
-             // Create the entity from the DTO
-             T entity = createEntityFunc(createDto);
-
-             // Validate the entity
-             var validationResult = validator.Validate(entity);
-             if (!validationResult.IsValid)
-             {
-                 return BadRequest(new
-                 {
-                     Success = false,
-                     Errors = validationResult.Errors
-                 });
-             }
-
-             if (saveEntityFunc(entity))
-             {
-                 return CreatedAtRoute(routeName, routeValues, entity); 
-             }
-
-             return BadRequest("Unable to create entity.");
-         }*/
 
         protected ActionResult DeleteEntity<T>(int id, Func<int, bool> deleteFunc, string entityName)
         {
@@ -109,6 +75,40 @@ namespace CakeDeliveryAPI.Controllers
             return Ok(entities);
         }
     }
+    /* protected ActionResult<T> AddEntity<TCreateDto, T>(
+    TCreateDto createDto,
+    Func<TCreateDto, T> createEntityFunc,
+    Func<T, bool> saveEntityFunc,
+    BaseValidator<T> validator,
+    string routeName,
+    object routeValues)
+     {
+         if (createDto == null)
+         {
+             return BadRequest("Invalid data.");
+         }
+
+         // Create the entity from the DTO
+         T entity = createEntityFunc(createDto);
+
+         // Validate the entity
+         var validationResult = validator.Validate(entity);
+         if (!validationResult.IsValid)
+         {
+             return BadRequest(new
+             {
+                 Success = false,
+                 Errors = validationResult.Errors
+             });
+         }
+
+         if (saveEntityFunc(entity))
+         {
+             return CreatedAtRoute(routeName, routeValues, entity); 
+         }
+
+         return BadRequest("Unable to create entity.");
+     }*/
 
 }
 

@@ -1,5 +1,6 @@
 ﻿using Business_Layer.Cake;
 using Business_Layer.Order;
+using CakeDeliveryAPI.Controllers;
 using CakeDeliveryDTO.CakeDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,59 +8,36 @@ using System.Collections.Generic;
 
 [Route("api/cakes")]
 [ApiController]
-public class CakesController : ControllerBase
+public class CakesController : BaseController
 {
     private readonly clsCakeValidator _validator = new clsCakeValidator();
 
+    // GET: api/cakes/all
     [HttpGet("All", Name = "GetAllCakes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<IEnumerable<CakeDTO>> GetAllCakes()
-    {
-        List<CakeDTO> cakesList = clsCake.All();
-        if (cakesList.Count == 0)
-        {
-            return NotFound("No Cakes Found!");
-        }
-        return Ok(cakesList);
-    }
+        => GetAllEntities(() => clsCake.All());
 
- 
+    
+    // GET: api/cakes/{id}
     [HttpGet("{id}", Name = "GetCakeById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<CakeDTO> GetCakeById(int id)
-    {
-        if (id < 1)
-        {
-            return BadRequest($"Not accepted ID {id}");
-        }
+        => GetEntityByIdentifier(id, clsCake.FindCakeById, cake => Ok(cake));
 
-        CakeDTO? cake = clsCake.FindCakeById(id);
-        if (cake == null)
-        {
-            return NotFound($"Cake with ID {id} not found.");
-        }
-
-        return Ok(cake);
-    }
-
-   
+  
+    // GET: api/cakes/name/{cakeName}
     [HttpGet("name/{cakeName}", Name = "GetCakeByName")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<CakeDTO> GetCakeByName(string cakeName)
-    {
-        CakeDTO? cake = clsCake.FindCakeByName(cakeName);
-        if (cake == null)
-        {
-            return NotFound($"Cake with name '{cakeName}' not found.");
-        }
-        return Ok(cake);
-    }
+        => GetEntityByIdentifier(cakeName, clsCake.FindCakeByName, cake => Ok(cake));
 
-   
+
+    // POST: api/cakes
     [HttpPost(Name = "AddCake")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -75,7 +53,6 @@ public class CakesController : ControllerBase
             clsCake.enMode.AddNew
         );
 
-        // Validate the cake instance
         var validationResult = _validator.Validate(cakeInstance);
         if (!validationResult.IsValid)
         {
@@ -86,15 +63,16 @@ public class CakesController : ControllerBase
             });
         }
 
-
         if (cakeInstance.Save())
         {
             return CreatedAtRoute("GetCakeById", new { id = cakeInstance.CakeID }, newCakeDTO);
         }
+
         return BadRequest("Unable to create cake.");
     }
 
- 
+   
+    // PUT: api/cakes/{id}
     [HttpPut("{id}", Name = "UpdateCake")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -114,7 +92,6 @@ public class CakesController : ControllerBase
 
         clsCake cakeInstance = new clsCake(updatedCake, clsCake.enMode.Update);
 
-        // Validate the cake instance
         var validationResult = _validator.Validate(cakeInstance);
         if (!validationResult.IsValid)
         {
@@ -123,8 +100,8 @@ public class CakesController : ControllerBase
                 Success = false,
                 Errors = validationResult.Errors
             });
-
         }
+
         if (cakeInstance.Save())
         {
             return Ok(cakeInstance.ToCakeDto());
@@ -134,49 +111,28 @@ public class CakesController : ControllerBase
     }
 
    
+    // DELETE: api/cakes/{id}
     [HttpDelete("{id}", Name = "DeleteCake")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+
     public ActionResult DeleteCake(int id)
-    {
-        if (id < 1)
-        {
-            return BadRequest($"Not accepted ID {id}");
-        }
+      => DeleteEntity<clsOrder>(id, clsCake.Delete, "Order");
 
-        if (clsCake.Delete(id))
-        {
-            return Ok($"Cake with ID {id} has been deleted.");
-        }
-
-        return NotFound($"Cake with ID {id} not found. No rows deleted!");
-    }
-
- 
+    // GET: api/cakes/category/{category}
     [HttpGet("category/{category}", Name = "GetCakesByCategory")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<IEnumerable<CakeDTO>> GetCakesByCategory(int category)
-    {
-        List<CakeDTO> cakesList = clsCake.AllByCategoryID(category);
-        if (cakesList.Count == 0)
-        {
-            return NotFound($"No Cakes found in category ID '{category}'!");
-        }
-        return Ok(cakesList);
-    }
+    public ActionResult<List<CakeDTO>> GetCakesByCategory(int category)
+        => GetAllEntitiesBy<int, CakeDTO, int>(category, clsCake.AllByCategoryID, "Cake");
 
 
+    // GET: api/cakes/category/name/{categoryName}
     [HttpGet("category/name/{categoryName}", Name = "GetCakesByCategoryName")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<IEnumerable<CakeDTO>> GetCakesByCategoryName(string categoryName)
+    public ActionResult<List<CakeDTO>> GetCakesByCategoryName(string categoryName)
     {
-        List<CakeDTO> cakesList = clsCake.AllByCategoryName(categoryName);
-        if (cakesList.Count == 0)
-        {
-            return NotFound($"No Cakes found in category name '{categoryName}'!");
-        }
-        return Ok(cakesList);
+        return GetAllEntitiesBy<string, CakeDTO, string>(categoryName, clsCake.AllByCategoryName, "Cake");
     }
 }

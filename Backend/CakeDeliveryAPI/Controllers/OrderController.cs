@@ -114,13 +114,8 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult DeleteOrder(int id)
-        {
-            return DeleteEntity<clsOrder>(
-                id,
-                clsOrder.Delete,
-                "Order"
-            );
-        }
+          => DeleteEntity<clsOrder>(id,clsOrder.Delete,"Order");
+
 
 
 
