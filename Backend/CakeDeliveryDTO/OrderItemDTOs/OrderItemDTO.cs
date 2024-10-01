@@ -5,10 +5,10 @@
     /// </summary>
     /// 
     public record OrderItemDTO(
-        int OrderItemID,
+        int? OrderItemID,
         int OrderID,
         int CakeID,
-        int size,
+        int SizeID,
         int Quantity,
         decimal PricePerItem
     );

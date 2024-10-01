@@ -8,7 +8,7 @@
     int OrderID,
     int CakeID,
     int Quantity,
-    int size,
+    int SizeID,
     decimal PricePerItem
 );
 }
