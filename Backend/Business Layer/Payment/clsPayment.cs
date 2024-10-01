@@ -46,7 +46,7 @@ namespace Business_Layer.Payment
      
         private bool _Add()
         {
-            PaymentID = clsPaymentData.Add(new PaymentCreateDTO(OrderID, PaymentMethod, PaymentDate, AmountPaid, PaymentStatus));
+            PaymentID = clsPaymentData.Add(new PaymentCreateDTO(OrderID, PaymentMethod,  AmountPaid, PaymentStatus));
             return PaymentID.HasValue;
         }
 
