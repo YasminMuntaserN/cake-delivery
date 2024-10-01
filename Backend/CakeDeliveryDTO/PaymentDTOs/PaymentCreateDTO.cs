@@ -6,7 +6,6 @@
     public record PaymentCreateDTO(
     int? OrderID,
     string PaymentMethod,
-    DateTime PaymentDate,
     decimal AmountPaid,
     string PaymentStatus
 );
