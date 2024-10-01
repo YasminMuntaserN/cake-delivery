@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class clsOrderItemsData
+    public class clsOrderItemData
     {
         /// <summary>
         /// Adds a new OrderItem to the database.

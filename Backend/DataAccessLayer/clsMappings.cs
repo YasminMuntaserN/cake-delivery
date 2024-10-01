@@ -81,6 +81,17 @@ namespace DataAccessLayer
             );
         }
 
-
+        public static OrderItemDTO MapOrderItemDTOFromReader(IDataReader reader)
+        {
+            return new OrderItemDTO
+            (
+                OrderItemID: (int)reader["OrderItemID"],
+                OrderID: (int)reader["OrderID"],
+                CakeID: (int)reader["CakeID"],
+                SizeID: (int)reader["SizeID"],
+                Quantity: (int)reader["Quantity"],
+                PricePerItem: (decimal)reader["PricePerItem"]
+            );
+        }
     }
 }
