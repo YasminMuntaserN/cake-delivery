@@ -51,9 +51,7 @@ namespace Business_Layer.Orders
         }
 
         private bool _Update()
-        {
-            return clsOrderItemData.UpdateOrderItem(ToOrderItemDto());
-        }
+            => clsOrderItemData.UpdateOrderItem(ToOrderItemDto());
 
         public bool Save()
         {
@@ -73,23 +71,13 @@ namespace Business_Layer.Orders
 
             return false;
         }
-
       
         public static OrderItemDTO? FindOrderItemById(int orderItemId)
-        {
-            return clsOrderItemData.GetOrderItemById(orderItemId);
-        }
-
-   
-        public static List<OrderItemDTO> FindOrderItemsByOrderId(int orderId)
-        {
-            return clsOrderItemData.GetOrderItemsByOrderId(orderId);
-        }
-
+            => clsOrderItemData.GetOrderItemById(orderItemId);
+       
         public static bool Delete(int orderItemId)
             => clsOrderItemData.DeleteOrderItem(orderItemId);
 
- 
         public static bool Exists<T>(T data, enFindBy findBy)
         {
             switch (findBy)
@@ -127,6 +115,10 @@ namespace Business_Layer.Orders
 
         public static List<OrderItemDTO> AllByOrderID(int orderId)
             => clsOrderItemData.GetOrderItemsByOrderId(orderId);
+
+        public static List<OrderItemDTO> AllOrderItems()
+            => clsOrderItemData.GetAllOrderItems();
+
 
 
     }
