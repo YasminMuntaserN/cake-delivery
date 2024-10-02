@@ -61,7 +61,6 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine("the problem here in helper" + ex.Message);
                 HandleException(ex);
             }
 
@@ -91,7 +90,6 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 HandleException(ex);
             }
 
@@ -197,7 +195,6 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine("the problem here in helper"+ ex.Message);
                 HandleException(ex);
             }
             return list;
