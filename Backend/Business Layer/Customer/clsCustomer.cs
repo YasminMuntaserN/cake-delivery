@@ -83,12 +83,12 @@ namespace Business_Layer.Customer
             return false;
         }
 
-        public static CustomerDTO? FindCustomerById(int? CustomerId)
+        public static CustomerDTO FindCustomerById(int CustomerId)
         {
             return clsCustomerData.GetCustomerById(CustomerId);
         }
 
-        public static CustomerDTO? FindCustomerByName(string Name)
+        public static CustomerDTO FindCustomerByName(string Name)
         {
             return clsCustomerData.GetCustomerByName(Name);
         }
@@ -96,7 +96,7 @@ namespace Business_Layer.Customer
         public static List<CustomerDTO> All()
             => clsCustomerData.GetAllCustomers();
 
-        public static bool Delete(int? CustomerID)
+        public static bool Delete(int CustomerID)
             => clsCustomerData.DeleteCustomer(CustomerID);
 
         public static bool Exists<T>(T data, enFindBy findBy)
