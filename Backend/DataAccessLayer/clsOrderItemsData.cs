@@ -1,4 +1,5 @@
-﻿using DTOs;
+﻿using CakeDeliveryDTO;
+using DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,6 +96,18 @@ namespace DataAccessLayer
                 "sp_GetOrderItemsByCakeId",
                 "CakeID",
                 cakeId,
+                clsMappings.MapOrderItemDTOFromReader
+            );
+        }
+
+        /// <summary>
+        /// Retrieves all OrderItems from the database.
+        /// </summary>
+        /// <returns>A list of OrderItemDTO objects.</returns>
+        public static List<OrderItemDTO> GetAllOrderItems()
+        {
+            return DataAccessHelper.GetAll(
+                "sp_GetAllOrderItems",  
                 clsMappings.MapOrderItemDTOFromReader
             );
         }

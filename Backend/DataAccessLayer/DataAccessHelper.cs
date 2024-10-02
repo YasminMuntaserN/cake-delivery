@@ -91,6 +91,7 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 HandleException(ex);
             }
 

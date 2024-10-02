@@ -1,5 +1,6 @@
 ﻿using Business_Layer.Cake;
 using Business_Layer.Customer;
+using Business_Layer.Order;
 using CakeDeliveryDTO.CustomerDTOs;
 using DTOs;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +15,7 @@ namespace CakeDeliveryAPI.Controllers
 
     [Route("api/customers")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomersController : BaseController
     {
         private readonly clsCustomerValidator _validator = new clsCustomerValidator();
 
@@ -23,15 +24,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<CustomerDTO>> GetAllcustomers()
-        {
-            List<CustomerDTO> customersList = clsCustomer.All();
-            if (!customersList.Any())
-            {
-                Console.WriteLine("the problem here in contoller");
-                return NotFound("No customers Found!");
-            }
-            return Ok(customersList);
-        }
+             => GetAllEntities(() => clsCustomer.All());
 
         
         // GET: api/customers/{id}
@@ -40,43 +33,17 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CustomerDTO> GetcustomerById(int id)
-        {
-            if (id < 1)
-            {
-                return BadRequest($"Not accepted ID {id}");
-            }
-
-            CustomerDTO? customer = clsCustomer.FindCustomerById(id);
-            if (customer == null)
-            {
-                return NotFound($"customer with ID {id} not found.");
-            }
-
-            return Ok(customer);
-        }
+              => GetEntityByIdentifier(id, clsCustomer.FindCustomerById, Customer => Ok(Customer));
+       
 
       
         // GET: api/customers/search?name={name}
-        [HttpGet("search", Name = "GetcustomerByName")]
+        [HttpGet("searchByName", Name = "GetcustomerByName")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CustomerDTO> GetcustomerByName( string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return BadRequest("Name cannot be empty.");
-            }
-
-            CustomerDTO? customer = clsCustomer.FindCustomerByName(name);
-            if (customer == null)
-            {
-                return NotFound($"Customer with Name '{name}' not found.");
-            }
-
-            return Ok(customer);
-        }
-
+             => GetEntityByIdentifier(name, clsCustomer.FindCustomerByName, customer => Ok(customer));
 
       
         // POST: api/customers
@@ -159,21 +126,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Deletecustomer(int id)
-        {
-            if (id < 1)
-            {
-                return BadRequest($"Not accepted ID {id}");
-            }
-
-            if (clsCustomer.Delete(id))
-            {
-                return Ok($"customer with ID {id} has been deleted.");
-            }
-
-            return NotFound($"customer with ID {id} not found. No rows deleted!");
-        }
-
-
+             => DeleteEntity<clsCustomer>(id, clsCustomer.Delete, "Customer");
 
     }
 }

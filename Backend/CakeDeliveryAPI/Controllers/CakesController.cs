@@ -117,7 +117,7 @@ public class CakesController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
 
     public ActionResult DeleteCake(int id)
-      => DeleteEntity<clsOrder>(id, clsCake.Delete, "Order");
+      => DeleteEntity<clsCake>(id, clsCake.Delete, "Cake");
 
    
     // GET: api/cakes/category/{category}

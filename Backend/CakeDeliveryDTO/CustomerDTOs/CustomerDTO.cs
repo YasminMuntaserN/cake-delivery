@@ -1,7 +1,7 @@
 ﻿namespace CakeDeliveryDTO.CustomerDTOs
 {
     /// <summary>
-    /// DTO  Used when updating an existing customer's details or retrieving customer details.
+    /// DTO  Used when updating an existing customer's details 
     /// </summary>
     /// 
     public record CustomerDTO(
