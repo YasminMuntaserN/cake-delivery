@@ -1,17 +1,18 @@
 import AppLayout from "./pages/AppLayout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home";
 
 const router =createBrowserRouter([
   {
     element : <AppLayout />,
-    path:'/'
     // errorElement : <Error />,
-//     children :[
+    children :[
   
-//   {
-//     path:'/',
-//     element: <Home/>
-//   },
+  {
+    path:'/',
+    element: <Home/>
+  },
+
 //   {
 //     path:'/menu',
 //     element: <Menu/>,
@@ -32,7 +33,7 @@ const router =createBrowserRouter([
 //     element: <Order/>,
 //     loader:orderLoader
 //   }
-// ]
+ ]
 }] );
 
 function App() {
