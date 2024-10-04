@@ -37,6 +37,26 @@ namespace CakeDeliveryAPI.Controllers
             return createResponse(entity);
         }
 
+        protected ActionResult<TDto> GetEntityByIdentifier<TDto, TFindBy,TKey>(
+        TKey identifier,
+        TFindBy findBy,
+        Func<TKey,TFindBy, TDto?> findEntity,
+        Func<TDto, ActionResult<TDto>> createResponse)
+        {
+            if (identifier == null || (identifier is int id && id < 1))
+            {
+                return BadRequest($"Not accepted identifier {identifier}");
+            }
+
+            TDto? entity = findEntity(identifier, findBy);
+            if (entity == null)
+            {
+                return NotFound($"Entity with identifier {identifier} not found.");
+            }
+
+            return createResponse(entity);
+        }
+
 
 
         protected ActionResult DeleteEntity<T>(int id, Func<int, bool> deleteFunc, string entityName)
