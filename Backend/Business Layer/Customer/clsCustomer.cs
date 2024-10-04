@@ -1,4 +1,5 @@
-﻿using CakeDeliveryDTO.CustomerDTOs;
+﻿using Business_Layer.Customer.FindMethods;
+using CakeDeliveryDTO.CustomerDTOs;
 using DataAccessLayer;
 using DTOs;
 using Microsoft.Extensions.Primitives;
@@ -83,14 +84,20 @@ namespace Business_Layer.Customer
             return false;
         }
 
-        public static CustomerDTO FindCustomerById(int CustomerId)
-        {
-            return clsCustomerData.GetCustomerById(CustomerId);
-        }
+        //public static CustomerDTO FindCustomerById(int CustomerId)
+        //{
+        //    return clsCustomerData.GetCustomerById(CustomerId);
+        //}
 
-        public static CustomerDTO FindCustomerByName(string Name)
+        //public static CustomerDTO FindCustomerByName(string Name)
+        //{
+        //    return clsCustomerData.GetCustomerByName(Name);
+        //}
+
+        public static CustomerDTO? Find<T>(T data, enFindBy findBy)
         {
-            return clsCustomerData.GetCustomerByName(Name);
+            var finder = FindFactory.GetFinder(findBy);
+            return finder?.Find(data);
         }
 
         public static List<CustomerDTO> All()
