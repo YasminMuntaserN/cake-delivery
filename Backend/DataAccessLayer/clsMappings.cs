@@ -93,5 +93,16 @@ namespace DataAccessLayer
                 PricePerItem: (decimal)reader["PricePerItem"]
             );
         }
+
+        public static CategoryDTO MapCategoryDTOFromReader(IDataReader reader)
+        {
+            return new CategoryDTO(
+                CategoryID: (int)reader["CategoryID"],
+                CategoryName: reader["CategoryName"].ToString() ?? string.Empty,
+                CategoryImageUrl: reader["CategoryImageURL"].ToString() ?? string.Empty
+            );
+        }
+
+
     }
 }
