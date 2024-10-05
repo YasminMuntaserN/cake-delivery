@@ -90,7 +90,7 @@ namespace Business_Layer.Cake
             => clsCakeData.DeleteCake(cakeID);
 
 
-        public static bool Exists<T>(T data, enFindBy findBy)
+        public static CakeDTO Find<T>(T data, enFindBy findBy)
         {
             switch (findBy)
             {
@@ -98,7 +98,7 @@ namespace Business_Layer.Cake
                     if (data is int cakeId)
                     {
                         var cake = clsCakeData.GetCakeById(cakeId);
-                        return cake != null;
+                        return cake ;
                     }
                     break;
 
@@ -106,12 +106,12 @@ namespace Business_Layer.Cake
                     if (data is string cakeName)
                     {
                         var cake = clsCakeData.GetCakeByName(cakeName);
-                        return cake != null;
+                        return cake ;
                     }
                     break;
             }
 
-            return false;
+            return null;
         }
 
 
