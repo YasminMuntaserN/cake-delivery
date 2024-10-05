@@ -12,8 +12,8 @@ namespace Business_Layer.Order
     {
         public enum enFindBy
         {
-            OrderID,
-            CustomerID
+            Id,
+            CustomerId
         };
 
         public enum enMode { AddNew = 0, Update = 1 };
@@ -88,29 +88,30 @@ namespace Business_Layer.Order
         public static bool Delete(int orderID)
             => clsOrderData.DeleteOrder(orderID);
 
-        public static bool Exists<T>(T data, enFindBy findBy)
-        {
-            switch (findBy)
-            {
-                case enFindBy.OrderID:
-                    if (data is int orderId)
-                    {
-                        var order = clsOrderData.GetOrderById(orderId);
-                        return order != null;
-                    }
-                    break;
 
-                case enFindBy.CustomerID:
-                    if (data is int customerId)
-                    {
-                        var order = clsOrderData.GetOrdersByCustomerId(customerId);
-                        return order != null;
-                    }
-                    break;
-            }
+        //public static OrderDTO Find<T>(T data, enFindBy findBy)
+        //{
+        //    switch (findBy)
+        //    {
+        //        case enFindBy.OrderID:
+        //            if (data is int orderId)
+        //            {
+        //                var order = clsOrderData.GetOrderById(orderId);
+        //                return order;
+        //            }
+        //            break;
 
-            return false;
-        }
+        //        case enFindBy.CustomerID:
+        //            if (data is int customerId)
+        //            {
+        //                var order = clsOrderData.GetOrdersByCustomerId(customerId);
+        //                return order;
+        //            }
+        //            break;
+        //    }
+
+        //    return null;
+        //}
 
     }
 }

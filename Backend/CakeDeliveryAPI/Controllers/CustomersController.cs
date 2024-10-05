@@ -33,7 +33,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CustomerDTO> GetcustomerById(int id)
-              => GetEntityByIdentifier(id, clsCustomer.FindCustomerById, Customer => Ok(Customer));
+              => GetEntityByIdentifier(id, key =>clsCustomer.Find(key, clsCustomer.enFindBy.Id), Customer => Ok(Customer));
        
 
       
@@ -42,10 +42,11 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<CustomerDTO> GetcustomerByName( string name)
-             => GetEntityByIdentifier(name, clsCustomer.FindCustomerByName, customer => Ok(customer));
+        public ActionResult<CustomerDTO> GetcustomerByName(string name)
+         => GetEntityByIdentifier(name, key => clsCustomer.Find(key, clsCustomer.enFindBy.Name), customer => Ok(customer));
 
-      
+
+
         // POST: api/customers
         [HttpPost(Name = "Addcustomer")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -93,7 +94,7 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid customer data.");
             }
 
-            CustomerDTO? existingcustomer = clsCustomer.FindCustomerById(id);
+            CustomerDTO? existingcustomer = clsCustomer.Find(id ,clsCustomer.enFindBy.Id);
             if (existingcustomer == null)
             {
                 return NotFound($"customer with ID {id} not found.");
