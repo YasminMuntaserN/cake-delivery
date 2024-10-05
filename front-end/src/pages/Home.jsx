@@ -1,22 +1,22 @@
 import Button from "../components/Button"
+import Category from "../components/Categories/Category";
 
 function Home() {
   return (
+    <>
     <section>
-
-
-<div className="flex flex-col lg:flex-row items-center justify-between p-10 bg-gray-100">
+<div className="flex flex-col lg:flex-row items-center justify-between p-10 bg-gray-100 ">
       {/* Left Text Content */}
       <div className="lg:mt-[-200px] mx-[50px] lg:w-1/2 flex flex-col justify-center p-6 text-center lg:text-left ">
         <h1 className=" text-3xl lg:text-4xl font-bold text-basic mb-4">
           Baking Happiness, One Cake at a Time!
         </h1>
         <p className="font-sans  text-lg text-basic mb-4">
-          Celebrate Life's Moments with Our Signature Cakes!
+          Celebrate Lifes Moments with Our Signature Cakes!
         </p>
         
         <Button> Order Your Cake Today 🎉 </Button>
-       
+
         <div className="flex items-center justify-between mt-4 mx-10">
         <p className="text-sm font-semibold text-pink-600 mb-2">
           <img src="./transport.png"className="w-7 inline-grid mr-4"/>
@@ -39,6 +39,8 @@ function Home() {
     </div>
     
     </section>
+    <Category />
+    </>
   )
 }
 
