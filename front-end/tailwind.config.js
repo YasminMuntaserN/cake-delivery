@@ -3,7 +3,7 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
-      sans: ["Geologica", "Gupter", "sans-serif"], // Add your fonts here
+      sans: ["RocknRoll One", "sans-serif"], 
     },
     extend: {
       colors: {
