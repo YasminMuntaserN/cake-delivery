@@ -1,6 +1,6 @@
 import Button from "../components/Button"
 import Category from "../components/Categories/Category";
-
+import VideoLayout from "../components/common/VideoLayout";
 function Home() {
   return (
     <>
@@ -40,6 +40,10 @@ function Home() {
     
     </section>
     <Category />
+    <VideoLayout/>
+    <div className="h-[300px]">
+
+    </div>
     </>
   )
 }

@@ -1,6 +1,7 @@
-import AppLayout from "./pages/AppLayout";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import AppLayout from "./components/common/AppLayout";
+import { BrowserRouter, createBrowserRouter, Navigate, Route, RouterProvider, Routes } from "react-router-dom";
 import Home from "./pages/Home";
+import Cakes from "./pages/Cakes";
 
 const router =createBrowserRouter([
   {
@@ -38,7 +39,18 @@ const router =createBrowserRouter([
 
 function App() {
   return (
-   <RouterProvider router={router}/>
+    <BrowserRouter>
+    <Routes>
+      <Route element={<AppLayout/>}>
+          <Route index element={
+                  <Navigate replace to="home"/>}/>
+          <Route path="home" element={<Home />} />
+          <Route path="cakes" element={<Cakes />} />
+          </Route>
+        {/* <Route path="login" element={<Login />} />
+        <Route path="*" element={<PageNotFound />} /> */}
+    </Routes>
+</BrowserRouter>
   );
 
 }
