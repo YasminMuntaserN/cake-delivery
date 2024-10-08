@@ -7,7 +7,7 @@ const nav__links = [
   },
   {
     display: "Cakes",
-    path: "/cakes",
+    path: "/cakes/-1",
   },
   {
     display: "Cart",

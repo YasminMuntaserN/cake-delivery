@@ -14,7 +14,7 @@ export async function getCategories() {
 
     const data = await res.json();
 
-    return data;  
+    return data;  // Return data if everything is successful
   } catch (error) {
     
     console.error("Error fetching categories:", error);
