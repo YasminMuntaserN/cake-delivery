@@ -1,33 +1,46 @@
+import { getCategories } from "../../services/apiCategories";
 import CategoryElement from "./CategoryElement";
+import { useQuery } from "@tanstack/react-query";
 
 function Category() {
-  const categories = [
-    {
-      CategoryID: 2,
-      CategoryName: "Baby Shower",
-      CategoryImageURL: "https://imgur.com/o4X0q9t.jpg",
-    },
-    {
-      CategoryID: 3,
-      CategoryName: "Birthday",
-      CategoryImageURL: "https://imgur.com/iNP2nSI.jpg",
-    },
-    {
-      CategoryID: 4,
-      CategoryName: "Anniversary",
-      CategoryImageURL: "https://imgur.com/dBRyXQe.jpg",
-    },
-    {
-      CategoryID: 5,
-      CategoryName: "Graduation",
-      CategoryImageURL: "https://imgur.com/b7yDmT6.jpg",
-    },
-    {
-      CategoryID: 6,
-      CategoryName: "Wedding",
-      CategoryImageURL: "https://imgur.com/QKm8p26.jpg",
-    },
-  ];
+// Use React Query to fetch categories
+const { data :categories, error, isLoading } = useQuery({
+  queryKey: ["categories"],
+  queryFn: getCategories,
+});
+
+// Loading state
+if (isLoading) return <div>Loading categories...</div>;
+
+// Error state
+if (error) return <div>Error loading categories</div>;
+  // const categories = [
+  //   {
+  //     CategoryID: 2,
+  //     CategoryName: "Baby Shower",
+  //     CategoryImageURL: "https://imgur.com/o4X0q9t.jpg",
+  //   },
+  //   {
+  //     CategoryID: 3,
+  //     CategoryName: "Birthday",
+  //     CategoryImageURL: "https://imgur.com/iNP2nSI.jpg",
+  //   },
+  //   {
+  //     CategoryID: 4,
+  //     CategoryName: "Anniversary",
+  //     CategoryImageURL: "https://imgur.com/dBRyXQe.jpg",
+  //   },
+  //   {
+  //     CategoryID: 5,
+  //     CategoryName: "Graduation",
+  //     CategoryImageURL: "https://imgur.com/b7yDmT6.jpg",
+  //   },
+  //   {
+  //     CategoryID: 6,
+  //     CategoryName: "Wedding",
+  //     CategoryImageURL: "https://imgur.com/QKm8p26.jpg",
+  //   },
+  // ];
 
   return (
     <section>
@@ -38,7 +51,8 @@ function Category() {
      <div className="flex justify-center items-center h-screen lg:mt-0 sm:mt-16"> 
       <div className="flex flex-wrap  mt-0 gap-10  justify-center items-center">
       {categories.map((Category) => (
-      <CategoryElement key={Category.CategoryID} Category={Category} />
+      <CategoryElement key={Category.
+        categoryID} Category={Category} />
     ))}
       </div>
       </div>

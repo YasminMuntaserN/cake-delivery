@@ -8,11 +8,11 @@ function CategoryElement({Category}) {
         <div className="bg-pink w-[100px] h-[100px] rounded-full relative mr-10" >
           <img
             className="w-12 h-12 absolute top-[20%] left-[25%] "
-            src={Category.CategoryImageURL}
+            src={Category.categoryImageUrl}
             alt="category__item"
           />
         </div>
-        <h6>{Category.CategoryName}</h6>
+        <h6>{Category.categoryName}</h6>
       </div>
     );
 }

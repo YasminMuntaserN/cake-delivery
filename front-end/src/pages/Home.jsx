@@ -9,7 +9,7 @@ function Home() {
       {/* Left Text Content */}
       <div className="lg:mt-[-200px] mx-[50px] lg:w-1/2 flex flex-col justify-center p-6 text-center lg:text-left ">
         <h1 className=" text-3xl lg:text-4xl font-bold text-basic mb-4">
-          Baking Happiness, One Cake at a Time!
+          Baking Happiness, Olne Cake at a Time!
         </h1>
         <p className="font-sans  text-lg text-basic mb-4">
           Celebrate Lifes Moments with Our Signature Cakes!
