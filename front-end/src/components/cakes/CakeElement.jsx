@@ -1,5 +1,5 @@
 import { HiMiniMinusCircle, HiMiniPlusCircle } from 'react-icons/hi2';
-import Button from "../Button";
+import Button from "../../ui/Button";
 
 function CakeElement({ cake }) {
   return (

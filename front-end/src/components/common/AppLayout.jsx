@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import PageNav from "../PageNav"
+import PageNav from "../../ui/PageNav"
 import VideoLayout from "../common/VideoLayout";
 
 function AppLayout() {
