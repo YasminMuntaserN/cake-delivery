@@ -15,7 +15,7 @@ function App() {
                 <Route index element={
                         <Navigate replace to="home"/>}/>
                 <Route path="home" element={<Home />} />
-                <Route path="cakes" element={<Cakes />} />
+                <Route path="cakes/:categoryId" element={<Cakes />} />
                 </Route>
               {/* <Route path="login" element={<Login />} />
               <Route path="*" element={<PageNotFound />} /> */}
