@@ -73,6 +73,30 @@ namespace CakeDeliveryAPI.Controllers
 
             return Ok(entities);
         }
+
+        protected ActionResult<List<TDto>> GetAllEntitiesBy<TEntity, TDto, Tvalue>(
+            Tvalue value1,
+            Tvalue value2,
+            Func<Tvalue, Tvalue, List<TDto>> findEntitiesFunc,
+            string entityName)
+        {
+            if (value1 == null || (value1 is string str1 && string.IsNullOrWhiteSpace(str1)))
+            {
+                return BadRequest($"Invalid {entityName} to search by {value1}.");
+            }
+            if (value2 == null || (value2 is string str2 && string.IsNullOrWhiteSpace(str2)))
+            {
+                return BadRequest($"Invalid {entityName} to search by {value2}.");
+            }
+
+            var entities = findEntitiesFunc(value1, value2);
+            if (entities == null || entities.Count == 0)
+            {
+                return NotFound($"No {entityName}(s) found for the given criteria.");
+            }
+
+            return Ok(entities);
+        }
     }
    
     
