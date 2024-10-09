@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -128,5 +129,19 @@ namespace DataAccessLayer
                 clsMappings.MapCakeDTOFromReader
             );
         }
+
+        public static List<CakeDTO> GetCakesByPage(int pageNumber, int pageSize)
+        {
+            return DataAccessHelper.All<CakeDTO, int, int>(
+                "SP_GetAllInPages",
+                "PageNumber",
+                pageNumber,
+                "RowsPerPage",
+                pageSize
+            );
+        }
+
+        public static void GetTotalPagesAndRows(out int totalRows, out int totalPagess)
+            => DataAccessHelper.GetTotalPagesAndRows("cakes" ,10 ,out totalRows, out totalPagess);
     }
 }

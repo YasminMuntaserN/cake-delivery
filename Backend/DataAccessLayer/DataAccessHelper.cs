@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using CakeDeliveryDTO.CakeDTOs;
 
 namespace DataAccessLayer
 {
@@ -230,6 +231,87 @@ namespace DataAccessLayer
             // If rowsAffected > 0, it means the record was successfully deleted
             return (rowsAffected > 0);
         }
+
+        public static List<T> All<T, T1, T2>(string storedProcedureName, string parameterName1, T1 value1, string parameterName2, T2 value2) where T : class
+        {
+            List<T> results = new List<T>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue($"@{parameterName1}", (object)value1 ?? DBNull.Value);
+                        command.Parameters.AddWithValue($"@{parameterName2}", (object)value2 ?? DBNull.Value);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // Instead of using Activator, we directly construct the CakeDTO (or any other DTO)
+                                if (typeof(T) == typeof(CakeDTO))
+                                {
+                                    var cakeDto = new CakeDTO(
+                                        reader["CakeID"] as int?,
+                                        reader["CakeName"].ToString(),
+                                        reader["Description"].ToString(),
+                                        (decimal)reader["Price"],
+                                        (int)reader["StockQuantity"],
+                                        (int)reader["CategoryID"],
+                                        reader["ImageUrl"].ToString()
+                                    );
+                                    results.Add(cakeDto as T);
+                                }
+                                // Add similar blocks for other DTOs if needed
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                HandleException(ex);
+            }
+
+            return results;
+        }
+
+        public static void GetTotalPagesAndRows(string tableName, int pageSize, out int totalRows, out int totalPages)
+        {
+            using (SqlConnection conn = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("SP_GetTotalPagesAndRows", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@TableName", tableName);
+                    cmd.Parameters.AddWithValue("@PageSize", pageSize);
+
+                    SqlParameter totalRowsParam = new SqlParameter("@TotalRows", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    cmd.Parameters.Add(totalRowsParam);
+
+                    SqlParameter totalPagesParam = new SqlParameter("@TotalPages", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    cmd.Parameters.Add(totalPagesParam);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+
+                    totalRows = (int)totalRowsParam.Value;
+                    totalPages = (int)totalPagesParam.Value;
+                }
+            }
+        }
+
 
         // Add parameters from a DTO object to a SqlCommand
         /// <summary>
