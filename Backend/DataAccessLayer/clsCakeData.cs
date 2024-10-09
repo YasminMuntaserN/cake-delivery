@@ -141,7 +141,7 @@ namespace DataAccessLayer
             );
         }
 
-        public static void GetTotalPagesAndRows(out int totalRows, out int totalPagess)
-            => DataAccessHelper.GetTotalPagesAndRows("cakes" ,10 ,out totalRows, out totalPagess);
+        public static void GetTotalPagesAndRows(int catogeryId ,out int totalRows, out int totalPagess)
+            => DataAccessHelper.GetTotalPagesAndRows(catogeryId, 10 ,out totalRows, out totalPagess);
     }
 }

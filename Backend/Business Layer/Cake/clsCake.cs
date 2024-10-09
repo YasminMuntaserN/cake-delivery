@@ -130,7 +130,7 @@ namespace Business_Layer.Cake
         public static List<CakeDTO> GetCakesByPage(int pageNumber, int pageSize)
             => clsCakeData.GetCakesByPage(pageNumber, pageSize);
 
-        public static void GetTotalPagesAndRows(out int totalRows, out int totalPages)
-            => clsCakeData.GetTotalPagesAndRows(out totalRows, out totalPages);
+        public static void GetTotalPagesAndRows(int catogeryId ,out int totalRows, out int totalPages)
+            => clsCakeData.GetTotalPagesAndRows(catogeryId ,out totalRows, out totalPages);
     }
 }

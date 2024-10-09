@@ -281,14 +281,14 @@ namespace DataAccessLayer
             return results;
         }
 
-        public static void GetTotalPagesAndRows(string tableName, int pageSize, out int totalRows, out int totalPages)
+        public static void GetTotalPagesAndRows(int categoryId, int pageSize, out int totalRows, out int totalPages)
         {
             using (SqlConnection conn = new SqlConnection(clsDataAccessSettings.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("SP_GetTotalPagesAndRows", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@TableName", tableName);
+                    cmd.Parameters.AddWithValue("@CategoryId", categoryId);
                     cmd.Parameters.AddWithValue("@PageSize", pageSize);
 
                     SqlParameter totalRowsParam = new SqlParameter("@TotalRows", SqlDbType.Int)
@@ -296,6 +296,7 @@ namespace DataAccessLayer
                         Direction = ParameterDirection.Output
                     };
                     cmd.Parameters.Add(totalRowsParam);
+
 
                     SqlParameter totalPagesParam = new SqlParameter("@TotalPages", SqlDbType.Int)
                     {

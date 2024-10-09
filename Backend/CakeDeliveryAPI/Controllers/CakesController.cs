@@ -158,16 +158,16 @@ public class CakesController : BaseController
     }
 
 
-    [HttpGet("GetTotalPages")]
+    [HttpGet("TotalPages/number/{catogeryId}", Name = "GetTotalPages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public IActionResult GetTotalPages()
+    public IActionResult GetTotalPages(int catogeryId)
     {
         // Variables to hold total rows and pages
         int totalRows;
         int totalPages;
 
         // Call the method to get total rows and pages
-        clsCake.GetTotalPagesAndRows( out totalRows, out totalPages);
+        clsCake.GetTotalPagesAndRows(catogeryId, out totalRows, out totalPages);
 
         return Ok(new
         {
