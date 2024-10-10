@@ -7,9 +7,9 @@ using Validation;
 
 namespace Business_Layer.Cake
 {
-    public class clsCakeValidator : BaseValidator<clsCake>
+    public class CakeValidator : BaseValidator<Cake>
     {
-        public override ValidationResult Validate(clsCake cake)
+        public override ValidationResult Validate(Cake cake)
         {
             if (!HasValidCakeID(cake.CakeID))
                 AddError("CakeID is invalid.");

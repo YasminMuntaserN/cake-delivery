@@ -7,9 +7,9 @@ using Validation;
 
 namespace Business_Layer.Payment
 {
-    public class clsPaymentValidator : BaseValidator<clsPayment>
+    public class PaymentValidator : BaseValidator<Payment>
     {
-        public override ValidationResult Validate(clsPayment payment)
+        public override ValidationResult Validate(Payment payment)
         {
             if (!HasValidPaymentID(payment.OrderID))
                 AddError("OrderID is invalid.");

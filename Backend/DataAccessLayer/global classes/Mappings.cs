@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class clsMappings
+    public class Mappings
     {
         public static CakeDTO MapCakeDTOFromReader(IDataReader reader)
         {
@@ -33,7 +33,7 @@ namespace DataAccessLayer
                 CustomerID: (int)reader["CustomerID"],
                 FirstName: reader["FirstName"]?.ToString() ?? string.Empty,
                 LastName: reader["LastName"]?.ToString() ?? string.Empty,
-                FullName: string.Concat(reader["FirstName"]?.ToString(), " ", reader["LastName"]?.ToString()),
+                FullName: $"{reader["FirstName"]?.ToString()}{reader["LastName"]?.ToString()}",
                 Email: reader["Email"]?.ToString() ?? string.Empty,
                 PhoneNumber: reader["PhoneNumber"]?.ToString() ?? string.Empty,
                 Address: reader["Address"]?.ToString() ?? string.Empty,

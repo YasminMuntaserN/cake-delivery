@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class clsPaymentData
+    public class PaymentData
     {
         /// <summary>
         /// Adds a new Payment to the database.
@@ -35,7 +35,7 @@ namespace DataAccessLayer
                 "sp_GetPaymentById",   // Stored procedure to get payment by ID
                 "PaymentID",           // Parameter name for the payment ID
                 paymentId,             // PaymentID to search for
-                clsMappings.MapPaymentDTOFromReader
+                Mappings.MapPaymentDTOFromReader
             );
         }
 
@@ -56,7 +56,7 @@ namespace DataAccessLayer
                 "sp_GetPaymentsByOrderId",   // Stored procedure to get payments by order ID
                 "OrderID",                   // Parameter name for order ID
                 orderID,                     // OrderID to search for
-                clsMappings.MapPaymentDTOFromReader
+                Mappings.MapPaymentDTOFromReader
             );
         }
 
@@ -98,7 +98,7 @@ namespace DataAccessLayer
         {
             return DataAccessHelper.GetAll(
                 "sp_GetAllPayments",  // Stored procedure to get all payments
-                clsMappings.MapPaymentDTOFromReader
+                Mappings.MapPaymentDTOFromReader
             );
         }
     }

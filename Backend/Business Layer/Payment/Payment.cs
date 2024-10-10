@@ -9,15 +9,8 @@ using System.Threading.Tasks;
 
 namespace Business_Layer.Payment
 {
-    public class clsPayment
+    public class Payment
     {
-        public enum enFindBy
-        {
-            PaymentID,
-            OrderID,
-            cakeID
-        };
-
         public enum enMode { AddNew = 0, Update = 1 };
         public enMode Mode = enMode.AddNew;
 
@@ -28,7 +21,7 @@ namespace Business_Layer.Payment
         public decimal AmountPaid { get; set; }
         public string PaymentStatus { get; set; }
 
-        public clsPayment(PaymentDTO paymentDto, enMode mode = enMode.AddNew)
+        public Payment(PaymentDTO paymentDto, enMode mode = enMode.AddNew)
         {
             PaymentID = paymentDto.PaymentID;
             OrderID = paymentDto.OrderID;
@@ -46,14 +39,14 @@ namespace Business_Layer.Payment
      
         private bool _Add()
         {
-            PaymentID = clsPaymentData.Add(new PaymentCreateDTO(OrderID, PaymentMethod,  AmountPaid, PaymentStatus));
+            PaymentID = PaymentData.Add(new PaymentCreateDTO(OrderID, PaymentMethod,  AmountPaid, PaymentStatus));
             return PaymentID.HasValue;
         }
 
  
         private bool _Update()
         {
-            return clsPaymentData.UpdatePayment(ToPaymentDto());
+            return PaymentData.UpdatePayment(ToPaymentDto());
         }
 
     
@@ -78,20 +71,20 @@ namespace Business_Layer.Payment
 
         public static PaymentDTO? FindPaymentById(int paymentId)
         {
-            return clsPaymentData.GetPaymentById(paymentId);
+            return PaymentData.GetPaymentById(paymentId);
         }
 
         public static List<PaymentDTO> FindPaymentByOrderId(int orderId)
         {
-            return clsPaymentData.GetPaymentsByOrderId(orderId);
+            return PaymentData.GetPaymentsByOrderId(orderId);
         }
 
         public static bool Delete(int paymentId)
-            => clsPaymentData.DeletePayment(paymentId);
+            => PaymentData.DeletePayment(paymentId);
 
 
         public static List<PaymentDTO> All()
-            => clsPaymentData.GetAllPayments();
+            => PaymentData.GetAllPayments();
 
     }
 

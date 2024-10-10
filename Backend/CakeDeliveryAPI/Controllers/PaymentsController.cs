@@ -9,14 +9,14 @@ namespace CakeDeliveryAPI.Controllers
     [ApiController]
     public class PaymentsController : BaseController
     {
-        private readonly clsPaymentValidator _validator = new clsPaymentValidator();
+        private readonly PaymentValidator _validator = new PaymentValidator();
 
         // GET: api/payments/all
         [HttpGet("all", Name = "GetAllPayments")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<PaymentDTO>> GetAllPayments()
-            => GetAllEntities(() => clsPayment.All());
+            => GetAllEntities(() => Payment.All());
 
 
         // GET: api/payments/{id}
@@ -25,7 +25,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<PaymentDTO> GetPaymentById(int id)
-            => GetEntityByIdentifier(id, clsPayment.FindPaymentById, entity => Ok(entity));
+            => GetEntityByIdentifier(id, Payment.FindPaymentById, entity => Ok(entity));
 
       
         // POST: api/payments
@@ -39,9 +39,9 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid payment data.");
             }
 
-            clsPayment paymentInstance = new clsPayment(
+            Payment paymentInstance = new Payment(
                 new PaymentDTO(null, newPaymentDTO.OrderID, newPaymentDTO.PaymentMethod, DateTime.Now, newPaymentDTO.AmountPaid, newPaymentDTO.PaymentStatus),
-                clsPayment.enMode.AddNew
+                Payment.enMode.AddNew
             );
 
             // Validate the payment instance
@@ -75,13 +75,13 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid payment data.");
             }
 
-            PaymentDTO? existingPayment = clsPayment.FindPaymentById(id);
+            PaymentDTO? existingPayment = Payment.FindPaymentById(id);
             if (existingPayment == null)
             {
                 return NotFound($"Payment with ID {id} not found.");
             }
 
-            clsPayment paymentInstance = new clsPayment(updatedPayment, clsPayment.enMode.Update);
+            Payment paymentInstance = new Payment(updatedPayment, Payment.enMode.Update);
 
             // Validate the payment instance
             var validationResult = _validator.Validate(paymentInstance);
@@ -108,7 +108,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult DeletePayment(int id)
-            => DeleteEntity<clsPayment>(id, clsPayment.Delete, "Payment");
+            => DeleteEntity<Payment>(id, Payment.Delete, "Payment");
 
      
         // GET: api/payments/order/{orderId}
@@ -116,8 +116,8 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<PaymentDTO>> GetPaymentsByOrderID(int orderId)
-        => GetAllEntitiesBy<clsPayment, PaymentDTO, int>(
-                orderId, clsPayment.FindPaymentByOrderId,"Payment" );
+        => GetAllEntitiesBy<Payment, PaymentDTO, int>(
+                orderId, Payment.FindPaymentByOrderId,"Payment" );
     }
 
 }

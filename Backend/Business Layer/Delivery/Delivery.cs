@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business_Layer.Delivery
 {
-    public class clsDelivery
+    public class Delivery
     {
 
         public enum enMode { AddNew = 0, Update = 1 };
@@ -23,7 +23,7 @@ namespace Business_Layer.Delivery
         public DateTime DeliveryDate { get; set; }
         public string DeliveryStatus { get; set; }
 
-        public clsDelivery(DeliveryDTO deliveryDto, enMode mode = enMode.AddNew)
+        public Delivery(DeliveryDTO deliveryDto, enMode mode = enMode.AddNew)
         {
             DeliveryID = deliveryDto.DeliveryID;
             OrderID = deliveryDto.OrderID;
@@ -43,13 +43,13 @@ namespace Business_Layer.Delivery
 
         private bool _Add()
         {
-            DeliveryID = clsDeliveryData.Add(new DeliveryCreateDTO(OrderID, DeliveryAddress, DeliveryCity, DeliveryPostalCode, DeliveryCountry, DeliveryDate, DeliveryStatus));
+            DeliveryID = DeliveryData.Add(new DeliveryCreateDTO(OrderID, DeliveryAddress, DeliveryCity, DeliveryPostalCode, DeliveryCountry, DeliveryDate, DeliveryStatus));
             return DeliveryID.HasValue;
         }
 
         private bool _Update()
         {
-            return clsDeliveryData.UpdateDelivery(ToDeliveryDto());
+            return DeliveryData.UpdateDelivery(ToDeliveryDto());
         }
 
       
@@ -75,16 +75,16 @@ namespace Business_Layer.Delivery
         
         public static DeliveryDTO? FindDeliveryById(int deliveryId)
         {
-            return clsDeliveryData.GetDeliveryById(deliveryId);
+            return DeliveryData.GetDeliveryById(deliveryId);
         }
 
 
         public static bool Delete(int deliveryId)
-            => clsDeliveryData.DeleteDelivery(deliveryId);
+            => DeliveryData.DeleteDelivery(deliveryId);
 
 
         public static List<DeliveryDTO> All()
-            => clsDeliveryData.GetAllDeliveries();
+            => DeliveryData.GetAllDeliveries();
 
     }
 

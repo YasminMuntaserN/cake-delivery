@@ -13,14 +13,14 @@ using CakeDeliveryDTO.CakeDTOs;
 [ApiController]
 public class OrderItemsController : BaseController
 {
-    private readonly clsOrderItemValidator _validator = new clsOrderItemValidator();
+    private readonly OrderItemValidator _validator = new OrderItemValidator();
 
     // GET: api/cakes/all
     [HttpGet("All", Name = "GetAllOrderItems")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<IEnumerable<OrderItemDTO>> GetAllOrderItems()
-        => GetAllEntities(() => clsOrderItem.AllOrderItems());
+        => GetAllEntities(() => OrderItem.AllOrderItems());
 
 
     // GET: api/orderItems/{id}
@@ -29,7 +29,7 @@ public class OrderItemsController : BaseController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<OrderItemDTO> GetOrderItemById(int id)
-        => GetEntityByIdentifier(id, clsOrderItem.FindOrderItemById, orderItem => Ok(orderItem));
+        => GetEntityByIdentifier(id, OrderItem.FindOrderItemById, orderItem => Ok(orderItem));
 
     // POST: api/orderItems
     [HttpPost(Name = "AddOrderItem")]
@@ -42,9 +42,9 @@ public class OrderItemsController : BaseController
             return BadRequest("Invalid order item data.");
         }
 
-        clsOrderItem orderItemInstance = new clsOrderItem(
+        OrderItem orderItemInstance = new OrderItem(
             new OrderItemDTO(null, newOrderItemDTO.OrderID, newOrderItemDTO.CakeID, newOrderItemDTO.SizeID, newOrderItemDTO.Quantity, newOrderItemDTO.PricePerItem),
-            clsOrderItem.enMode.AddNew
+            OrderItem.enMode.AddNew
         );
 
         var validationResult = _validator.Validate(orderItemInstance);
@@ -77,13 +77,13 @@ public class OrderItemsController : BaseController
             return BadRequest("Invalid order item data.");
         }
 
-        OrderItemDTO? existingOrderItem = clsOrderItem.FindOrderItemById(id);
+        OrderItemDTO? existingOrderItem = OrderItem.FindOrderItemById(id);
         if (existingOrderItem == null)
         {
             return NotFound($"Order item with ID {id} not found.");
         }
 
-        clsOrderItem orderItemInstance = new clsOrderItem(updatedOrderItem, clsOrderItem.enMode.Update);
+        OrderItem orderItemInstance = new OrderItem(updatedOrderItem, OrderItem.enMode.Update);
 
         var validationResult = _validator.Validate(orderItemInstance);
         if (!validationResult.IsValid)
@@ -108,7 +108,7 @@ public class OrderItemsController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult DeleteOrderItem(int id)
-        => DeleteEntity<clsOrderItem>(id, clsOrderItem.Delete, "OrderItem");
+        => DeleteEntity<OrderItem>(id, OrderItem.Delete, "OrderItem");
 
    
     // GET: api/orderItems/order/{orderId}
@@ -116,7 +116,7 @@ public class OrderItemsController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<List<OrderItemDTO>> GetOrderItemsByOrderId(int orderId)
-        => GetAllEntitiesBy<int, OrderItemDTO, int>(orderId, clsOrderItem.AllByOrderID, "OrderItem");
+        => GetAllEntitiesBy<int, OrderItemDTO, int>(orderId, OrderItem.AllByOrderID, "OrderItem");
 
    
     // GET: api/orderItems/order/{cakeId}
@@ -124,7 +124,7 @@ public class OrderItemsController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<List<OrderItemDTO>> GetOrderItemsBycakeId(int cakeId)
-        => GetAllEntitiesBy<int, OrderItemDTO, int>(cakeId, clsOrderItem.AllByCakeID, "OrderItem");
+        => GetAllEntitiesBy<int, OrderItemDTO, int>(cakeId, OrderItem.AllByCakeID, "OrderItem");
 
 
 }

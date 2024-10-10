@@ -10,14 +10,14 @@ using System.Collections.Generic;
 [ApiController]
 public class CakesController : BaseController
 {
-    private readonly clsCakeValidator _validator = new clsCakeValidator();
+    private readonly CakeValidator _validator = new CakeValidator();
 
     // GET: api/cakes/all
     [HttpGet("All", Name = "GetAllCakes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<IEnumerable<CakeDTO>> GetAllCakes()
-        => GetAllEntities(() => clsCake.All());
+        => GetAllEntities(() => Cake.All());
 
 
     // GET: api/cakes/{id}
@@ -26,7 +26,7 @@ public class CakesController : BaseController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<CakeDTO> GetCakeById(int id)
-        => GetEntityByIdentifier(id, clsCake.FindCakeById, cake => Ok(cake));
+        => GetEntityByIdentifier(id, Cake.FindCakeById, cake => Ok(cake));
 
 
     // GET: api/cakes/name/{cakeName}
@@ -34,7 +34,7 @@ public class CakesController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<CakeDTO> GetCakeByName(string cakeName)
-        => GetEntityByIdentifier(cakeName, clsCake.FindCakeByName, cake => Ok(cake));
+        => GetEntityByIdentifier(cakeName, Cake.FindCakeByName, cake => Ok(cake));
 
 
     // POST: api/cakes
@@ -48,9 +48,9 @@ public class CakesController : BaseController
             return BadRequest("Invalid cake data.");
         }
 
-        clsCake cakeInstance = new clsCake(
+        Cake cakeInstance = new Cake(
             new CakeDTO(null, newCakeDTO.CakeName, newCakeDTO.Description, newCakeDTO.Price, newCakeDTO.StockQuantity, newCakeDTO.CategoryID, newCakeDTO.ImageUrl),
-            clsCake.enMode.AddNew
+            Cake.enMode.AddNew
         );
 
         var validationResult = _validator.Validate(cakeInstance);
@@ -84,13 +84,13 @@ public class CakesController : BaseController
             return BadRequest("Invalid cake data.");
         }
 
-        CakeDTO? existingCake = clsCake.FindCakeById(id);
+        CakeDTO? existingCake = Cake.FindCakeById(id);
         if (existingCake == null)
         {
             return NotFound($"Cake with ID {id} not found.");
         }
 
-        clsCake cakeInstance = new clsCake(updatedCake, clsCake.enMode.Update);
+        Cake cakeInstance = new Cake(updatedCake, Cake.enMode.Update);
 
         var validationResult = _validator.Validate(cakeInstance);
         if (!validationResult.IsValid)
@@ -117,7 +117,7 @@ public class CakesController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
 
     public ActionResult DeleteCake(int id)
-      => DeleteEntity<clsCake>(id, clsCake.Delete, "Cake");
+      => DeleteEntity<Cake>(id, Cake.Delete, "Cake");
 
 
     // GET: api/cakes/category/{category}
@@ -125,7 +125,7 @@ public class CakesController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<List<CakeDTO>> GetCakesByCategory(int category)
-        => GetAllEntitiesBy<int, CakeDTO, int>(category, clsCake.AllByCategoryID, "Cake");
+        => GetAllEntitiesBy<int, CakeDTO, int>(category, Cake.AllByCategoryID, "Cake");
 
 
     // GET: api/cakes/category/name/{categoryName}
@@ -133,22 +133,29 @@ public class CakesController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<List<CakeDTO>> GetCakesByCategoryName(string categoryName)
-        => GetAllEntitiesBy<string, CakeDTO, string>(categoryName, clsCake.AllByCategoryName, "Cake");
+        => GetAllEntitiesBy<string, CakeDTO, string>(categoryName, Cake.AllByCategoryName, "Cake");
 
-    // GET: api/cakes/page/number/{pageNumber}
-    [HttpGet("page/number/{pageNumber}", Name = "GetCakesBypageNumber")]
+   
+    // GET: api/cakes/page/number/{pageNumber}?pageSize={pageSize}
+    [HttpGet("page/number/{pageNumber}", Name = "GetCakesByPage")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<List<CakeDTO>> GetCakesByPage(int pageNumber, int pageSize)
+    public ActionResult<List<CakeDTO>> GetCakesByPage(int pageNumber, [FromQuery] int pageSize)
     {
-        // Basic validation for pageSize
+        // Validate page number and page size
+        if (pageNumber <= 0)
+        {
+            return BadRequest("Page number must be greater than zero.");
+        }
+
         if (pageSize <= 0)
         {
             return BadRequest("Page size must be greater than zero.");
         }
 
-        // Call to your clsCake method
-        var cakes = clsCake.GetCakesByPage(pageNumber, pageSize);
+        // Call to your clsCake method to get cakes
+        var cakes = Cake.GetCakesByPage(pageNumber, pageSize);
         if (cakes == null || cakes.Count == 0)
         {
             return NotFound("No cakes found for the given page.");
@@ -158,23 +165,29 @@ public class CakesController : BaseController
     }
 
 
-    [HttpGet("TotalPages/number/{catogeryId}", Name = "GetTotalPages")]
+    // GET: api/cakes/TotalPages/number/{categoryId}
+    [HttpGet("TotalPages/number/{Id}", Name = "GetTotalPages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public IActionResult GetTotalPages(int catogeryId)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult GetTotalPages(int Id )
     {
+        // Validate the categoryId
+        if (Id < -1)
+        {
+            return BadRequest("Category ID must be -1 or greater.");
+        }
+
         // Variables to hold total rows and pages
         int totalRows;
         int totalPages;
 
         // Call the method to get total rows and pages
-        clsCake.GetTotalPagesAndRows(catogeryId, out totalRows, out totalPages);
+        Cake.GetTotalPagesAndRows(Id, out totalRows, out totalPages);
 
         return Ok(new
         {
-            TotalRows = totalRows,
-            TotalPages = totalPages
+            totalRows,
+             totalPages
         });
-        
     }
-
 }

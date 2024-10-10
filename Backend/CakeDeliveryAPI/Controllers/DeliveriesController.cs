@@ -13,14 +13,14 @@ namespace CakeDeliveryAPI.Controllers
     [ApiController]
     public class DeliveriesController : BaseController
     {
-        private readonly clsDeliveryValidator _validator = new clsDeliveryValidator();
+        private readonly DeliveryValidator _validator = new DeliveryValidator();
 
         // GET: api/deliveries/all
         [HttpGet("All", Name = "GetAllDeliveries")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<DeliveryDTO>> GetAllDeliveries()
-            => GetAllEntities(() => clsDelivery.All());
+            => GetAllEntities(() => Delivery.All());
 
      
         // GET: api/deliveries/{id}
@@ -29,7 +29,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<DeliveryDTO> GetDeliveryById(int id)
-            => GetEntityByIdentifier(id, clsDelivery.FindDeliveryById, delivery => Ok(delivery));
+            => GetEntityByIdentifier(id, Delivery.FindDeliveryById, delivery => Ok(delivery));
 
      
         // POST: api/deliveries
@@ -43,9 +43,9 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid delivery data.");
             }
 
-            clsDelivery deliveryInstance = new clsDelivery(
+            Delivery deliveryInstance = new Delivery(
                 new DeliveryDTO(null, newDeliveryDTO.OrderID, newDeliveryDTO.DeliveryAddress, newDeliveryDTO.DeliveryCity, newDeliveryDTO.DeliveryPostalCode, newDeliveryDTO.DeliveryCountry, newDeliveryDTO.DeliveryDate,  newDeliveryDTO.DeliveryStatus),
-                clsDelivery.enMode.AddNew
+                Delivery.enMode.AddNew
             );
 
             var validationResult = _validator.Validate(deliveryInstance);
@@ -79,13 +79,13 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid delivery data.");
             }
 
-            DeliveryDTO? existingDelivery = clsDelivery.FindDeliveryById(id);
+            DeliveryDTO? existingDelivery = Delivery.FindDeliveryById(id);
             if (existingDelivery == null)
             {
                 return NotFound($"Delivery with ID {id} not found.");
             }
 
-            clsDelivery deliveryInstance = new clsDelivery(updatedDelivery, clsDelivery.enMode.Update);
+            Delivery deliveryInstance = new Delivery(updatedDelivery, Delivery.enMode.Update);
 
             var validationResult = _validator.Validate(deliveryInstance);
             if (!validationResult.IsValid)
@@ -112,7 +112,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult DeleteDelivery(int id)
-            => DeleteEntity<clsOrder>(id, clsDelivery.Delete, "Delivery");
+            => DeleteEntity<Order>(id, Delivery.Delete, "Delivery");
 
     }
 }

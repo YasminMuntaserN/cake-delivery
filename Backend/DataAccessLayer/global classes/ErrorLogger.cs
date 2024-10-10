@@ -3,12 +3,12 @@ using System.Diagnostics;
 
 namespace DataAccessLayer
 {
-    public class clsErrorLogger
+    public class ErrorLogger
     {
         private Action<string, Exception> _logAction;
 
         // Constructor that takes an Action delegate for logging
-        public clsErrorLogger(Action<string, Exception> logAction)
+        public ErrorLogger(Action<string, Exception> logAction)
         {
             _logAction = logAction;
         }

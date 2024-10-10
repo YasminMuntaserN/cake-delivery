@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business_Layer.Category
 {
-    public class clsCategory
+    public class Category
     {
         // Enum to define different operations to find categories
         public enum enFindBy
@@ -24,7 +24,7 @@ namespace Business_Layer.Category
         public string CategoryName { get; set; }
         public string CategoryImageUrl { get; set; }
 
-        public clsCategory(CategoryDTO categoryDto, enMode mode = enMode.AddNew)
+        public Category(CategoryDTO categoryDto, enMode mode = enMode.AddNew)
         {
             CategoryID = categoryDto.CategoryID;
             CategoryName = categoryDto.CategoryName;
@@ -38,13 +38,13 @@ namespace Business_Layer.Category
 
         private bool _Add()
         {
-            CategoryID = clsCategoryData.Add(new CategoryCreateDto(CategoryName, CategoryImageUrl));
+            CategoryID = CategoryData.Add(new CategoryCreateDto(CategoryName, CategoryImageUrl));
             return CategoryID.HasValue;
         }
 
         private bool _Update()
         {
-            return clsCategoryData.UpdateCategory(ToCategoryDto());
+            return CategoryData.UpdateCategory(ToCategoryDto());
         }
 
         public bool Save()
@@ -68,20 +68,20 @@ namespace Business_Layer.Category
 
         public static CategoryDTO? FindCategoryById(int categoryId)
         {
-            return clsCategoryData.GetCategoryById(categoryId);
+            return CategoryData.GetCategoryById(categoryId);
         }
 
         public static CategoryDTO? FindCategoryByName(string categoryName)
         {
-            return clsCategoryData.GetCategoryByName(categoryName);
+            return CategoryData.GetCategoryByName(categoryName);
         }
 
         public static bool Delete(int categoryId)
-            => clsCategoryData.DeleteCategory(categoryId);
+            => CategoryData.DeleteCategory(categoryId);
 
 
         public static List<CategoryDTO> All()
-            => clsCategoryData.GetAllCategories();
+            => CategoryData.GetAllCategories();
 
 }
 }

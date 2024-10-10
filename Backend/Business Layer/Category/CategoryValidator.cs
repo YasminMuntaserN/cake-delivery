@@ -7,9 +7,9 @@ using Validation;
 
 namespace Business_Layer.Category
 {
-    public class clsCategoryValidator : BaseValidator<clsCategory>
+    public class CategoryValidator : BaseValidator<Category>
     {
-        public override ValidationResult Validate(clsCategory category)
+        public override ValidationResult Validate(Category category)
         {
             if (!HasValidCategoryID(category.CategoryID))
                 AddError("CategoryID is invalid.");

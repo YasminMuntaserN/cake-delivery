@@ -4,16 +4,14 @@ using System.Data;
 
 namespace Business_Layer.Cake
 {
-    public class clsCake
+    public class Cake
     {
-        // Enum to define different operations to find cakes
         public enum enFindBy
         {
             CakeID,
             CakeName
         };
 
-        // Enum for modes (Add or Update)
         public enum enMode { AddNew = 0, Update = 1 };
         public enMode Mode = enMode.AddNew;
 
@@ -25,7 +23,7 @@ namespace Business_Layer.Cake
         public int CategoryID { get; set; }
         public string ImageUrl { get; set; }
 
-        public clsCake(CakeDTO cakeDto, enMode mode = enMode.AddNew)
+        public Cake(CakeDTO cakeDto, enMode mode = enMode.AddNew)
         {
             CakeID = cakeDto.CakeID;
             CakeName = cakeDto.CakeName;
@@ -44,14 +42,14 @@ namespace Business_Layer.Cake
 
         private bool _Add()
         {
-            CakeID = clsCakeData.Add(new CakeCreateDto(CakeName, Description, Price, StockQuantity, CategoryID, ImageUrl));
+            CakeID = CakeData.Add(new CakeCreateDto(CakeName, Description, Price, StockQuantity, CategoryID, ImageUrl));
             return CakeID.HasValue;
         }
 
 
         private bool _Update()
         {
-            return clsCakeData.UpdateCake(ToCakeDto());
+            return CakeData.UpdateCake(ToCakeDto());
         }
 
 
@@ -77,18 +75,18 @@ namespace Business_Layer.Cake
 
         public static CakeDTO? FindCakeById(int cakeId)
         {
-            return clsCakeData.GetCakeById(cakeId);
+            return CakeData.GetCakeById(cakeId);
         }
 
 
         public static CakeDTO? FindCakeByName(string cakeName)
         {
-            return clsCakeData.GetCakeByName(cakeName);
+            return CakeData.GetCakeByName(cakeName);
         }
 
 
         public static bool Delete(int cakeID)
-            => clsCakeData.DeleteCake(cakeID);
+            => CakeData.DeleteCake(cakeID);
 
 
         public static CakeDTO Find<T>(T data, enFindBy findBy)
@@ -98,7 +96,7 @@ namespace Business_Layer.Cake
                 case enFindBy.CakeID:
                     if (data is int cakeId)
                     {
-                        var cake = clsCakeData.GetCakeById(cakeId);
+                        var cake = CakeData.GetCakeById(cakeId);
                         return cake ;
                     }
                     break;
@@ -106,7 +104,7 @@ namespace Business_Layer.Cake
                 case enFindBy.CakeName:
                     if (data is string cakeName)
                     {
-                        var cake = clsCakeData.GetCakeByName(cakeName);
+                        var cake = CakeData.GetCakeByName(cakeName);
                         return cake ;
                     }
                     break;
@@ -117,20 +115,20 @@ namespace Business_Layer.Cake
 
 
         public static List<CakeDTO> All()
-            => clsCakeData.GetAllCakes();
+            => CakeData.GetAllCakes();
 
 
         public static List<CakeDTO> AllByCategoryID(int categoryId) 
-            => clsCakeData.GetCakesByCategory(categoryId);
+            => CakeData.GetCakesByCategory(categoryId);
 
 
         public static List<CakeDTO> AllByCategoryName(string categoryName)
-            => clsCakeData.GetCakesByCategoryName(categoryName);
+            => CakeData.GetCakesByCategoryName(categoryName);
 
         public static List<CakeDTO> GetCakesByPage(int pageNumber, int pageSize)
-            => clsCakeData.GetCakesByPage(pageNumber, pageSize);
+            => CakeData.GetCakesByPage(pageNumber, pageSize);
 
         public static void GetTotalPagesAndRows(int catogeryId ,out int totalRows, out int totalPages)
-            => clsCakeData.GetTotalPagesAndRows(catogeryId ,out totalRows, out totalPages);
+            => CakeData.GetTotalPagesAndRows(catogeryId ,out totalRows, out totalPages);
     }
 }

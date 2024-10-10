@@ -14,7 +14,7 @@ namespace CakeDeliveryAPI.Controllers
     [ApiController]
     public class OrdersController : BaseController
     {
-        private readonly clsOrderValidator _validator = new clsOrderValidator();
+        private readonly OrderValidator _validator = new OrderValidator();
 
 
         // GET: api/orders/all
@@ -22,7 +22,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<OrderDTO>> GetAllOrders()
-            => GetAllEntities(() => clsOrder.All());
+            => GetAllEntities(() => Order.All());
 
 
         // GET: api/orders/{id}
@@ -31,7 +31,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<OrderDTO> GetOrderById(int id)
-        => GetEntityByIdentifier(id, clsOrder.FindOrderById, entity => Ok(entity));
+        => GetEntityByIdentifier(id, Order.FindOrderById, entity => Ok(entity));
 
 
         // POST: api/orders
@@ -45,9 +45,9 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid order data.");
             }
 
-            clsOrder orderInstance = new clsOrder(
+            Order orderInstance = new Order(
                 new OrderDTO(null, newOrderDTO.CustomerID, DateTime.Now, newOrderDTO.TotalAmount, newOrderDTO.PaymentStatus, newOrderDTO.DeliveryStatus),
-                clsOrder.enMode.AddNew
+                Order.enMode.AddNew
             );
             // Validate the order instance
             var validationResult = _validator.Validate(orderInstance);
@@ -81,13 +81,13 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid order data.");
             }
 
-            OrderDTO? existingOrder = clsOrder.FindOrderById(id);
+            OrderDTO? existingOrder = Order.FindOrderById(id);
             if (existingOrder == null)
             {
                 return NotFound($"Order with ID {id} not found.");
             }
 
-            clsOrder orderInstance = new clsOrder(updatedOrder, clsOrder.enMode.Update);
+            Order orderInstance = new Order(updatedOrder, Order.enMode.Update);
 
             // Validate the order instance
             var validationResult = _validator.Validate(orderInstance);
@@ -114,7 +114,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult DeleteOrder(int id)
-          => DeleteEntity<clsOrder>(id,clsOrder.Delete,"Order");
+          => DeleteEntity<Order>(id,Order.Delete,"Order");
 
 
 
@@ -124,9 +124,9 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<OrderDTO>> GetOrdersByCustomerID(int customerId)
         {
-            return GetAllEntitiesBy<clsOrder, OrderDTO, int>(
+            return GetAllEntitiesBy<Order, OrderDTO, int>(
                 customerId,
-                clsOrder.FindOrdersByCustomerId,
+                Order.FindOrdersByCustomerId,
                 "Order"
             );
         }

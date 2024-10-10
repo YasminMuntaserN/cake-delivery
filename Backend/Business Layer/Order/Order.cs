@@ -8,14 +8,8 @@ using System.Threading.Tasks;
 
 namespace Business_Layer.Order
 {
-    public class clsOrder
+    public class Order
     {
-        public enum enFindBy
-        {
-            Id,
-            CustomerId
-        };
-
         public enum enMode { AddNew = 0, Update = 1 };
         public enMode Mode = enMode.AddNew;
 
@@ -26,7 +20,7 @@ namespace Business_Layer.Order
         public string PaymentStatus { get; set; }
         public string DeliveryStatus { get; set; }
 
-        public clsOrder(OrderDTO orderDto, enMode mode = enMode.AddNew)
+        public Order(OrderDTO orderDto, enMode mode = enMode.AddNew)
         {
             OrderID = orderDto.OrderID;
             CustomerID = orderDto.CustomerID;
@@ -44,13 +38,13 @@ namespace Business_Layer.Order
 
         private bool _Add()
         {
-            OrderID = clsOrderData.Add(new OrderCreateDTO(CustomerID, TotalAmount, PaymentStatus, DeliveryStatus));
+            OrderID = OrderData.Add(new OrderCreateDTO(CustomerID, TotalAmount, PaymentStatus, DeliveryStatus));
             return OrderID.HasValue;
         }
 
         private bool _Update()
         {
-            return clsOrderData.UpdateOrder(new OrderUpdateDTO(OrderID, CustomerID, TotalAmount, PaymentStatus, DeliveryStatus));
+            return OrderData.UpdateOrder(new OrderUpdateDTO(OrderID, CustomerID, TotalAmount, PaymentStatus, DeliveryStatus));
         }
 
         public bool Save()
@@ -74,44 +68,20 @@ namespace Business_Layer.Order
 
         public static OrderDTO? FindOrderById(int orderId)
         {
-            return clsOrderData.GetOrderById(orderId);
+            return OrderData.GetOrderById(orderId);
         }
 
         public static List<OrderDTO> FindOrdersByCustomerId(int customerID)
         {
-            return clsOrderData.GetOrdersByCustomerId(customerID);
+            return OrderData.GetOrdersByCustomerId(customerID);
         }
 
         public static List<OrderDTO> All()
-            => clsOrderData.GetAllOrders();
+            => OrderData.GetAllOrders();
 
         public static bool Delete(int orderID)
-            => clsOrderData.DeleteOrder(orderID);
+            => OrderData.DeleteOrder(orderID);
 
-
-        //public static OrderDTO Find<T>(T data, enFindBy findBy)
-        //{
-        //    switch (findBy)
-        //    {
-        //        case enFindBy.OrderID:
-        //            if (data is int orderId)
-        //            {
-        //                var order = clsOrderData.GetOrderById(orderId);
-        //                return order;
-        //            }
-        //            break;
-
-        //        case enFindBy.CustomerID:
-        //            if (data is int customerId)
-        //            {
-        //                var order = clsOrderData.GetOrdersByCustomerId(customerId);
-        //                return order;
-        //            }
-        //            break;
-        //    }
-
-        //    return null;
-        //}
 
     }
 }

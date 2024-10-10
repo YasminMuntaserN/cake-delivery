@@ -7,9 +7,9 @@ using Validation;
 
 namespace Business_Layer.Order
 {
-    public class clsOrderValidator : BaseValidator<clsOrder>
+    public class OrderValidator : BaseValidator<Order>
     {
-        public override ValidationResult Validate(clsOrder order)
+        public override ValidationResult Validate(Order order)
         {
             if (!HasValidOrderID(order.CustomerID))
                 AddError("OrderID is invalid.");

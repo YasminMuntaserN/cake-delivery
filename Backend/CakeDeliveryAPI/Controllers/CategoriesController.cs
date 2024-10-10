@@ -8,14 +8,14 @@ namespace CakeDeliveryAPI.Controllers
     [ApiController]
     public class CategoriesController : BaseController
     {
-        private readonly clsCategoryValidator _validator = new clsCategoryValidator();
+        private readonly CategoryValidator _validator = new CategoryValidator();
 
         // GET: api/categories/all
         [HttpGet("All", Name = "GetAllCategories")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<CategoryDTO>> GetAllCategories()
-            => GetAllEntities(() => clsCategory.All());
+            => GetAllEntities(() => Category.All());
 
         // GET: api/categories/{id}
         [HttpGet("{id}", Name = "GetCategoryById")]
@@ -23,7 +23,7 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CategoryDTO> GetCategoryById(int id)
-            => GetEntityByIdentifier(id, clsCategory.FindCategoryById, category => Ok(category));
+            => GetEntityByIdentifier(id, Category.FindCategoryById, category => Ok(category));
 
         // POST: api/categories
         [HttpPost(Name = "AddCategory")]
@@ -36,9 +36,9 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid category data.");
             }
 
-            clsCategory categoryInstance = new clsCategory(
+            Category categoryInstance = new Category(
                 new CategoryDTO(null, newCategoryDTO.CategoryName,  newCategoryDTO.CategoryImageURL),
-                clsCategory.enMode.AddNew
+                Category.enMode.AddNew
             );
 
             var validationResult = _validator.Validate(categoryInstance);
@@ -71,13 +71,13 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest("Invalid category data.");
             }
 
-            CategoryDTO? existingCategory = clsCategory.FindCategoryById(id);
+            CategoryDTO? existingCategory = Category.FindCategoryById(id);
             if (existingCategory == null)
             {
                 return NotFound($"Category with ID {id} not found.");
             }
 
-            clsCategory categoryInstance = new clsCategory(updatedCategory, clsCategory.enMode.Update);
+            Category categoryInstance = new Category(updatedCategory, Category.enMode.Update);
 
             var validationResult = _validator.Validate(categoryInstance);
             if (!validationResult.IsValid)
@@ -102,6 +102,6 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult DeleteCategory(int id)
-            => DeleteEntity<clsCategory>(id, clsCategory.Delete, "Category");
+            => DeleteEntity<Category>(id, Category.Delete, "Category");
     }
 }

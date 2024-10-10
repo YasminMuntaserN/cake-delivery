@@ -9,9 +9,9 @@ using Validation;
 namespace Business_Layer.OrderItem
 {
 
-    public class clsOrderItemValidator : BaseValidator<clsOrderItem>
+    public class OrderItemValidator : BaseValidator<Orders.OrderItem>
     {
-        public override ValidationResult Validate(clsOrderItem orderItem)
+        public override ValidationResult Validate(Orders.OrderItem orderItem)
         {
             if (!HasValidID(orderItem.CakeID))
                 AddError("ProductID is invalid.");

@@ -7,9 +7,9 @@ using Validation;
 
 namespace Business_Layer.Customer
 {
-    public class clsCustomerValidator : BaseValidator<clsCustomer>
+    public class CustomerValidator : BaseValidator<Customer>
     {
-        public override ValidationResult Validate(clsCustomer customer)
+        public override ValidationResult Validate(Customer customer)
         {
             if (!HasValidCustomerID(customer.CustomerID))
                 AddError("CustomerID must be a positive integer.");

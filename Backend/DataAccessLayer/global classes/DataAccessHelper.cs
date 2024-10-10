@@ -15,7 +15,7 @@ namespace DataAccessLayer
     public class DataAccessHelper
     {
         // Create an instance of clsErrorLogger
-        private static clsErrorLogger _logger = new clsErrorLogger(clsErrorLogger.LogToEventViewer);
+        private static ErrorLogger _logger = new ErrorLogger(ErrorLogger.LogToEventViewer);
 
         // Method to handle exceptions and log them
         private static void HandleException(Exception ex)
@@ -37,7 +37,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
@@ -75,7 +75,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
@@ -102,7 +102,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
@@ -138,7 +138,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
@@ -175,7 +175,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
@@ -209,7 +209,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
@@ -238,7 +238,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
@@ -283,7 +283,7 @@ namespace DataAccessLayer
 
         public static void GetTotalPagesAndRows(int categoryId, int pageSize, out int totalRows, out int totalPages)
         {
-            using (SqlConnection conn = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection conn = new SqlConnection(DataAccessSettings.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("SP_GetTotalPagesAndRows", conn))
                 {

@@ -8,14 +8,8 @@ using System.Threading.Tasks;
 
 namespace Business_Layer.Orders
 {
-    public class clsOrderItem
+    public class OrderItem
     {
-        public enum enFindBy
-        {
-            OrderItemID,
-            OrderID,
-            CakeID
-        };
 
         public enum enMode { AddNew = 0, Update = 1 };
         public enMode Mode = enMode.AddNew;
@@ -28,7 +22,7 @@ namespace Business_Layer.Orders
         public decimal PricePerItem { get; set; }
 
        
-        public clsOrderItem(OrderItemDTO orderItemDto, enMode mode = enMode.AddNew)
+        public OrderItem(OrderItemDTO orderItemDto, enMode mode = enMode.AddNew)
         {
             OrderItemID = orderItemDto.OrderItemID;
             OrderID = orderItemDto.OrderID;
@@ -78,38 +72,7 @@ namespace Business_Layer.Orders
         public static bool Delete(int orderItemId)
             => clsOrderItemData.DeleteOrderItem(orderItemId);
 
-        public static bool Exists<T>(T data, enFindBy findBy)
-        {
-            switch (findBy)
-            {
-                case enFindBy.OrderItemID:
-                    if (data is int orderItemId)
-                    {
-                        var orderItem = clsOrderItemData.GetOrderItemById(orderItemId);
-                        return orderItem != null;
-                    }
-                    break;
-
-                case enFindBy.OrderID:
-                    if (data is int orderId)
-                    {
-                        var orderItems = clsOrderItemData.GetOrderItemsByOrderId(orderId);
-                        return orderItems.Count > 0;
-                    }
-                    break;
-
-                case enFindBy.CakeID:
-                    if (data is int cakeId)
-                    {
-                        var orderItems = clsOrderItemData.GetOrderItemsByCakeId(cakeId);
-                        return orderItems.Count > 0;
-                    }
-                    break;
-            }
-
-            return false;
-        }
-
+      
         public static List<OrderItemDTO> AllByCakeID(int cakeId)
             => clsOrderItemData.GetOrderItemsByCakeId(cakeId);
 

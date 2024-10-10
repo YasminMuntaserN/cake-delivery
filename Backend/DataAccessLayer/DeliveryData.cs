@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class clsDeliveryData
+    public class DeliveryData
     {
         /// <summary>
         /// Adds a new Delivery to the database.

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class clsCategoryData
+    public class CategoryData
     {
         /// <summary>
         /// Adds a new Category to the database.

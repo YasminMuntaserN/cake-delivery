@@ -12,7 +12,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DataAccessLayer
 {
-    public class clsCustomerData
+    public class CustomerData
     {
         /// <summary>
         /// Adds a new Customer to the database.

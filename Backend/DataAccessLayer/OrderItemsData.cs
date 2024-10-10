@@ -36,7 +36,7 @@ namespace DataAccessLayer
                 "sp_GetOrderItemById",
                 "OrderItemID",
                 orderItemId,
-                clsMappings.MapOrderItemDTOFromReader
+                Mappings.MapOrderItemDTOFromReader
             );
         }
 
@@ -80,7 +80,7 @@ namespace DataAccessLayer
                 "sp_GetOrderItemsByOrderId",
                 "OrderID",
                 orderId,
-                clsMappings.MapOrderItemDTOFromReader
+                Mappings.MapOrderItemDTOFromReader
             );
         }
 
@@ -96,7 +96,7 @@ namespace DataAccessLayer
                 "sp_GetOrderItemsByCakeId",
                 "CakeID",
                 cakeId,
-                clsMappings.MapOrderItemDTOFromReader
+                Mappings.MapOrderItemDTOFromReader
             );
         }
 
@@ -108,7 +108,7 @@ namespace DataAccessLayer
         {
             return DataAccessHelper.GetAll(
                 "sp_GetAllOrderItems",  
-                clsMappings.MapOrderItemDTOFromReader
+                Mappings.MapOrderItemDTOFromReader
             );
         }
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class clsOrderData
+    public class OrderData
     {
         /// <summary>
         /// Adds a new Order to the database.
@@ -36,7 +36,7 @@ namespace DataAccessLayer
                 "sp_GetOrderById",
                 "OrderID",
                 orderId,
-                clsMappings.MapOrderDTOFromReader
+                Mappings.MapOrderDTOFromReader
             );
         }
 
@@ -56,7 +56,7 @@ namespace DataAccessLayer
                 "sp_GetOrderByCustomerId",
                 "CustomerID",
                 customerID,
-                clsMappings.MapOrderDTOFromReader
+                Mappings.MapOrderDTOFromReader
             );
         }
 
@@ -98,7 +98,7 @@ namespace DataAccessLayer
         {
             return DataAccessHelper.GetAll(
                 "sp_GetAllOrders", // Stored procedure name to get all orders
-                clsMappings.MapOrderDTOFromReader
+                Mappings.MapOrderDTOFromReader
             );
         }
     }

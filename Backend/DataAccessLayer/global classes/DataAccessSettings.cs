@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer
 {
-    static class clsDataAccessSettings
+    static class DataAccessSettings
     {
         private static IConfigurationRoot? _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 

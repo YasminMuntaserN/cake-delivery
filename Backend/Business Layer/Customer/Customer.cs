@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business_Layer.Customer
 {
-    public class clsCustomer
+    public class Customer
     {
         public enum enFindBy
         {
@@ -25,7 +25,7 @@ namespace Business_Layer.Customer
         public int? CustomerID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string FullName => string.Concat(FirstName, " ",LastName);
+        public string FullName => $"{FirstName} {LastName}";
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
@@ -35,7 +35,7 @@ namespace Business_Layer.Customer
         public DateTime CreatedAt { get; set; }
 
 
-        public clsCustomer(CustomerDTO customerDto, enMode mode = enMode.AddNew)
+        public Customer(CustomerDTO customerDto, enMode mode = enMode.AddNew)
         {
             CustomerID = customerDto.CustomerID;
             FirstName = customerDto.FirstName;
@@ -56,13 +56,13 @@ namespace Business_Layer.Customer
 
         private bool _Add()
         {
-            CustomerID = clsCustomerData.Add(new CustomerCreateDTO(FirstName, LastName, Email, PhoneNumber, Address, City, PostalCode, Country));
+            CustomerID = CustomerData.Add(new CustomerCreateDTO(FirstName, LastName, Email, PhoneNumber, Address, City, PostalCode, Country));
             return CustomerID.HasValue;
         }
 
         private bool _Update()
         {
-            return clsCustomerData.UpdateCustomer(new CustomerDTO(CustomerID, FirstName, LastName, FirstName +" "+ LastName, Email, PhoneNumber, Address, City, PostalCode, Country));
+            return CustomerData.UpdateCustomer(new CustomerDTO(CustomerID, FirstName, LastName, $"{FirstName} {LastName}", Email, PhoneNumber, Address, City, PostalCode, Country));
         }
 
         public bool Save()
@@ -86,11 +86,11 @@ namespace Business_Layer.Customer
 
 
         public static List<CustomerDTO> All()
-            => clsCustomerData.GetAllCustomers();
+            => CustomerData.GetAllCustomers();
 
 
         public static bool Delete(int CustomerID)
-            => clsCustomerData.DeleteCustomer(CustomerID);
+            => CustomerData.DeleteCustomer(CustomerID);
 
 
         public static CustomerDTO Find<T>(T data, enFindBy findBy)

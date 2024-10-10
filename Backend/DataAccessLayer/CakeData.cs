@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class clsCakeData
+    public class CakeData
     {
         /// <summary>
         /// Adds a new Cake to the database.

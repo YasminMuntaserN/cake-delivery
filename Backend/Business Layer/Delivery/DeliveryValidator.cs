@@ -8,9 +8,9 @@ using Validation;
 
 namespace Business_Layer.Customer
 {
-    public class clsDeliveryValidator : BaseValidator<clsDelivery>
+    public class DeliveryValidator : BaseValidator<Delivery.Delivery>
     {
-        public override ValidationResult Validate(clsDelivery delivery)
+        public override ValidationResult Validate(Delivery.Delivery delivery)
         {
             if (!HasValidOrderID(delivery.OrderID))
                 AddError("OrderID is invalid.");
