@@ -1,36 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTotalPages } from "../../services/apiCakes";
 import { useParams } from "react-router-dom";
+import Loader from "../common/Loader";
 
 function Pagination() {
-  //const { categoryId } = useParams(); // Get the categoryId from the URL
-  //console.log("Category ID from URL:", categoryId); // Log for debugging
-  const Id=4;
-  // Use a unique queryKey for fetching total pages
-  //const { data: pagesNum, error, isLoading } = useQuery({
-  //  ["totalPages", Id], // Changed the queryKey to avoid conflict with cakes data
-    //() => {
-      //console.log("Calling getTotalPages with categoryId:", Id);
-      //return getTotalPages(Id);
-   // },
-  //});
-  const { data:pagesNum, error } = useQuery(['totalPages', Id], () => getTotalPages(Id));
-  // Log the response for debugging
-  console.log("pagesNum from query:", pagesNum);
+    const { categoryId } = useParams(); // Get categoryId from URL
 
-  // Loading state
-  //if (isLoading) return <div>Loading pages...</div>;
+    const { data: pagesNum, error, isLoading } = useQuery({
+        queryKey: ["pagesNum", categoryId],
+        queryFn: () => getTotalPages(categoryId),
+    });
 
-  // Error state
-  if (error) return <div>Error loading pages: {error.message}</div>;
 
-  // Ensure pagesNum has the expected structure
-  if (!pagesNum || typeof pagesNum.totalPages === "undefined" || typeof pagesNum.totalRows === "undefined") {
-    return <div>Error fetching page data</div>;
-  }
+    if (isLoading) return <Loader/>;
+    if (error) return <div>Error loading pages: {error.message}</div>;
 
-  const { totalPages, totalRows } = pagesNum;
-  console.log("totalPages:", totalPages, "totalRows:", totalRows);
+    // Ensure pagesNum has the expected structure
+    if (!pagesNum || typeof pagesNum.totalPages === "undefined" || typeof pagesNum.totalRows === "undefined") {
+        return <div>Error fetching page data</div>;
+    }
+
+    const { totalPages, totalRows } = pagesNum;
+    console.log("totalPages:", totalPages, "totalRows:", totalRows);
 
   return (
     <div>

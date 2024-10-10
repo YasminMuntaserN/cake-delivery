@@ -4,8 +4,9 @@ import Pagination from "../components/cakes/Pagination";
 function Cakes() {
   return (
     <>
-      <Pagination/>
-      <CakesTable/>
+          <CakesTable />
+          <Pagination />
+
     </>
   );
 }
