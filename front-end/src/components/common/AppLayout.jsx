@@ -11,7 +11,8 @@ function AppLayout() {
     <div className ="grid grid-rows-[auto_1fr_auto] h-screen ">
       <PageNav />
       <main>
-        {showVideo && <VideoLayout>All Cakes :</VideoLayout>}
+              {showVideo && location.pathname.includes("/cakes") && <VideoLayout>All Cakes :</VideoLayout>}
+              {showVideo && location.pathname.includes("/cart") && <VideoLayout>Your Cart</VideoLayout>}
       <Outlet/>
       </main>
       </div>

@@ -23,9 +23,12 @@ function SearchBar() {
 		enabled: !!cakeName, 
 	});
 
+	if (isLoading) return <Loader />;
+	if (error) return <Error />;
+
 	const handleCategoryChange = (event) => {
-		const selectedCategoryId = event.target.value; // Get the selected category ID
-		navigate(`/cakes/${selectedCategoryId}`); // Navigate based on the selected category
+		const selectedCategoryId = event.target.value; 
+		navigate(`/cakes/${selectedCategoryId}`); 
 	};
 
 	return (
