@@ -33,7 +33,7 @@ function CakesTable() {
         </div>
     );
 }
-const styledContainer = "mt-20 flex justify-center flex-wrap gap-10";
+const styledContainer = "mt-10 flex justify-center flex-wrap gap-10";
 
 export default CakesTable
 

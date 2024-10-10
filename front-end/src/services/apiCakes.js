@@ -44,7 +44,25 @@ export async function getCakesByCategory(categoryId) {
     throw error; 
   }
 }
+export async function getCakeByName(cakeName) {
+    try {
+        const res = await fetch(`${API_URL}/name/${cakeName}`, {
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
 
+        if (!res.ok) {
+            throw new Error(`Failed to fetch the cake with name: ${cakeName}`);
+        }
+
+        const data = await res.json();
+        return data; // Return the fetched cake data
+    } catch (error) {
+        console.error(`Error fetching the cake with name ${cakeName}:`, error);
+        throw error; // Re-throw the error to be handled by the calling code
+    }
+}
 export async function fetchCakes(pageNumber = 1, pageSize = 10) {
   console.log("fetchCakes method called");
 
