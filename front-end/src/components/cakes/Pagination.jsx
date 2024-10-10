@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getTotalPages } from "../../services/apiCakes";
 import { useParams } from "react-router-dom";
 import Loader from "../common/Loader";
+import Error from "../common/Error";
 
 function Pagination() {
     const { categoryId } = useParams(); // Get categoryId from URL
@@ -11,17 +12,9 @@ function Pagination() {
         queryFn: () => getTotalPages(categoryId),
     });
 
+    if (isLoading) return <Loader />;
+    if (error) return <Error />;
 
-    if (isLoading) return <Loader/>;
-    if (error) return <div>Error loading pages: {error.message}</div>;
-
-    // Ensure pagesNum has the expected structure
-    if (!pagesNum || typeof pagesNum.totalPages === "undefined" || typeof pagesNum.totalRows === "undefined") {
-        return <div>Error fetching page data</div>;
-    }
-
-    const { totalPages, totalRows } = pagesNum;
-    console.log("totalPages:", totalPages, "totalRows:", totalRows);
 
   return (
     <div>
@@ -29,7 +22,7 @@ function Pagination() {
         <li>
           <a href="#" className={StyledLink}>Prev</a>
         </li>
-        {Array.from({ length: totalPages }, (_, index) => (
+              {Array.from({ length: pagesNum.totalPages }, (_, index) => (
           <li key={index + 1}>
             <a href="#" className={StyledLink}>
               {index + 1}

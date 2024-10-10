@@ -1,5 +1,4 @@
 const API_URL = "https://localhost:7085/api/cakes";
-
 export async function getCakes() {
   console.log("getCakesByCategory method called");
 
@@ -16,16 +15,15 @@ export async function getCakes() {
 
     const data = await res.json();
 
-    return data;  // Return data if everything is successful
+    return data; 
   } catch (error) {
     
     console.error("Error fetching cakes:", error);
-    throw error;  // Re-throw the error to be handled by React Query
+    throw error;  
   }
 }
 
 export async function getCakesByCategory(categoryId) {
-  console.log("getCakesByCategory method called");
 
   try {
     const res = await fetch(`${API_URL}/category/${categoryId}`, {
@@ -40,10 +38,10 @@ export async function getCakesByCategory(categoryId) {
 
     const data = await res.json();
 
-    return data; // Return data if everything is successful
+    return data; 
   } catch (error) {
     console.error("Error fetching cakes:", error);
-    throw error; // Re-throw the error to be handled by React Query or your component
+    throw error; 
   }
 }
 

@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import CakeElement from "./CakeElement";
 import {getCakes, getCakesByCategory } from "../../services/apiCakes";
 import { useParams } from "react-router-dom";
+import Loader from "../common/Loader";
+import Error from "../common/Error";
 
 
 function CakesTable() {
@@ -19,18 +21,19 @@ function CakesTable() {
             }
     );
 
-    console.log('cakes:', cakes);
 
-    if (isLoading) return <div>Loading cakes...</div>;
-    if (error) return <div>Error loading cakes</div>;
+    if (isLoading) return <Loader />;
+    if (error) return <Error />;
 
-  return (
-      <div className="mt-20 flex justify-center flex-wrap gap-10">
-        {cakes.map((cake) => (
-          <CakeElement key={cake.cakeID} cake={cake} />
-        ))}
-      </div>
-  );
+    return (
+        <div className={styledContainer}>
+            {cakes.map((cake) => (
+                <CakeElement key={cake.cakeID} cake={cake} />
+            ))}
+        </div>
+    );
 }
+const styledContainer = "mt-20 flex justify-center flex-wrap gap-10";
 
 export default CakesTable
+
