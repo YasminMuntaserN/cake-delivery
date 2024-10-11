@@ -1,10 +1,24 @@
 import { HiMiniMinusCircle, HiMiniPlusCircle } from 'react-icons/hi2';
 import Button from "../../ui/Button";
 import { formatCurrency } from '../../utils/helper';
+import { useState } from 'react';
+import { useCake } from '../../hooks/useCake';
+import Loader from '../common/Loader';
+import Error from '../common/Error';
 
 function CakeElement({ cake }) {
+  const [cakeID, setCakeID] = useState(null);
+
+  function handleOnClick(id){
+    setCakeID(id);
+  }
+  const {cake :clickedCake , isLoading, error}=useCake(cakeID);
+
+  if (isLoading) return <Loader />;
+  if (error) return <Error />;
+  console.log(clickedCake);
   return (
-    <div className={StyledContainer}>
+    <div className={StyledContainer} onClick={()=>handleOnClick(cake.cakeID)}>
       <div className="w-[200px] h-[200px] mx-auto">
         <img 
           src={cake.imageUrl} 

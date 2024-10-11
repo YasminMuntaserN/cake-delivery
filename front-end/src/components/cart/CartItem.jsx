@@ -1,19 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import { HiTrash } from "react-icons/hi2";
-import { getCakeById }  from "../../services/apiCakes";
 import { formatCurrency } from "../../utils/helper";
 import Loader from "../common/Loader";
 import Error from "../common/Error";
+import { useCake } from "../../hooks/useCake";
 
 function CartItem({ OrderItem }) {
-    const { orderItemID, cakeID, quantity, pricePerItem } = OrderItem;
-
-    const { data: cake, isLoading, error } = useQuery(
-        {
-            queryKey: ['cakes', cakeID],
-            queryFn: () => getCakeById(cakeID),
-        }
-    );
+    const {cakeID, quantity, pricePerItem } = OrderItem;
+    const {cake , isLoading, error}=useCake(cakeID);
 
     if (isLoading) return <Loader />;
     if (error) return <Error />;
