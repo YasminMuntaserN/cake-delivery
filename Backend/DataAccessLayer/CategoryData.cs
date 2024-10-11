@@ -34,7 +34,7 @@ namespace DataAccessLayer
                 "sp_GetCategoryById",
                 "CategoryID",
                 categoryId,
-                clsMappings.MapCategoryDTOFromReader
+                Mappings.MapCategoryDTOFromReader
             );
         }
 
@@ -49,7 +49,7 @@ namespace DataAccessLayer
                 "sp_GetCategoryByName",
                 "CategoryName",
                 categoryName,
-                clsMappings.MapCategoryDTOFromReader
+                Mappings.MapCategoryDTOFromReader
             );
         }
 
@@ -88,7 +88,7 @@ namespace DataAccessLayer
         {
             return DataAccessHelper.GetAll(
                 "sp_GetAllCategory",
-                clsMappings.MapCategoryDTOFromReader
+                Mappings.MapCategoryDTOFromReader
             );
         }
     }

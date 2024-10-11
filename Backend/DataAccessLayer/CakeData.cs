@@ -37,7 +37,7 @@ namespace DataAccessLayer
                 "sp_GetCakeById",
                 "CakeID",
                 cakeId,
-                clsMappings.MapCakeDTOFromReader
+                Mappings.MapCakeDTOFromReader
             );
         }
 
@@ -52,7 +52,7 @@ namespace DataAccessLayer
                 "sp_GetCakeByName",
                 "CakeName",
                 cakeName,
-                clsMappings.MapCakeDTOFromReader
+                Mappings.MapCakeDTOFromReader
             );
         }
 
@@ -94,7 +94,7 @@ namespace DataAccessLayer
         {
             return DataAccessHelper.GetAll(
                 "sp_GetAllCakes",
-                clsMappings.MapCakeDTOFromReader
+                Mappings.MapCakeDTOFromReader
             );
         }
 
@@ -110,7 +110,7 @@ namespace DataAccessLayer
                 "sp_GetCakesByCategory",
                 "CategoryID",
                 categoryId,
-                clsMappings.MapCakeDTOFromReader
+                Mappings.MapCakeDTOFromReader
             );
         }
 
@@ -126,7 +126,7 @@ namespace DataAccessLayer
                 "sp_GetCakesByCategoryName",
                 "CategoryName",
                 categoryName,
-                clsMappings.MapCakeDTOFromReader
+                Mappings.MapCakeDTOFromReader
             );
         }
 

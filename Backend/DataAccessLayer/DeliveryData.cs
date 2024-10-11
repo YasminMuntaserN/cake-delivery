@@ -34,7 +34,7 @@ namespace DataAccessLayer
                 "sp_GetDeliveryById",
                 "DeliveryID",
                 deliveryId,
-                clsMappings.MapDeliveryDTOFromReader
+                Mappings.MapDeliveryDTOFromReader
             );
         }
 
@@ -77,7 +77,7 @@ namespace DataAccessLayer
         {
             return DataAccessHelper.GetAll(
                 "sp_GetAllDeliveries",  // Stored procedure name to get all deliveries
-                clsMappings.MapDeliveryDTOFromReader
+                Mappings.MapDeliveryDTOFromReader
             );
         }
     }

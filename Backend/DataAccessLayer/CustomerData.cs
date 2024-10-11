@@ -40,7 +40,7 @@ namespace DataAccessLayer
                 "sp_GetCustomerById",                                                    
                 "CustomerID",
                 CustomerId,
-                clsMappings.MapCustomerDTOFromReader
+                Mappings.MapCustomerDTOFromReader
           );
       }
 
@@ -56,7 +56,7 @@ namespace DataAccessLayer
                 "sp_GetCustomerByName",
                 "FullName",
                 Name,
-                clsMappings.MapCustomerDTOFromReader
+                Mappings.MapCustomerDTOFromReader
           );
         }
 
@@ -98,7 +98,7 @@ namespace DataAccessLayer
         {
             return DataAccessHelper.GetAll(
                 "sp_GetAllCustomers",
-                clsMappings.MapCustomerDTOFromReader
+                Mappings.MapCustomerDTOFromReader
                  );
         }
     }
