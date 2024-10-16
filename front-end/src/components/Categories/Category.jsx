@@ -1,6 +1,8 @@
 import { getCategories } from "../../services/apiCategories";
 import CategoryElement from "./CategoryElement";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../common/Loader";
+import Error from "../common/Error";
 
 function Category() {
 // Use React Query to fetch categories
@@ -9,11 +11,9 @@ const { data :categories, error, isLoading } = useQuery({
   queryFn: getCategories,
 });
 
-// Loading state
-if (isLoading) return <div>Loading categories...</div>;
+if (isLoading) return  <Loader />;
 
-// Error state
-if (error) return <div>Error loading categories</div>;
+if (error) return <Error/>;
 
 return (
     <section>

@@ -3,8 +3,9 @@ import Button from "../../ui/Button";
 function TotalPrice() {
     return (
         <div className={styledContainer }>
-            <p>Subtotal: $ </p>
-            <span className="text-pink">500</span>
+            <p>Subtotal: 
+            <span className="text-pink ">500 </span>
+            </p>
             <div className={styledBtnContainer }>
             <Button>Order it now</Button>
                 <Button>Continue Shopping</Button>

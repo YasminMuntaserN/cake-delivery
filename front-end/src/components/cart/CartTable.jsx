@@ -34,8 +34,8 @@ function CartTable() {
         </div>
     );
 }
-const styledTable = "mx-[60px] mt-10 border border-grey-200 text-[1.1rem] bg-grey-0 rounded-[7px] overflow-hidden"
+const styledTable = "lg:mx-[60px] sm:mx-[30px] mt-20 border border-grey-200 text-[1.1rem] bg-grey-0 rounded-[7px] overflow-hidden"
 
-const styledTableHeader = " grid grid-cols-[0.2fr_1.8fr_2.0fr_1.2fr_0.5fr_1fr_0.2fr] gap-[2.4rem] items-center bg-grey-50 border-b border-grey-100  uppercase tracking-[0.4px]  text-grey-600 p-[10px_10px]"
+const styledTableHeader = " grid grid-cols-[0.2fr_1.8fr_2.0fr_1.2fr_0.5fr_1fr_0.2fr] gap-[3.4rem] items-center bg-grey-50 border-b border-grey-100  uppercase tracking-[0.4px]  text-grey-600 p-[10px_10px]"
 
 export default CartTable;
