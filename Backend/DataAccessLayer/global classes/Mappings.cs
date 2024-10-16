@@ -2,6 +2,7 @@
 using CakeDeliveryDTO.CakeDTOs;
 using CakeDeliveryDTO.CustomerDTOs;
 using CakeDeliveryDTO.DeliveryDTO;
+using CakeDeliveryDTO.FeedbackDTOs;
 using DTOs;
 using System;
 using System.Collections.Generic;
@@ -100,6 +101,16 @@ namespace DataAccessLayer
                 CategoryID: (int)reader["CategoryID"],
                 CategoryName: reader["CategoryName"].ToString() ?? string.Empty,
                 CategoryImageUrl: reader["CategoryImageURL"].ToString() ?? string.Empty
+            );
+        }
+
+        public static FeedbackDto MapFeedbackDTOFromReader(IDataReader reader)
+        {
+            return new FeedbackDto(
+                FeedbackID: (int)reader["FeedbackID"],
+                CustomerID: (int)reader["CustomerID"],
+                Feedback: reader["Feedback"].ToString() ?? string.Empty,
+                FeedbackDate: (DateTime)reader["FeedbackDate"]
             );
         }
 
