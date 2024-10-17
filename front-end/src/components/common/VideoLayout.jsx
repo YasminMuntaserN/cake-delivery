@@ -1,7 +1,7 @@
 function VideoLayout({ children }) {
   return (
     <div className="relative video-container mt-[-130px]">
-      <div className="absolute top-[200px] left-[100px] text-5xl text-peach z-1000">
+      <div className="absolute top-[200px] left-[100px]  text-peach z-1000">
         {children}
       </div>
       {/* Video Overlay */}
