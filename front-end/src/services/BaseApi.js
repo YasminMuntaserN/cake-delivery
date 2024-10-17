@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 export async function getAll(entityName) {
-  console.log(`${API_URL}/${entityName}/All`);
+console.log(`${API_URL}/${entityName}/All`);
     try {
         const res = await fetch(`${API_URL}/${entityName}/All`, {
             headers: {
@@ -24,8 +24,9 @@ export async function getAll(entityName) {
 }
 
 export async function getBy(entityName,type ,value){
-  try {
-    const res = await fetch(`${API_URL}/${type}/${value}`, {
+    console.log(`${API_URL}/${entityName}/${type}/${value}`);
+    try {
+    const res = await fetch(`${API_URL}/${entityName}/${type}/${value}`, {
         headers: {
             'Accept': 'application/json',
         },
