@@ -1,12 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Loader from "../common/Loader";
 import Error from "../common/Error";
-import { getCustomersFeedback } from "../../services/apiCustomerFeedback";
 import CustomersFeedbacksHeader from "./CustomersFeedbacksHeader";
 import CustomersFeedbacksItem from "./CustomersFeedbacksItem";
+import { useCustomersFeedback } from './customersFeedbackshook/useCustomersFeedback';
 
 
 function CustomerFeedback() {
@@ -21,12 +20,7 @@ function CustomerFeedback() {
     autoplaySpeed: 2000,
   };
 
-  const { data :Feedbacks, error, isLoading } = useQuery({
-    queryKey: ["Feedback"],
-    queryFn: getCustomersFeedback,
-  });
-  console.log(Feedbacks);
-
+  const {Feedbacks ,error ,isLoading}= useCustomersFeedback();
   if (isLoading) return  <Loader />;
   
   if (error) return <Error/>;
