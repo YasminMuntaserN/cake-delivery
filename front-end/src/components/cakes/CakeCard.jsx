@@ -18,7 +18,7 @@ function CakeCard({ cake }) {
   );
 }
 
-const styleContainer = "flex   rounded-lg overflow-hidden p-2 ";
+const styleContainer = "flex rounded-lg overflow-hidden p-2 ";
 const styledImageContainer = "w-1/2 h-auto overflow-hidden sm:w-1/4 "; 
 const styledImage = "w-full h-full object-cover object-center transition-transform duration-500 transform hover:scale-110 ";
 const styledDetails = "flex flex-col justify-center p-4 w-1/2"; 
