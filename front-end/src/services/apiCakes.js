@@ -1,117 +1,22 @@
-const API_URL = "https://localhost:7085/api/cakes";
-export async function getCakes() {
-    try {
-        const res = await fetch(`${API_URL}/All`, {
-            headers: {
-                'Accept': 'application/json',
-            },
-        });
+import { getAll ,getById ,getBy, getByPageNumAndPgeSize } from "./BaseApi";
 
-        if (!res.ok) {
-            throw new Error('Failed to fetch cakes');
-        }
+const API_URL = import.meta.env.VITE_API_URL+'/cakes';
 
-        const data = await res.json();
+export const getCakes = async () => await getAll("cakes");
 
-        return data;
-    } catch (error) {
 
-        console.error("Error fetching cakes:", error);
-        throw error;
-    }
-}
+export const getCakesByCategory = async (categoryId) => await getBy("cakes","category" ,categoryId);
 
-export async function getCakesByCategory(categoryId) {
 
-    try {
-        const res = await fetch(`${API_URL}/category/${categoryId}`, {
-            headers: {
-                'Accept': 'application/json',
-            },
-        });
 
-        if (!res.ok) {
-            throw new Error('Failed to fetch cakes');
-        }
+export const getCakeByName = async (cakeName) => await getBy("cake","name" ,cakeName);
 
-        const data = await res.json();
 
-        return data;
-    } catch (error) {
-        console.error("Error fetching cakes:", error);
-        throw error;
-    }
-}
+export const getCakeById = async (cakeId) => await getById("cakes",cakeId);
 
-export async function getCakeByName(cakeName) {
-    try {
-        const res = await fetch(`${API_URL}/name/${cakeName}`, {
-            headers: {
-                'Accept': 'application/json',
-            },
-        });
 
-        if (!res.ok) {
-            throw new Error(`Failed to fetch the cake with name: ${cakeName}`);
-        }
+export const fetchCakes = async (pageNumber = 1, pageSize = 10) => await getByPageNumAndPgeSize("cakes",pageNumber,pageSize);
 
-        const data = await res.json();
-        return data; // Return the fetched cake data
-    } catch (error) {
-        console.error(`Error fetching the cake with name ${cakeName}:`, error);
-        throw error; // Re-throw the error to be handled by the calling code
-    }
-}
-
-export async function getCakeById(cakeId) {
-    try {
-        const res = await fetch(`${API_URL}/${cakeId}`, {
-            headers: {
-                'Accept': 'application/json',
-            },
-        });
-
-        if (!res.ok) {
-            throw new Error(`Failed to fetch the cake with Id: ${cakeId}`);
-        }
-
-        const data = await res.json();
-        return data; // Return the fetched cake data
-    } catch (error) {
-        console.error(`Error fetching the cake with Id ${cakeId}:`, error);
-        throw error; // Re-throw the error to be handled by the calling code
-    }
-}
-
-export async function fetchCakes(pageNumber = 1, pageSize = 10) {
-    console.log("fetchCakes method called");
-
-    // Validate input parameters
-    if (pageNumber <= 0 || pageSize <= 0) {
-        throw new Error("Page number and page size must be greater than zero.");
-    }
-
-    try {
-        const res = await fetch(`${API_URL}/page/number/${pageNumber}?pageSize=${pageSize}`, {
-            headers: {
-                'Accept': 'application/json',
-            },
-        });
-
-        if (!res.ok) {
-            const errorDetails = await res.text(); // Log response details
-            console.error('Failed to fetch cakes:', errorDetails);
-            throw new Error('Failed to fetch cakes');
-        }
-
-        const data = await res.json();
-        console.log('Fetched cakes:', data); // Log the fetched cakes data
-        return data; // Return data if everything is successful
-    } catch (error) {
-        console.error("Error fetching cakes:", error);
-        throw error; // Re-throw the error to be handled by React Query or your component
-    }
-}
 
 export async function getTotalPages(Id) {
     try {

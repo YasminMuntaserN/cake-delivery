@@ -1,4 +1,5 @@
-const API_URL = "https://localhost:7085/api/orderItems";
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function getOrderItems() {
 
     try {
