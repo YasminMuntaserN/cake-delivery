@@ -1,37 +1,23 @@
 import { HiMiniMinusCircle, HiMiniPlusCircle } from 'react-icons/hi2';
 import Button from "../../ui/Button";
 import { formatCurrency } from '../../utils/helper';
-import { useDispatch } from "react-redux";
-import { addItem, setQuantity as SetNewQuantity ,deleteItem } from '../cart/cartSlice';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import Sizes from './Sizes';
+import { CartItemsContext } from '../../context/CartItemsContext';
 
 function CakeItem({ cake }) {
-  const [isAdded, setIsAdded] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-  
-  const dispatch = useDispatch();
+  const { handleAdd, handleInc, handleDec, handleSize, cart } = useContext(CartItemsContext);
 
-  const handleAdd =(cake)=>{
-      dispatch(addItem(cake)); 
-      setIsAdded(true);
-      setQuantity(1); 
-  }
+  const [isAdded , setIsAdded]=useState(false);
+  const [quantity , setQuantity]=useState(0);
 
-  const handleInc = (id) => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-    dispatch(SetNewQuantity({id ,quantity}));
-  }
-
-  const handleDec = (id) => {
-    if(quantity >0){
-      setQuantity((prevQuantity) => prevQuantity - 1);
-      dispatch(SetNewQuantity({id ,quantity}));
-  }else{
-    setQuantity(0);
-    dispatch(deleteItem(id));
-    setIsAdded(false);
-  }
-}
+useEffect(()=>{
+  const item =cart.find(item => item.cakeObject.cakeID === cake.cakeID);
+    if(item){
+    const {quantity}=item;
+      setQuantity(quantity);
+    }
+},[cart ,cake.cakeID]);
 
   return (
     <>
@@ -43,19 +29,24 @@ function CakeItem({ cake }) {
       </div>
       <div>
         <span className={StylePrice}>{formatCurrency(cake.price)}</span>
-        {!isAdded &&
+        {!isAdded && ( 
           <div>
-          <Button onClick={() => handleAdd(cake)}>
-            Add To Cart
-          </Button>
-        </div>
-        }
+            <Button onClick={() =>{ 
+              setIsAdded((added)=>!added) ;
+              handleAdd(cake)}}>
+              Add To Cart
+            </Button>
+          </div>
+        )}
       </div>
-      {isAdded && (
-        <div className={StyledSubContainer}>
-          <HiMiniMinusCircle className={StyledIcon} onClick={() => handleDec(cake.cakeID)} />
-          <p>{quantity}</p>
-          <HiMiniPlusCircle className={StyledIcon} onClick={() => handleInc(cake.cakeID)} />
+      {isAdded && ( 
+        <div>
+          <div className={StyledSubContainer}>
+            <HiMiniMinusCircle className={StyledIcon} onClick={() => handleDec(cake.cakeID)} />
+            <p>{quantity}</p> 
+            <HiMiniPlusCircle className={StyledIcon} onClick={() => handleInc(cake.cakeID)} />
+          </div>
+          <Sizes handleSetSize={(sizeId) => handleSize(cake.cakeID, sizeId)} />
         </div>
       )}
     </>

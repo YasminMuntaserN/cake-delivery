@@ -3,13 +3,8 @@ import CakeElement from "./CakeElement";
 import Loader from "../common/Loader";
 import Error from "../common/Error";
 import { useCakes } from "./cakeHooks/useCakes";
-import { getCart } from "../cart/cartSlice";
-import { useSelector } from "react-redux";
-
 
 function CakesTable() {
-    const cart = useSelector(getCart);
-    console.log(cart);
 
     const {cakes ,error , isLoading}=useCakes();
     if (isLoading) return <Loader />;
