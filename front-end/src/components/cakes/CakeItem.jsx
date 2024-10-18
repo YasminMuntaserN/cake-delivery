@@ -1,23 +1,16 @@
-import { HiMiniMinusCircle, HiMiniPlusCircle } from 'react-icons/hi2';
 import Button from "../../ui/Button";
 import { formatCurrency } from '../../utils/helper';
 import { useContext, useEffect, useState } from 'react';
-import Sizes from './Sizes';
 import { CartItemsContext } from '../../context/CartItemsContext';
+import Sizes from './Sizes';
+import Quantity from './Quantity';
+
 
 function CakeItem({ cake }) {
-  const { handleAdd, handleInc, handleDec, handleSize, cart } = useContext(CartItemsContext);
+  const { handleAdd ,handleSize} = useContext(CartItemsContext);
 
   const [isAdded , setIsAdded]=useState(false);
-  const [quantity , setQuantity]=useState(0);
 
-useEffect(()=>{
-  const item =cart.find(item => item.cakeObject.cakeID === cake.cakeID);
-    if(item){
-    const {quantity}=item;
-      setQuantity(quantity);
-    }
-},[cart ,cake.cakeID]);
   return (
     <>
       <div className={StyledContainer}>
@@ -40,11 +33,7 @@ useEffect(()=>{
       </div>
       {isAdded && ( 
         <div>
-          <div className={StyledSubContainer}>
-            <HiMiniMinusCircle className={StyledIcon} onClick={() => handleDec(cake.cakeID)} />
-            <p>{quantity}</p> 
-            <HiMiniPlusCircle className={StyledIcon} onClick={() => handleInc(cake.cakeID)} />
-          </div>
+          <Quantity cake={cake} />
           <Sizes handleSetSize={(sizeId) => handleSize(cake.cakeID, sizeId)} />
         </div>
       )}
@@ -53,9 +42,7 @@ useEffect(()=>{
 }
 
 const StyledContainer = "w-[200px] h-[200px] mx-auto";
-const StyledIcon = 'h-10 w-10 text-pink hover:text-basic transition-colors duration-300';
 const StyledImage = 'w-full h-48 sm:w-64 sm:h-64 object-cover rounded-lg shadow-lg mb-5 transition-transform duration-400 group-hover:scale-110';
-const StyledSubContainer = 'flex justify-center space-x-12 mt-5';
 const StyledName = "mt-[100px] mb-5 text-center text-basic";
 const StylePrice = 'mr-0 text-pink';
 
