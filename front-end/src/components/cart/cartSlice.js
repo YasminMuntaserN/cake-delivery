@@ -14,14 +14,6 @@ const cartSlice = createSlice({
         {cakeObject :action.payload ,quantity:1 ,sizeId:1}
       );
     },
-    // setQuantity(state, action) {
-    //   // payload will be the cake id and quantity
-    //   const { id, quantity } = action.payload;
-    //   const item = state.cart.find(item => item.cakeObject.cakeID === id);
-    //   if (item) {
-    //     item.quantity = quantity; 
-    //   }
-    // },
     IncQuantity(state, action) {
       // payload will be the cake id
       const item = state.cart.find(item => item.cakeObject.cakeID === action.payload);
@@ -42,6 +34,7 @@ const cartSlice = createSlice({
     deleteItem(state, action) {
       // payload will be the cake id
       state.cart = state.cart.filter(item => item.cakeObject.cakeID !== action.payload);
+      console.log(`state.cart: ${state.cart}`);
     },
     setSize(state, action){
       // payload will be the cake id and sizeId

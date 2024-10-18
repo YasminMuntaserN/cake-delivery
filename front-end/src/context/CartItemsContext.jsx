@@ -1,7 +1,8 @@
 import { createContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IncQuantity as SetNewIncQuantity,
-  DecQuantity as SetNewDecQuantity, setSize as SetNewSize, addItem, getCart } from '../components/cart/cartSlice';
+  DecQuantity as SetNewDecQuantity, setSize as SetNewSize, addItem, getCart, 
+  deleteItem} from '../components/cart/cartSlice';
 
 const CartItemsContext = createContext();
 
@@ -28,12 +29,15 @@ function CartItemsProvider({ children }) {
   const handleSize = (id, sizeId) => {
     dispatch(SetNewSize({ id, sizeId }));
   };
-
+  const handleDelete = (id) => {
+    console.log(`delete ${id}`);
+    dispatch(deleteItem(id));
+  };
   console.log(cart); 
 
   return (
     <CartItemsContext.Provider
-      value={{ handleInc, handleDec, handleSize, handleAdd, cart }}
+      value={{ handleInc, handleDec, handleSize, handleAdd,handleDelete, cart }}
     >
       {children}
     </CartItemsContext.Provider>

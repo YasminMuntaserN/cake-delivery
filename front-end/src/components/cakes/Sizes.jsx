@@ -3,13 +3,13 @@ import Button from "../../ui/Button"
 function Sizes({handleSetSize}) {
   return (
     <div className="StyledContainer">
-      <Button type="circle" onClick={()=>handleSetSize(1)}>
+      <Button type="Circle" onClick={()=>handleSetSize(1)}>
       🤌 Small
       </Button>
-      <Button type="circle" onClick={()=>handleSetSize(2)}>
+      <Button type="Circle" onClick={()=>handleSetSize(2)}>
       🫳 medium
       </Button>
-      <Button type="circle" onClick={()=>handleSetSize(3)}>
+      <Button type="Circle" onClick={()=>handleSetSize(3)}>
       🫴 large
       </Button>
     </div>

@@ -18,7 +18,6 @@ useEffect(()=>{
       setQuantity(quantity);
     }
 },[cart ,cake.cakeID]);
-
   return (
     <>
       <div className={StyledContainer}>

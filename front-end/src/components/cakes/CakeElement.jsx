@@ -24,7 +24,6 @@ function CakeElement({ cake }) {
     }
   }, [cakeID]); 
 
-
   return (
     <Modal>
       <div className={StyledContainer}>
