@@ -5,7 +5,6 @@ import Cakes from "./pages/Cakes";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Cart from "./pages/Cart";
-
 // Create a new instance of QueryClient
 const queryClient = new QueryClient({
     defaultOptions: {
