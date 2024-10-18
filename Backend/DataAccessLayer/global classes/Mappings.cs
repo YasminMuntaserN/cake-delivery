@@ -114,5 +114,15 @@ namespace DataAccessLayer
             );
         }
 
+        public static FeedbackWithCustomerName MapFeedbackWithCustomerNameDTOFromReader(IDataReader reader)
+        {
+            return new FeedbackWithCustomerName(
+            FeedbackID: (int)reader["FeedbackID"],
+            CustomerName: reader["CustomerName"].ToString() ?? string.Empty,
+            Feedback: reader["Feedback"].ToString() ?? string.Empty,
+            FeedbackDate: (DateTime)reader["FeedbackDate"]
+        );
+        }
+
     }
 }

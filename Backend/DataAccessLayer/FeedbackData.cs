@@ -84,11 +84,11 @@ namespace DataAccessLayer
         /// Retrieves all Feedbacks from the database.With Customers Name
         /// </summary>
         /// <returns>A list of FeedbackDTO objects.</returns>
-        public static List<FeedbackDto> GetAllFeedbacksWithCustomersName()
+        public static List<FeedbackWithCustomerName> GetAllFeedbacksWithCustomersName()
         {
             return DataAccessHelper.GetAll(
-                "sp_GetAllFeedbacks",
-                Mappings.MapFeedbackDTOFromReader
+                "sp_GetAllFeedbacksWithCustomersName",
+                Mappings.MapFeedbackWithCustomerNameDTOFromReader
             );
         }
     }

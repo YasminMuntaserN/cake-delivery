@@ -1,6 +1,5 @@
 ﻿using Business_Layer.Cake;
 using Business_Layer.Feedback;
-using Business_Layer.Feedback.Business_Layer.Feedback;
 using CakeDeliveryDTO.CakeDTOs;
 using CakeDeliveryDTO.FeedbackDTOs;
 using DataAccessLayer;
@@ -8,22 +7,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CakeDeliveryAPI.Controllers
 {
+    [Route("api/Feedbacks")]
+    [ApiController]
     public class CustomerFeedbackController : BaseController
     {
         private readonly CustomerFeedbackValidator _validator = new CustomerFeedbackValidator();
 
-        // GET: api/cakes/all
-        [HttpGet("All", Name = "GetAllFeedback")]
+        // GET: api/Feedback/all
+        [HttpGet("AllFeedback", Name = "GetAllFeedback")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<FeedbackDto>> GetAllCustomerFeedbacks()
             => GetAllEntities(() => CustomerFeedback.All());
 
-        // GET: api/cakes/all
-        [HttpGet("AllFeedbacksWithCustomersName", Name = "GetAllFeedbacksWithCustomersName")]
+
+        // GET: api/Feedback/all
+        [HttpGet("All", Name = "AllFeedbacksWithCustomersName")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<FeedbackDto>> GetAllFeedbacksWithCustomersName()
+        public ActionResult<IEnumerable<FeedbackWithCustomerName>> GetAllFeedbacksWithCustomersName()
             => GetAllEntities(() => CustomerFeedback.AllFeedbacksWithCustomersName());
 
 
