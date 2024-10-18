@@ -1,22 +1,25 @@
 import { HiTrash } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/helper";
-import Loader from "../common/Loader";
-import Error from "../common/Error";
-import { useCake } from "../../hooks/useCake";
+// import Loader from "../common/Loader";
+// import Error from "../common/Error";
+// import { useCake } from "../../hooks/useCake";
 
-function CartItem({ OrderItem }) {
-    const {cakeID, quantity, pricePerItem } = OrderItem;
-    const {cake , isLoading, error}=useCake(cakeID);
+function CartItem({ Item }) {
+    //const {cakeID, quantity, pricePerItem } = OrderItem;
 
-    if (isLoading) return <Loader />;
-    if (error) return <Error />;
+    // const {cake , isLoading, error}=useCake(cakeID);
 
+    // if (isLoading) return <Loader />;
+    // if (error) return <Error />;
+
+    const {cakeObject, quantity, sizeID } = Item;
+    console.log(`${cakeObject} ${ quantity} ${ sizeID }`)
     return (
         <div className={styledRow }>
-            <img className={styledImage}  src={cake.imageUrl} alt={cake.cakeName} />
-            <p>{cake.cakeName}</p>
+            <img className={styledImage}  src={cakeObject.imageUrl} alt={cakeObject.cakeName} />
+            <p>{cakeObject.cakeName}</p>
             <p>{quantity}</p>
-            <p>{formatCurrency(pricePerItem)}</p>
+            <p>{formatCurrency(cakeObject.price)}</p>
             <div>
                 <button><HiTrash /></button>
             </div>

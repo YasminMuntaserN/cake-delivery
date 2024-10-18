@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { getOrderItems } from "../../services/apiCart";
+//import { getOrderItems } from "../../services/apiCart";
 import CartItem from "./CartItem";
-import Loader from "../common/Loader";
-import Error from "../common/Error";
+//import Loader from "../common/Loader";
+//import Error from "../common/Error";
+import { getCart } from "../cart/cartSlice";
+import { useSelector } from "react-redux";
+
 function CartTable() {
-    const { data: OrderItems = [], error, isLoading } = useQuery(
+/* const { data: OrderItems = [], error, isLoading } = useQuery(
         {
             queryKey: ["orderItems"],
             queryFn: getOrderItems
@@ -15,7 +18,11 @@ function CartTable() {
 
 
     if (isLoading) return <Loader />;
-    if (error) return <Error />;
+    if (error) return <Error />;*/
+
+    const cart = useSelector(getCart);
+    console.log(cart);
+
     return (
         <div role="table" className={styledTable}>
 
@@ -28,8 +35,8 @@ function CartTable() {
                 <div>Delete</div>
                 <div></div>
             </header>
-            {OrderItems.map((OrderItem) => (
-                <CartItem OrderItem={OrderItem}  key={OrderItem.orderItemID} />
+            {cart.map((Item) => (
+                <CartItem Item={Item}  key={Item.cakeObject.cakeID} />
             ))}
         </div>
     );
