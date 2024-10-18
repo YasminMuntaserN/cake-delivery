@@ -1,16 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { getTotalPages } from "../../services/apiCakes";
-import { useParams } from "react-router-dom";
 import Loader from "../common/Loader";
 import Error from "../common/Error";
+import { usePagination } from "./cakeHooks/usePagination";
 
 function Pagination() {
-    const { categoryId } = useParams(); // Get categoryId from URL
-
-    const { data: pagesNum, error, isLoading } = useQuery({
-        queryKey: ["pagesNum", categoryId],
-        queryFn: () => getTotalPages(categoryId),
-    });
+    const {pagesNum ,error, isLoading}=usePagination();
 
     if (isLoading) return <Loader />;
     if (error) return <Error />;
