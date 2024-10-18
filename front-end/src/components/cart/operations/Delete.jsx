@@ -7,7 +7,6 @@ import { CartItemsContext } from "../../../context/CartItemsContext";
 function Delete({id}) {
   const {handleDelete} =useContext(CartItemsContext);
 
-  console.log(id);
   return (
     <Modal>
       <Modal.Open>
