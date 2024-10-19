@@ -14,18 +14,19 @@ function CartItem({ Item }) {
     // if (isLoading) return <Loader />;
     // if (error) return <Error />;
 
-    const {cakeObject, quantity, sizeID } = Item;
-    console.log(`Item ${Item}`)
+    const {cakeObject, quantity, sizeId } = Item;
+    const size= sizeId===1 ?"Small" : sizeId==   2 ?"medium":"large";
+
     return (
         <div className={styledRow }>
             <p></p>
             <img className={styledImage}  src={cakeObject.imageUrl} alt={cakeObject.cakeName} />
             <p>{cakeObject.cakeName}</p>
             <p>{quantity}</p>
-            <p>{formatCurrency(cakeObject.price)}</p>
-            <p>size</p>
+            <p className="text-pink">{formatCurrency(cakeObject.price)}</p>
+            <p>{size}</p>
             <Delete id={cakeObject.cakeID}/>
-            <Edit/>
+            <Edit cake={cakeObject}/>
         </div>
     );
 }
