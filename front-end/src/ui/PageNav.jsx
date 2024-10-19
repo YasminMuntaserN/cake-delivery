@@ -1,3 +1,4 @@
+import CartOverview from '../components/cart/CartOverview';
 import Logo from './Logo';
 import { NavLink } from "react-router-dom";
 const nav__links = [
@@ -41,14 +42,7 @@ function PageNav() {
     </div>
 
     <div className="flex items-center gap-6 sm:gap-10">
-      <span className="relative">
-        <i className="cursor-pointer">
-          <img className="w-[40px]" src="./cart.png" alt="Cart" />
-        </i>
-        <span className="absolute top-[-5px] right-[-5px] bg-pink text-white w-[20px] h-[20px] rounded-full text-[0.8rem] font-medium flex items-center justify-center">
-          0
-        </span>
-      </span>
+      <CartOverview />
       <i className="cursor-pointer">
         <img className="w-[40px]" src="./fast-delivery.png" alt="Delivery" />
       </i>
