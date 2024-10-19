@@ -1,15 +1,18 @@
+import { useContext } from "react";
 import Button from "../../ui/Button"
+import { CartItemsContext } from '../../context/CartItemsContext';
 
-function Sizes({handleSetSize}) {
+function Sizes({cake}) {
+  const {handleSize} = useContext(CartItemsContext);
   return (
     <div className="StyledContainer">
-      <Button type="Circle" onClick={()=>handleSetSize(1)}>
+      <Button type="Circle" onClick={()=>handleSize(cake.cakeID, 1)}>
       🤌 Small
       </Button>
-      <Button type="Circle" onClick={()=>handleSetSize(2)}>
+      <Button type="Circle" onClick={()=>handleSize(cake.cakeID, 2)}>
       🫳 medium
       </Button>
-      <Button type="Circle" onClick={()=>handleSetSize(3)}>
+      <Button type="Circle" onClick={()=>handleSize(cake.cakeID, 3)}>
       🫴 large
       </Button>
     </div>
