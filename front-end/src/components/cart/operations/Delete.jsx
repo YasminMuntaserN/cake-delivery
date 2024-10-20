@@ -2,10 +2,10 @@ import { useContext } from "react";
 import Button from "../../../ui/Button";
 import Modal from "../../../ui/Modal";
 import { HiTrash } from "react-icons/hi2";
-import { CartItemsContext } from "../../../context/CartItemsContext";
+import { useCartItems } from "../../../context/CartItemsContext";
 
 function Delete({id}) {
-  const {handleDelete} =useContext(CartItemsContext);
+  const {handleDelete} =useCartItems();
 
   return (
     <Modal>

@@ -11,7 +11,7 @@ function AppLayout() {
   return (
     <CartItemsProvider>
 
-    <div className ="grid grid-rows-[auto_1fr_auto] h-screen ">
+    <div className ={StyledCointainer}>
       <PageNav />
       <main>
               {showVideo && location.pathname.includes("/cakes") && <VideoLayout>All Cakes :</VideoLayout>}
@@ -25,4 +25,5 @@ function AppLayout() {
   )
 }
 
+const StyledCointainer ="grid grid-rows-[auto_1fr_auto] h-screen ";
 export default AppLayout
