@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   IncQuantity as SetNewIncQuantity,
@@ -51,4 +51,10 @@ function CartItemsProvider({ children }) {
   );
 }
 
-export { CartItemsContext, CartItemsProvider };
+function useCartItems(){
+  const context = useContext(CartItemsContext);
+  if(context === undefined)
+    throw new Error ('postContext was used outside of the Provider');
+}
+
+export { CartItemsProvider, useCartItems };
