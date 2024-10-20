@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import Button from "../../ui/Button"
-import { CartItemsContext } from '../../context/CartItemsContext';
+import { useCartItems } from '../../context/CartItemsContext';
 
 function Sizes({cake}) {
-  const {handleSize} = useContext(CartItemsContext);
+  const {handleSize} = useCartItems();
   return (
     <div className="StyledContainer">
       <Button type="Circle" onClick={()=>handleSize(cake.cakeID, 1)}>

@@ -1,13 +1,13 @@
 import Button from "../../ui/Button";
 import { formatCurrency } from '../../utils/helper';
-import { useContext,  useState } from 'react';
-import { CartItemsContext } from '../../context/CartItemsContext';
+import { useState } from 'react';
+import { useCartItems } from '../../context/CartItemsContext';
 import Sizes from './Sizes';
 import Quantity from './Quantity';
 
 
 function CakeItem({ cake }) {
-  const { handleAdd} = useContext(CartItemsContext);
+  const { handleAdd} = useCartItems();
 
   const [isAdded , setIsAdded]=useState(false);
 

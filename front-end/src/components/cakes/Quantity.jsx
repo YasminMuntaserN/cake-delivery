@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { HiMiniMinusCircle, HiMiniPlusCircle } from 'react-icons/hi2';
-import { CartItemsContext } from "../../context/CartItemsContext";
+import { useCartItems } from "../../context/CartItemsContext";
 
 function Quantity({ cake }) {
-  const {handleInc, handleDec, cart } = useContext(CartItemsContext);
+  const {handleInc, handleDec, cart } = useCartItems();
   const [quantity , setQuantity]=useState(0);
 
   useEffect(()=>{
