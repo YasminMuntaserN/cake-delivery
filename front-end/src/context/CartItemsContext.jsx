@@ -51,10 +51,12 @@ function CartItemsProvider({ children }) {
   );
 }
 
-function useCartItems(){
+function useCartItems() {
   const context = useContext(CartItemsContext);
-  if(context === undefined)
-    throw new Error ('postContext was used outside of the Provider');
+  if (context === undefined) {
+    throw new Error('useCartItems must be used within a CartItemsProvider');
+  }
+  return context;
 }
 
 export { CartItemsProvider, useCartItems };
