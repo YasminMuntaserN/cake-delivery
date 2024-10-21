@@ -1,27 +1,47 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import Form from "../../ui/Form";
+import Button  from "../../ui/Button";
 import FormRow from "../../ui/FormRow";
 import CustomerAddressInput from "./CustomerAddressInput";
-import { setCustomerInfo } from "./customerSlice";
+import { AddCustomer, UpdateCustomerId } from "./customerSlice";
+import {useCustomer} from "./hooks/useCustomer";
+import { useEffect } from "react";
 
 function AddCustomerForm({ onGeocode }) {
-    const { register, handleSubmit, formState } = useForm();
-
-    const { errors } = formState;
     const dispatch =useDispatch();
+    const { register, handleSubmit, formState  } = useForm();
+    const  {addCustomer ,id} =useCustomer();
+    const { errors } = formState;
+    console.log(` id ${id}`);
 
     const onSubmit = (data) => {
-        console.log(`data :${data}`);
-        dispatch(setCustomerInfo(data));
-    };
+        console.log(data);
+        if (data) {
+            const addressInfo = data.address ? data.address.split(",") : [];
+            const customerData = {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                email: data.email,
+                phoneNumber:  data.phoneNumber,
+                address: addressInfo.at(0) || '',
+                city: addressInfo.at(1)  || '',
+                postalCode: data.postalCode,
+                country: addressInfo.at(2)  || ''
+            };
+            console.log(customerData);
+
+            addCustomer(JSON.stringify(customerData));
+            dispatch(AddCustomer({ id, ...customerData }));
+            }
+        }
 
     function onError(errors) {
         console.log(errors);
     }
 
     return (
-        <Form onSubmit={()=>handleSubmit(onSubmit ,onError)}>
+        <Form onSubmit={handleSubmit(onSubmit ,onError)}>
         <FormRow error={errors?.firstName?.message}>
             <input
             className={StyledInput}
@@ -46,24 +66,39 @@ function AddCustomerForm({ onGeocode }) {
             <input
             className={StyledInput}
             placeholder="Email"
-            type="email"
+            type="text"
             id="email"
             {...register("email", { required: "This field is required" })}
             />
         </FormRow>
 
-        <FormRow error={errors?.phone?.message}>
+        <FormRow error={errors?.phoneNumber?.message}>
             <input
             className={StyledInput}
-            placeholder="Phone"
-            type="tel"
-            id="phone"
-            {...register("phone", { required: "This field is required" })}
+            placeholder="phone Number"
+            type="Number"
+            id="phoneNumber"
+            {...register("phoneNumber", { required: "This field is required" })}
+            />
+        </FormRow>
+
+        <FormRow error={errors?.postalCode?.message}>
+            <input
+            className={StyledInput}
+            placeholder="postal Code"
+            type="text"
+            id="postalCode"
+            {...register("postalCode", { required: "This field is required" })}
             />
         </FormRow>
 
         <CustomerAddressInput errors={errors} register={register} StyledInput={StyledInput} onGeocode={onGeocode} />
+
+        <FormRow className="form-row">
+        <Button type="submit">Submit</Button>
+        </FormRow>
         </Form>
+
     );
     }
 

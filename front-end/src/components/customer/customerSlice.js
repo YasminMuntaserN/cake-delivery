@@ -18,17 +18,18 @@ export const fetchAddress = createAsyncThunk('user/fetchAddress', async () => {
 
   // Reverse geocoding
   const addressObj = await getAddress(position);
-  const address = `${addressObj.locality}, ${addressObj.city}, ${addressObj.postcode}, ${addressObj.countryName}`;
+  const address = `${addressObj.locality},${addressObj.city},${addressObj.countryName}`;
 
   return { address, position };
 });
 
 const initialState={
-  customerId:0,
+  id:0,
   firstName: '',
   lastName: '',
   email: '',
-  phone: '',
+  phoneNumber: '',
+  postalCode:'',
   position: {},
   address: '',
 };
@@ -37,16 +38,17 @@ const customerSlice = createSlice({
   name: 'user',
   initialState,
   reducers:{
-    setCustomerInfo(state, action){
+    AddCustomer(state, action){
       console.log(`action.payload: ${action.payload}`);
-      // here the payload will be an object of customer info
-      const {firstName ,lastName,email,phone ,address} = action.payload;
-      return { ...state,firstName ,lastName ,email,phone,address};
+        const { id, firstName, lastName, email, phoneNumber, address, postalCode } = action.payload;
+        return { ...state, id, firstName, lastName, email, phoneNumber, postalCode, address };
     },
-    setCustomerId(state, action){
-      // here the payload will be an object of customer id
-      return { ...state, customerId :action.payload };
-    }
+    UpdateCustomerId(state, action){
+      //action.payload will be the id
+      console.log(`action.payload: ${action.payload}`);
+        const { id} = action.payload;
+        return { ...state, id};
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAddress.fulfilled, (state, action) => {
@@ -56,7 +58,11 @@ const customerSlice = createSlice({
   },
 });
 export const {
-  setCustomerInfo,setCustomerId 
+  AddCustomer ,UpdateCustomerId
 } = customerSlice.actions;
 
 export default customerSlice.reducer;
+
+
+export const getCustomer =(state)=>state.customer;
+export const getCustomerId =(state)=>state.customer.id;

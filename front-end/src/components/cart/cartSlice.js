@@ -21,15 +21,15 @@ const cartSlice = createSlice({
       if (item) {
         item.quantity =item.quantity+1; 
       }
-    },DecQuantity(state, action) {
+    },
+      DecQuantity(state, action) {
       // payload will be the cake id
-      const item = state.cart.find(item => item.cakeObject.cakeID === action.payload);
-    console.log(`handleInc item ${item}`);
-      if (item && item.quantity > 1) {
-        item.quantity =item.quantity-1; 
-      } else {
-        deleteItem(action.payload);
-      }
+        const item = state.cart.find(item => item.cakeObject.cakeID === action.payload);
+        if (item && item.quantity > 1) {
+          item.quantity = item.quantity - 1;
+        } else {
+          state.cart = state.cart.filter(item => item.cakeObject.cakeID !== action.payload);
+        }
     },
     deleteItem(state, action) {
       // payload will be the cake id

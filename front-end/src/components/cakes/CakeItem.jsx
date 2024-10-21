@@ -7,7 +7,7 @@ import Quantity from './Quantity';
 
 
 function CakeItem({ cake }) {
-  const { handleAdd} = useCartItems();
+  const { handleAdd } = useCartItems();
 
   const [isAdded , setIsAdded]=useState(false);
 

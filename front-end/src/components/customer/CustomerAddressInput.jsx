@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormRow from "../../ui/FormRow";
 import { useDispatch } from "react-redux";
 import { fetchAddress } from "./customerSlice";
@@ -17,7 +17,8 @@ function CustomerAddressInput({ errors, register, StyledInput, onGeocode }) {
       console.error("Error fetching position:", error);
     }
   };
-  console.log(address);
+
+  useEffect(()=>handleGeolocation ,[]);
 
   return (
     <div className="relative">
@@ -26,7 +27,7 @@ function CustomerAddressInput({ errors, register, StyledInput, onGeocode }) {
           className={StyledInput}
           placeholder="Address"
           type="text"
-          disabled={false}
+          readOnly={true}
           value={address}
           id="address"
           {...register("address", {
@@ -34,13 +35,6 @@ function CustomerAddressInput({ errors, register, StyledInput, onGeocode }) {
           })}
         />
       </FormRow>
-      <button
-        type="button"
-        onClick={handleGeolocation}
-        className="absolute top-0 right-0 border-2 border-gray-200 p-2 rounded-md"
-      >
-        Get Your Position
-      </button>
     </div>
   );
 }
