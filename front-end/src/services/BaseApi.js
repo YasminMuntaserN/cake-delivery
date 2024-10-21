@@ -44,8 +44,7 @@ export async function getBy(entityName,type ,value){
 }
 
 export async function getById(entityName ,value){
-  console.log(`from getById : ${API_URL}/${entityName}/${value}`);
-  try {
+try {
     const res = await fetch(`${API_URL}/${entityName}/${value}`, {
         headers: {
             'Accept': 'application/json',
@@ -91,3 +90,28 @@ try {
 }
 }
 
+export async function addEntity(entityName, entityData) {
+    console.log(`entityData: ${entityData}`); 
+    try {
+        const response = await fetch(`${API_URL}/${entityName}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: entityData, 
+        });
+        console.log(response);
+        if (response.ok) {
+            const data = await response.json();
+            
+            return data.split('/').pop();
+        } else {
+            const errorText = await response.text();
+            throw new Error(`Error adding customer: ${errorText}`);
+        }
+    } catch (error) {
+        console.error(`Error adding ${entityName}:`, error);
+        throw error;
+    }
+}

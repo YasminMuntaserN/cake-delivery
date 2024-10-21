@@ -1,18 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import AddCustomerForm from "../components/customer/AddCustomerForm";
 
-function Map() {
-  const [coordinates, setCoordinates] = useState([]);
+
+function Map({coordinates}) {
 
   const {latitude, longitude}=coordinates;
-  const handleGeocode = (position) => {
-    setCoordinates(position);
-  };
+
+
   return (
-    <div className="flex ">
-      <AddCustomerForm onGeocode={handleGeocode} />
       <div className={StyledContainer}>
         {coordinates.length !== 0 ? (
           <MapContainer center={[latitude, longitude]} zoom={13} className={StyledMap}>
@@ -23,7 +19,6 @@ function Map() {
           <p>Loading map...</p>
         )}
       </div>
-    </div>
   );
 }
 

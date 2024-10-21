@@ -3,7 +3,7 @@ function FormRow({error, children}) {
     <div className={StyledContainer}>
       {/* {label &&<label htmlFor={children.props.id}> {label}</label>} */}
       {children}
-      {error&& <span>{error}</span>}
+      {error&& <span className="text-red">{error}</span>}
     </div>
   )
 }
