@@ -13,7 +13,8 @@ namespace CakeDeliveryDTO.FeedbackDTOs
         int? FeedbackID,
         int CustomerID,
         string Feedback,
-        DateTime FeedbackDate
+        DateTime FeedbackDate,
+        int Rating
     );
 
 }

@@ -17,7 +17,7 @@ namespace Business_Layer.Feedback
         public int CustomerID { get; set; }
         public string Feedback { get; set; }
         public DateTime FeedbackDate { get; set; }
-
+        public int Rating { get; set; }
 
         public CustomerFeedback(FeedbackDto feedbackDto, enMode mode = enMode.AddNew)
         {
@@ -25,20 +25,20 @@ namespace Business_Layer.Feedback
             CustomerID = feedbackDto.CustomerID;
             Feedback = feedbackDto.Feedback;
             FeedbackDate = feedbackDto.FeedbackDate;
-
+            Rating= feedbackDto.Rating;
             Mode = mode;
         }
 
 
         public FeedbackDto ToFeedbackDto() =>
-            new FeedbackDto(FeedbackID, CustomerID, Feedback, FeedbackDate);
+            new FeedbackDto(FeedbackID, CustomerID, Feedback, FeedbackDate, Rating);
 
         public static FeedbackDto FindById(int feedbackId)
               => FeedbackData.FindFeedbackById(feedbackId);
 
         private bool _Add()
         {
-            FeedbackID = FeedbackData.Add(new FeedbackCreateDto(CustomerID, Feedback, FeedbackDate));
+            FeedbackID = FeedbackData.Add(new FeedbackCreateDto(CustomerID, Feedback, FeedbackDate, Rating));
             return FeedbackID.HasValue;
         }
 

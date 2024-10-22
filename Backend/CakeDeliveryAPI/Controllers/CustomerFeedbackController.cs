@@ -41,7 +41,7 @@ namespace CakeDeliveryAPI.Controllers
             }
 
             CustomerFeedback feedbackInstance = new CustomerFeedback(
-                new FeedbackDto(null, newFeedbackDto.CustomerID, newFeedbackDto.Feedback, DateTime.Now),
+                new FeedbackDto(null, newFeedbackDto.CustomerID, newFeedbackDto.Feedback, DateTime.Now , newFeedbackDto.Rating),
                 CustomerFeedback.enMode.AddNew
             );
 

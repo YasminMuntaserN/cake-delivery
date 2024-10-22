@@ -20,10 +20,14 @@ namespace Business_Layer.Feedback
             if (!HasValidFeedbackDate(feedback.FeedbackDate))
                 AddError("FeedbackDate cannot be in the future.");
 
+            if (!HasValidRating(feedback.Rating))
+                AddError("Rating cannot be geater than 5.");
+
             return Result;
         }
 
         private bool HasValidCustomerID(int customerId) => customerId > 0;
+        private bool HasValidRating(int rating) => rating < 5;
 
         private bool HasValidFeedback(string feedback)
         {
