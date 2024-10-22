@@ -34,7 +34,7 @@ namespace CakeDeliveryAPI.Controllers
      
         // POST: api/deliveries
         [HttpPost(Name = "AddDelivery")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<DeliveryDTO> AddDelivery([FromBody] DeliveryCreateDTO newDeliveryDTO)
         {
@@ -60,7 +60,8 @@ namespace CakeDeliveryAPI.Controllers
 
             if (deliveryInstance.Save())
             {
-                return CreatedAtRoute("GetDeliveryById", new { id = deliveryInstance.DeliveryID }, newDeliveryDTO);
+                var locationUrl = Url.Link("GetDeliveryById", new { id = deliveryInstance.DeliveryID });
+                return Ok(locationUrl);
             }
 
             return BadRequest("Unable to create delivery.");

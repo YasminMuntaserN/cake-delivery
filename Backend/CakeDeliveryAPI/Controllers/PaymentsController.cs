@@ -57,7 +57,8 @@ namespace CakeDeliveryAPI.Controllers
 
             if (paymentInstance.Save())
             {
-                return CreatedAtRoute("GetPaymentById", new { id = paymentInstance.PaymentID }, newPaymentDTO);
+                var locationUrl = Url.Link("GetPaymentById", new { id = paymentInstance.PaymentID });
+                return Ok(locationUrl);
             }
             return BadRequest("Unable to create payment.");
         }

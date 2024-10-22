@@ -36,7 +36,7 @@ namespace CakeDeliveryAPI.Controllers
 
         // POST: api/orders
         [HttpPost(Name = "AddOrder")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<OrderDTO> AddOrder([FromBody] OrderCreateDTO newOrderDTO)
         {
@@ -63,7 +63,8 @@ namespace CakeDeliveryAPI.Controllers
 
             if (orderInstance.Save())
             {
-                return CreatedAtRoute("GetOrderById", new { id = orderInstance.OrderID }, newOrderDTO);
+                var locationUrl = Url.Link("GetOrderById", new { id = orderInstance.OrderID });
+                return Ok(locationUrl);
             }
             return BadRequest("Unable to create order.");
         }

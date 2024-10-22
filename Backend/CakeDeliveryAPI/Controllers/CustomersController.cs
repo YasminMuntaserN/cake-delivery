@@ -49,7 +49,7 @@ namespace CakeDeliveryAPI.Controllers
 
         // POST: api/customers
         [HttpPost(Name = "Addcustomer")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CustomerDTO> Addcustomer([FromBody] CustomerCreateDTO newCustomerDTO)
         {
@@ -57,13 +57,23 @@ namespace CakeDeliveryAPI.Controllers
             {
                 return BadRequest("Invalid customer data.");
             }
+
             Customer customerInstance = new Customer(
-                new CustomerDTO(null, newCustomerDTO.FirstName, newCustomerDTO.LastName,string.Concat(newCustomerDTO.FirstName, " ", newCustomerDTO.LastName)
-                , newCustomerDTO.Email, newCustomerDTO.PhoneNumber, newCustomerDTO.Address, newCustomerDTO.City, newCustomerDTO.PostalCode, newCustomerDTO.Country),
-            Customer.enMode.AddNew
+                new CustomerDTO(
+                    null,
+                    newCustomerDTO.FirstName,
+                    newCustomerDTO.LastName,
+                    string.Concat(newCustomerDTO.FirstName, " ", newCustomerDTO.LastName),
+                    newCustomerDTO.Email,
+                    newCustomerDTO.PhoneNumber,
+                    newCustomerDTO.Address,
+                    newCustomerDTO.City,
+                    newCustomerDTO.PostalCode,
+                    newCustomerDTO.Country
+                ),
+                Customer.enMode.AddNew
             );
 
-            // Validate the customer instance
             var validationResult = _validator.Validate(customerInstance);
             if (!validationResult.IsValid)
             {
@@ -76,8 +86,11 @@ namespace CakeDeliveryAPI.Controllers
 
             if (customerInstance.Save())
             {
-                return CreatedAtRoute("GetcustomerById", new { id = customerInstance.CustomerID }, newCustomerDTO);
+                var locationUrl = Url.Link("GetcustomerById", new { id = customerInstance.CustomerID });
+
+                return Ok(locationUrl);
             }
+
             return BadRequest("Unable to create customer.");
         }
 
