@@ -39,13 +39,13 @@ const customerSlice = createSlice({
   initialState,
   reducers:{
     AddCustomer(state, action){
-      console.log(`action.payload: ${action.payload}`);
         const { id, firstName, lastName, email, phoneNumber, address, postalCode } = action.payload;
+      console.log(` ${ id}, ${firstName},${ lastName}, ${email}, ${phoneNumber}, ${address}, ${postalCode }`);
         return { ...state, id, firstName, lastName, email, phoneNumber, postalCode, address };
     },
     UpdateCustomerId(state, action){
       //action.payload will be the id
-      console.log(`action.payload: ${action.payload}`);
+      console.log(`action.payload: ${JSON.stringify(action.payload)}`);
         const { id} = action.payload;
         return { ...state, id};
     },

@@ -30,9 +30,7 @@ function CustomerAddressInput({ errors, register, StyledInput, onGeocode }) {
           readOnly={true}
           value={address}
           id="address"
-          {...register("address", {
-            required: "This field is required",
-          })}
+          {...register("address")}
         />
       </FormRow>
     </div>

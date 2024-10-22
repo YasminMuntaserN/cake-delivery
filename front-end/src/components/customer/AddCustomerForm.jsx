@@ -1,22 +1,21 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import Form from "../../ui/Form";
 import Button  from "../../ui/Button";
 import FormRow from "../../ui/FormRow";
 import CustomerAddressInput from "./CustomerAddressInput";
-import { AddCustomer, UpdateCustomerId } from "./customerSlice";
+import { AddCustomer } from "./customerSlice";
 import {useCustomer} from "./hooks/useCustomer";
-import { useEffect } from "react";
 
-function AddCustomerForm({ onGeocode }) {
+function AddCustomerForm({ onGeocode ,onShowOrder}) {
     const dispatch =useDispatch();
     const { register, handleSubmit, formState  } = useForm();
     const  {addCustomer ,id} =useCustomer();
     const { errors } = formState;
-    console.log(` id ${id}`);
+
+    console.log(`id from AddCustomerForm ${id}`);
 
     const onSubmit = (data) => {
-        console.log(data);
         if (data) {
             const addressInfo = data.address ? data.address.split(",") : [];
             const customerData = {
@@ -29,10 +28,11 @@ function AddCustomerForm({ onGeocode }) {
                 postalCode: data.postalCode,
                 country: addressInfo.at(2)  || ''
             };
-            console.log(customerData);
 
             addCustomer(JSON.stringify(customerData));
+            console.log(`id ${id} after adding customer`);
             dispatch(AddCustomer({ id, ...customerData }));
+            onShowOrder(true);
             }
         }
 
@@ -95,7 +95,7 @@ function AddCustomerForm({ onGeocode }) {
         <CustomerAddressInput errors={errors} register={register} StyledInput={StyledInput} onGeocode={onGeocode} />
 
         <FormRow className="form-row">
-        <Button type="submit">Submit</Button>
+        <Button type="submit" >Submit</Button>
         </FormRow>
         </Form>
 
