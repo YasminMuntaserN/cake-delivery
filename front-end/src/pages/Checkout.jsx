@@ -7,19 +7,18 @@ import AddCustomerForm from "../components/customer/AddCustomerForm";
 
 function Checkout() {
   const [coordinates, setCoordinates] = useState([]);
-
-  const customerId =useSelector(getCustomerId);
+  const [ShowOrder ,setShowOrder]=useState(false);
 
   const handleGeocode = (position) => {
     setCoordinates(position);
   };
-  console.log(`customerId: ${customerId}`);
+  console.log(ShowOrder);
   return (
     <>
       <h2 className={StyledHeader}> Please Fill Out Your Information</h2>
-      <div className="flex ">
-          <AddCustomerForm onGeocode={handleGeocode} />
-          { !customerId ? 
+      <div className="grid lg:grid-cols-[1fr_1.2fr] ">
+          <AddCustomerForm onGeocode={handleGeocode} onShowOrder={setShowOrder} />
+          { !ShowOrder ? 
           <Map coordinates={coordinates}/> :<Order />}
       </div>
     </>
