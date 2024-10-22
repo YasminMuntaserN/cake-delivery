@@ -22,7 +22,7 @@ function Map({coordinates}) {
   );
 }
 
-const StyledContainer = "w-1/2  mx-7 my-10  border-2  rounded-lg p-1";
+const StyledContainer = "mx-7 my-10  border-2  rounded-lg p-1";
 const StyledMap = "w-full h-full rounded-lg";
 
 export default Map;
