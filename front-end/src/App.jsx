@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Cakes from "./pages/Cakes";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Contact from "./pages/Contact";
 
 
 const queryClient = new QueryClient({
@@ -28,6 +29,7 @@ function App() {
                         <Route path="cakes/:categoryId" element={<Cakes />} />
                         <Route path="cart" element={<Cart />} />
                         <Route path="checkout" element={<Checkout />} />
+                        <Route path="contact" element={<Contact />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

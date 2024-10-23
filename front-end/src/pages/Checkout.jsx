@@ -18,8 +18,9 @@ function Checkout() {
       <h2 className={StyledHeader}> Please Fill Out Your Information</h2>
       <div className="grid lg:grid-cols-[1fr_1.2fr] ">
           <AddCustomerForm onGeocode={handleGeocode} onShowOrder={setShowOrder} />
-          { !ShowOrder ? 
-          <Map coordinates={coordinates}/> :<Order />}
+          {/* { !ShowOrder ? 
+          <Map coordinates={coordinates}/> :<Order />} */}
+          <Order />
       </div>
     </>
   )
