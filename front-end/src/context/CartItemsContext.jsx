@@ -7,6 +7,7 @@ import {
   addItem,
   getCart,
   deleteItem,
+  clearCart,
 } from '../components/cart/cartSlice';
 
 const CartItemsContext = createContext();
@@ -39,12 +40,14 @@ function CartItemsProvider({ children }) {
     console.log(`delete ${id}`);
     dispatch(deleteItem(id));
   };
-
+  const handleClear = () => {
+    dispatch(clearCart());
+  };
   console.log(cart);
 
   return (
     <CartItemsContext.Provider
-      value={{ handleInc, handleDec, handleSize, handleAdd, handleDelete, cart }}
+      value={{ handleInc, handleDec, handleSize, handleAdd, handleDelete,handleClear, cart }}
     >
       {children}
     </CartItemsContext.Provider>
