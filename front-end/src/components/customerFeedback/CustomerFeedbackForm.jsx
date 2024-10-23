@@ -1,53 +1,52 @@
 import { useSelector } from "react-redux"
-import { getCustomer, getCustomerId } from "../customer/customerSlice"
+import { getCustomer} from "../customer/customerSlice"
 import { useForm } from "react-hook-form";
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import StartRating from "../../ui/StartRating";
-import { useState } from "react";
+import {useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useAddCustomersFeedback } from "./customersFeedbackshook/useAddCustomerFeedback";
+import { useCartItems } from "../../context/CartItemsContext";
 
 function CustomerFeedbackForm() {
-  const { register, handleSubmit ,formState} = useForm();
-  const { isAdding, addCustomerFeedback ,id:customerFeedbackId }=useAddCustomersFeedback();
-  const { errors } = formState;
+  const { register, handleSubmit } = useForm();
+  const { addCustomerFeedback }=useAddCustomersFeedback();
   const customer =useSelector(getCustomer);
-  const customerId =useSelector(getCustomerId);
-
-
-  console.log(customer);
-  console.log(`customerId: ${customerId}`);
-
   const { id, firstName, lastName } = customer;
   const [rating ,setRating]=useState(0);
+  const navigate =useNavigate();
+  const {handleClear} =useCartItems();
 
+  console.log(customer);
   console.log(rating);
+
   function onError(errors) {
     console.log(errors);
 }
 const onSubmit = (data) => {
-  const customerFeedback = {
-    customerID: customerId,
-    feedback: data.feedback,
-    feedbackDate: new Date(),
-    rating: rating
+  const feedbackData = {
+    CustomerID: id, 
+    Feedback: data.feedback, 
+    FeedbackDate: new Date(),
+    Rating: rating, 
   };
-
-  const payload = {
-    newFeedbackDto: customerFeedback  // Wrap it as newFeedbackDto
-  };
-
-  addCustomerFeedback(JSON.stringify(payload));
+  addCustomerFeedback(JSON.stringify(feedbackData),{
+    onSuccess:()=>{
+      navigate("/home");
+      handleClear();
+    }
+  });
 };
 
   return (
     <div>
-
       <Form onSubmit={handleSubmit(onSubmit,onError)}>
       <p className={StyledText}>Thanks <span>{firstName}  {lastName}</span> to help us ❤️</p>
 
-      <textarea
+      <input
           className={StyledInput}
+          type="text"
           id="feedback"
           placeholder="share with us your feedback"
           {...register("feedback", { required: "This field is required" })}

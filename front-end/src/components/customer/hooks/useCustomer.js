@@ -7,9 +7,11 @@ export function useCustomer() {
 
     const { mutate: addCustomer, isLoading: isAdding ,data :id } = useMutation({
         mutationFn: addNewCustomer,
-        onSuccess: () => {
+        onSuccess: (data) => {
+            const customerId = data.customerID;
             toast.success('Customer added successfully');
             queryClient.invalidateQueries({ queryKey: ["customers"] });
+            return customerId;
         },
         onError: (err) => {
             toast.error(err.message || 'An error occurred');

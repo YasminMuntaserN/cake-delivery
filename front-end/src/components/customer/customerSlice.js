@@ -38,16 +38,10 @@ const customerSlice = createSlice({
   name: 'user',
   initialState,
   reducers:{
-    AddCustomer(state, action){
-        const { id, firstName, lastName, email, phoneNumber, address, postalCode } = action.payload;
-      console.log(` ${ id}, ${firstName},${ lastName}, ${email}, ${phoneNumber}, ${address}, ${postalCode }`);
-        return { ...state, id, firstName, lastName, email, phoneNumber, postalCode, address };
-    },
-    UpdateCustomerId(state, action){
-      //action.payload will be the id
-      console.log(`action.payload: ${JSON.stringify(action.payload)}`);
-        const { id} = action.payload;
-        return { ...state, id};
+    AddCustomer(state, action) {
+      const {id,firstName, lastName, email, phoneNumber, address, postalCode } = action.payload;
+      return { 
+        ...state,id, firstName, lastName, email, phoneNumber, postalCode, address };
     },
   },
   extraReducers: (builder) => {
@@ -65,4 +59,4 @@ export default customerSlice.reducer;
 
 
 export const getCustomer =(state)=>state.customer;
-export const getCustomerId =(state)=>state.customer.id;
+export const getCustomerId = (state) => state.customer.id;

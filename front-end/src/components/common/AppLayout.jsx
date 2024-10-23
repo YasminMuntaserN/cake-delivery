@@ -17,6 +17,8 @@ function AppLayout() {
               {showVideo && location.pathname.includes("/cakes") && <VideoLayout>All Cakes :</VideoLayout>}
               {showVideo && location.pathname.includes("/cart") && <VideoLayout>Your Cart</VideoLayout>}
               {showVideo && location.pathname.includes("/checkout") && <VideoLayout>checkout</VideoLayout>}
+              {showVideo && location.pathname.includes("/contact") && <VideoLayout>Contact Us</VideoLayout>}
+
 
       <Outlet/>
       </main>
