@@ -4,16 +4,16 @@ import Form from "../../ui/Form";
 import Button  from "../../ui/Button";
 import FormRow from "../../ui/FormRow";
 import CustomerAddressInput from "./CustomerAddressInput";
-import { AddCustomer } from "./customerSlice";
+import { AddCustomer, UpdateCustomerId } from "./customerSlice";
 import {useCustomer} from "./hooks/useCustomer";
+import { useEffect } from "react";
 
 function AddCustomerForm({ onGeocode ,onShowOrder}) {
     const dispatch =useDispatch();
     const { register, handleSubmit, formState  } = useForm();
-    const  {addCustomer ,id} =useCustomer();
+    const  {addCustomer} =useCustomer();
     const { errors } = formState;
 
-    console.log(`id from AddCustomerForm ${id}`);
 
     const onSubmit = (data) => {
         if (data) {
@@ -29,17 +29,20 @@ function AddCustomerForm({ onGeocode ,onShowOrder}) {
                 country: addressInfo.at(2)  || ''
             };
 
-            addCustomer(JSON.stringify(customerData));
-            console.log(`id ${id} after adding customer`);
-            dispatch(AddCustomer({ id, ...customerData }));
-            onShowOrder(true);
+            addCustomer(JSON.stringify(customerData),{
+                onSuccess :(data)=>{
+                    const id= data.customerID;
+                    console.log(`id ${id} after adding customer`);
+                    dispatch(AddCustomer({id,...customerData }));
+                    onShowOrder(true);
+                }
+            });
             }
         }
 
     function onError(errors) {
         console.log(errors);
     }
-
     return (
         <Form onSubmit={handleSubmit(onSubmit ,onError)}>
         <FormRow error={errors?.firstName?.message}>
