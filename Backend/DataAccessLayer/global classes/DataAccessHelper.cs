@@ -62,6 +62,7 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
+                Console.WriteLine("the error in the data access function" + ex);
                 HandleException(ex);
             }
 

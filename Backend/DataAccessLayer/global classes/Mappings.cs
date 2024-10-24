@@ -110,19 +110,21 @@ namespace DataAccessLayer
                 FeedbackID: (int)reader["FeedbackID"],
                 CustomerID: (int)reader["CustomerID"],
                 Feedback: reader["Feedback"].ToString() ?? string.Empty,
-                FeedbackDate: (DateTime)reader["FeedbackDate"]
+                FeedbackDate: (DateTime)reader["FeedbackDate"],
+                Rating: (int)reader["Rating"]
             );
         }
+
 
         public static FeedbackWithCustomerName MapFeedbackWithCustomerNameDTOFromReader(IDataReader reader)
         {
             return new FeedbackWithCustomerName(
-            FeedbackID: (int)reader["FeedbackID"],
-            CustomerName: reader["CustomerName"].ToString() ?? string.Empty,
-            Feedback: reader["Feedback"].ToString() ?? string.Empty,
-            FeedbackDate: (DateTime)reader["FeedbackDate"]
-        );
+                FeedbackID: (int)reader["FeedbackID"],
+                CustomerName: reader["CustomerName"].ToString() ?? string.Empty,
+                Feedback: reader["Feedback"].ToString() ?? string.Empty,
+                FeedbackDate: (DateTime)reader["FeedbackDate"],
+                Rating: (int)reader["Rating"]
+            );
         }
-
     }
 }

@@ -59,7 +59,8 @@ public class OrderItemsController : BaseController
 
         if (orderItemInstance.Save())
         {
-            return CreatedAtRoute("GetOrderItemById", new { id = orderItemInstance.OrderItemID }, newOrderItemDTO);
+            var locationUrl = Url.Link("GetOrderItemById", new { id = orderItemInstance.OrderItemID });
+            return Ok(locationUrl);
         }
 
         return BadRequest("Unable to create order item.");

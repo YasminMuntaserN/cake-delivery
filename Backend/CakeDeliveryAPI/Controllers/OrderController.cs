@@ -49,7 +49,7 @@ namespace CakeDeliveryAPI.Controllers
                 new OrderDTO(null, newOrderDTO.CustomerID, DateTime.Now, newOrderDTO.TotalAmount, newOrderDTO.PaymentStatus, newOrderDTO.DeliveryStatus),
                 Order.enMode.AddNew
             );
-            // Validate the order instance
+       
             var validationResult = _validator.Validate(orderInstance);
             if (!validationResult.IsValid)
             {

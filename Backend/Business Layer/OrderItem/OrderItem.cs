@@ -40,7 +40,7 @@ namespace Business_Layer.Orders
       
         private bool _Add()
         {
-            OrderItemID = clsOrderItemData.Add(new OrderItemCreateDTO(OrderID, CakeID, SizeID, Quantity, PricePerItem));
+            OrderItemID = clsOrderItemData.Add(new OrderItemCreateDTO(OrderID, CakeID,  Quantity, SizeID, PricePerItem));
             return OrderItemID.HasValue;
         }
 
@@ -55,8 +55,10 @@ namespace Business_Layer.Orders
                     if (_Add())
                     {
                         Mode = enMode.Update;
+                        Console.WriteLine("the error not in save function");
                         return true;
                     }
+                    Console.WriteLine("the error in save function");
                     return false;
 
                 case enMode.Update:

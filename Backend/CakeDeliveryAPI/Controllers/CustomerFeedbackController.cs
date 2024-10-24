@@ -1,6 +1,8 @@
 ﻿using Business_Layer.Cake;
+using Business_Layer.Customer;
 using Business_Layer.Feedback;
 using CakeDeliveryDTO.CakeDTOs;
+using CakeDeliveryDTO.CustomerDTOs;
 using CakeDeliveryDTO.FeedbackDTOs;
 using DataAccessLayer;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +22,13 @@ namespace CakeDeliveryAPI.Controllers
         public ActionResult<IEnumerable<FeedbackDto>> GetAllCustomerFeedbacks()
             => GetAllEntities(() => CustomerFeedback.All());
 
+        // GET: api/Feedback/CustomerFeedbackById
+        [HttpGet("GetFeedbackById", Name = "GetFeedbackById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<FeedbackDto> GetFeedbackById(int FeedbackId)
+            => GetEntityByIdentifier(FeedbackId , CustomerFeedback.FindById , Feedback => Ok(Feedback));
+
 
         // GET: api/Feedback/all
         [HttpGet("All", Name = "AllFeedbacksWithCustomersName")]
@@ -29,19 +38,25 @@ namespace CakeDeliveryAPI.Controllers
             => GetAllEntities(() => CustomerFeedback.AllFeedbacksWithCustomersName());
 
 
-        // POST: api/feedback
+        // POST: api/feedbacks
         [HttpPost(Name = "AddFeedback")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<FeedbackDto> AddFeedback([FromBody] FeedbackCreateDto newFeedbackDto)
         {
-            if (newFeedbackDto == null || string.IsNullOrEmpty(newFeedbackDto.Feedback))
+            if (newFeedbackDto == null)
             {
                 return BadRequest("Invalid feedback data.");
             }
 
             CustomerFeedback feedbackInstance = new CustomerFeedback(
-                new FeedbackDto(null, newFeedbackDto.CustomerID, newFeedbackDto.Feedback, DateTime.Now , newFeedbackDto.Rating),
+                new FeedbackDto(
+                    null,
+                    newFeedbackDto.CustomerID,
+                    newFeedbackDto.Feedback,
+                    DateTime.Now ,
+                    newFeedbackDto.Rating
+                    ),
                 CustomerFeedback.enMode.AddNew
             );
 
@@ -57,7 +72,9 @@ namespace CakeDeliveryAPI.Controllers
 
             if (feedbackInstance.Save())
             {
-                return CreatedAtRoute("GetFeedbackById", new { id = feedbackInstance.FeedbackID }, newFeedbackDto);
+                var locationUrl = Url.Link("GetFeedbackById", new { id = feedbackInstance.FeedbackID });
+
+                return Ok(locationUrl);
             }
 
             return BadRequest("Unable to create feedback.");

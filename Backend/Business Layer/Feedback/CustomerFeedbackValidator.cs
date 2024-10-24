@@ -27,7 +27,7 @@ namespace Business_Layer.Feedback
         }
 
         private bool HasValidCustomerID(int customerId) => customerId > 0;
-        private bool HasValidRating(int rating) => rating < 5;
+        private bool HasValidRating(int rating) => rating <= 5;
 
         private bool HasValidFeedback(string feedback)
         {

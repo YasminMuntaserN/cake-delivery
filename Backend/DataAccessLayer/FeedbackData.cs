@@ -67,7 +67,6 @@ namespace DataAccessLayer
             );
         }
 
-
         /// <summary>
         /// Retrieves all Feedbacks from the database.
         /// </summary>
