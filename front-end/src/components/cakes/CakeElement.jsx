@@ -1,34 +1,29 @@
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import Modal from '../../ui/Modal';
 import CakeCard from'./CakeCard';
-import { getCakeById } from "../../services/apiCakes";
 import CakeItem from './CakeItem';
 import { HiHeart } from 'react-icons/hi2';
+import { useGetCake } from './cakeHooks/useGetCake';
 
 
 function CakeElement({ cake }) {
-  const [cakeID, setCakeID] = useState(null); 
   const [clickedCake, setClickedCake] = useState(null); 
-  
-  useEffect(() => {
-    if (cakeID) {
-      const fetchCakeData = async () => {
-        try {
-          const fetchedCake = await getCakeById(cakeID);
-          setClickedCake(fetchedCake);
-        } catch (err) {
-          console.error('Error fetching cake data:', err);
-        }
-      };
-      fetchCakeData();
-    }
-  }, [cakeID]); 
+  const { getCake}=useGetCake();
+
+  const handleGetCake = (id) => {
+    getCake(id, {
+      onSuccess: (data) => {
+        console.log(data);
+        setClickedCake(data);
+      }
+    });
+  };
 
   return (
     <Modal>
       <div className={StyledContainer}>
           <CakeItem cake={cake}/>
-          <Modal.Open opens="cake-card" onClick={() => {setCakeID(cake.cakeID)}}>
+          <Modal.Open opens="cake-card" onClick={() => {handleGetCake(cake.cakeID)}}>
                 <HiHeart className={styledIcon}/>
             </Modal.Open>
       </div>
