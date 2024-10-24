@@ -116,6 +116,8 @@ namespace Business_Layer.Cake
         public static List<CakeDTO> All()
             => CakeData.GetAllCakes();
 
+        public static List<CakeDTO> TopCakes()
+            => CakeData.GetTopCakes();
 
         public static List<CakeDTO> AllByCategoryID(int categoryId) 
             => CakeData.GetCakesByCategory(categoryId);

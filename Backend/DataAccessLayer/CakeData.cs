@@ -98,6 +98,18 @@ namespace DataAccessLayer
             );
         }
 
+        /// <summary>
+        /// Retrieves all Last ten cakes from the database.
+        /// </summary>
+        /// <returns>A list of CakeDTO objects.</returns>
+        public static List<CakeDTO> GetTopCakes()
+        {
+            return DataAccessHelper.GetAll(
+                "sp_GetTopCakes",
+                Mappings.MapCakeDTOFromReader
+            );
+        }
+
 
         /// <summary>
         /// Retrieves all cakes belonging to a specified category.

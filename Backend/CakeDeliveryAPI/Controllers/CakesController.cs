@@ -19,6 +19,13 @@ public class CakesController : BaseController
     public ActionResult<IEnumerable<CakeDTO>> GetAllCakes()
         => GetAllEntities(() => Cake.All());
 
+    // GET: api/cakes/TopCakes
+    [HttpGet("TopCakes", Name = "GetTopCakes")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<IEnumerable<CakeDTO>> GetTopCakes()
+        => GetAllEntities(() => Cake.TopCakes());
+
 
     // GET: api/cakes/{id}
     [HttpGet("{id}", Name = "GetCakeById")]
