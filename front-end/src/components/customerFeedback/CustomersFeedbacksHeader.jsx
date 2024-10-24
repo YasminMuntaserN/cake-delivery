@@ -6,6 +6,6 @@ function CustomersFeedbacksHeader() {
   )
 }
 
-const StyledContainer ="text-[40px] text-center text-basic font-sans font-bold";
+const StyledContainer ="text-[40px] text-center text-basic font-sans ";
 const StyledHeader ="text-2xl font-bold";
 export default CustomersFeedbacksHeader

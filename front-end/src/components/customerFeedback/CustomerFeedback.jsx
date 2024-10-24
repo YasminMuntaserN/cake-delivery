@@ -41,7 +41,7 @@ function CustomerFeedback() {
   </div>
   )
 }
-const StyledContainer = "flex flex-col lg:flex-row items-center justify-between px-20 bg-gray-100 h-[500px]";
+const StyledContainer = "flex flex-col lg:flex-row items-center justify-between px-20 py-20 ";
 const StyledSubContainer="w-[600px] flex flex-col justify-between gap-10 mt-[-80px]";
 const StyledImgContainer = "w-1/3 rounded-full overflow-hidden"; 
 const StyledImg = "w-full object-cover transition-transform duration-1000 h-62";
