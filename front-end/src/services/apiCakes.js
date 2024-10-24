@@ -52,5 +52,24 @@ export async function getTotalPages(Id) {
 }
 
 
+export async function getTopCakes(){
+    try {
+        const res = await fetch(`${API_URL}/TopCakes`, {
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
 
+        if (!res.ok) {
+            throw new Error(`Failed to fetch cakes`);
+        }
 
+        const data = await res.json();
+        console.log(data);  
+        return data;  
+    } catch (error) {
+
+        console.error(`Error fetching cakes:`, error);
+        throw error; 
+    }
+}
