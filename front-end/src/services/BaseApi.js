@@ -64,32 +64,6 @@ try {
 }
 }
 
-export async function getByPageNumAndPgeSize(entityName ,pageNumber, pageSize) {
-
-  if (pageNumber <= 0 || pageSize <= 0) {
-    throw new Error("Page number and page size must be greater than zero.");
-}
-
-try {
-    const res = await fetch(`${API_URL}/page/number/${pageNumber}?pageSize=${pageSize}`, {
-        headers: {
-            'Accept': 'application/json',
-        },
-    });
-
-    if (!res.ok) {
-        throw new Error(`Failed to fetch ${entityName}`);
-    }
-
-    const data = await res.json();
-  
-    return data; 
-
-  } catch (error) {
-    throw error; 
-}
-}
-
 export async function addEntity(entityName, entityData) {
     console.log(`entityData: ${entityData}`); 
     try {

@@ -3,6 +3,7 @@ import Pagination from "../components/cakes/Pagination";
 import SearchBar from "../components/common/SearchBar";
 
 function Cakes() {
+  
   return (
       <>
           <SearchBar/>

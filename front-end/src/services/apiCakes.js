@@ -1,4 +1,4 @@
-import { getAll ,getById ,getBy, getByPageNumAndPgeSize } from "./BaseApi";
+import { getAll ,getById ,getBy} from "./BaseApi";
 
 const API_URL = import.meta.env.VITE_API_URL+'/cakes';
 
@@ -15,13 +15,14 @@ export const getCakeByName = async (cakeName) => await getBy("cake","name" ,cake
 export const getCakeById = async (cakeId) => await getById("cakes",cakeId);
 
 
-export const fetchCakes = async (pageNumber = 1, pageSize = 10) => await getByPageNumAndPgeSize("cakes",pageNumber,pageSize);
+export const fetchCakes = async (pageNumber) => await getByPageNumAndPgeSize("cakes",pageNumber);
 
 
 export async function getTotalPages(Id) {
+    console.log(`${API_URL}/TotalPages/number/${Id}`);
     try {
         console.log("getTotalPages method called with categoryId:", Id);
-        const apiUrl = `${API_URL}/TotalPages/number/${Id}`; // Check this URL is correct
+        const apiUrl = `${API_URL}/TotalPages/number/${Id}`;
         console.log('apiUrl:', apiUrl);
         const res = await fetch(apiUrl, {
             method: 'GET',
@@ -32,7 +33,7 @@ export async function getTotalPages(Id) {
         console.log('res:', res);
 
         if (!res.ok) {
-            const errorDetails = await res.text(); // Log response details
+            const errorDetails = await res.text(); 
             console.error('Failed to fetch total pages:', errorDetails);
             throw new Error('Failed to fetch total pages');
         }
@@ -47,8 +48,36 @@ export async function getTotalPages(Id) {
         return data;
     } catch (error) {
         console.error("Error fetching total pages:", error);
-        throw error; // Re-throw the error for React Query to handle
+        throw error; 
     }
+}
+
+export async function getByPageNumAndPgeSize(entityName ,pageNumber) {
+
+if (pageNumber <= 0) {
+    throw new Error("Page number and page size must be greater than zero.");
+}
+console.log(` pageNumber ${pageNumber}`);
+console.log(`${API_URL}/page/number/${pageNumber}?pageSize=${5}`);
+
+try {
+    const res = await fetch(`${API_URL}/page/number/${pageNumber}?pageSize=${5}`, {
+        headers: {
+            'Accept': 'application/json',
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to fetch ${entityName}`);
+    }
+
+    const data = await res.json();
+  
+    return data; 
+
+  } catch (error) {
+    throw error; 
+}
 }
 
 
