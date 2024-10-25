@@ -1,22 +1,11 @@
-import {HiMiniPencilSquare } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/helper";
 import Delete from "./operations/Delete";
 import Edit from "./operations/Edit";
-// import Loader from "../common/Loader";
-// import Error from "../common/Error";
-// import { useCake } from "../../hooks/useCake";
+
 
 function CartItem({ Item }) {
-    //const {cakeID, quantity, pricePerItem } = OrderItem;
-
-    // const {cake , isLoading, error}=useCake(cakeID);
-
-    // if (isLoading) return <Loader />;
-    // if (error) return <Error />;
-
     const {cakeObject, quantity, sizeId } = Item;
     const size= sizeId===1 ?"Small" : sizeId==   2 ?"medium":"large";
-
     return (
         <div className={styledRow }>
             <p></p>

@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTotalPages } from "../../../services/apiCakes";
-import { useParams } from "react-router-dom";
 
-export function usePagination() {
-  const { categoryId } = useParams(); 
+export function usePagination({ categoryId }) {
 
   const { data: pagesNum, error, isLoading } = useQuery({
       queryKey: ["pagesNum", categoryId],

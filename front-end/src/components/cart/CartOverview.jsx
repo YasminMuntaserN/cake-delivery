@@ -13,7 +13,7 @@ function CartOverview() {
         <i className="cursor-pointer">
             <img className="w-[40px]" src="./cart.png" alt="Cart" />
         </i>
-        <span className={StyledItemCount}>0</span>
+        <span className={StyledItemCount}>{cart.length}</span>
       </div>
       </Modal.Open>
       <Modal.Window type="List">
