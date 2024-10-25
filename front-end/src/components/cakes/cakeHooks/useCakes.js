@@ -1,9 +1,7 @@
-import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {getCakes, getCakesByCategory } from "../../../services/apiCakes";
 
-export function useCakes() {
-const { categoryId } = useParams(); 
+export function useCakes({ categoryId }) {
 
 const { data: cakes = [], error, isLoading } = useQuery(
     Number(categoryId) === -1

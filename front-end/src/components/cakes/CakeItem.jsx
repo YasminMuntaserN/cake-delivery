@@ -1,14 +1,12 @@
 import Button from "../../ui/Button";
 import { formatCurrency } from '../../utils/helper';
-import { useState } from 'react';
+import {useState } from 'react';
 import { useCartItems } from '../../context/CartItemsContext';
 import Sizes from './Sizes';
 import Quantity from './Quantity';
 
-
 function CakeItem({ cake }) {
   const { handleAdd } = useCartItems();
-
   const [isAdded , setIsAdded]=useState(false);
 
   return (
@@ -21,22 +19,19 @@ function CakeItem({ cake }) {
       </div>
       <div>
         <span className={StylePrice}>{formatCurrency(cake.price)}</span>
-        {!isAdded && ( 
+        {!isAdded ? (
           <div>
-            <Button onClick={() =>{ 
-              setIsAdded((added)=>!added) ;
-              handleAdd(cake)}}>
+            <Button onClick={() => {handleAdd(cake);}}>
               Add To Cart
             </Button>
           </div>
+        ) : (
+          <div>
+            <Quantity cake={cake} />
+            <Sizes cake={cake} />
+          </div>
         )}
       </div>
-      {isAdded && ( 
-        <div>
-          <Quantity cake={cake} />
-          <Sizes cake={cake} />
-        </div>
-      )}
     </>
   );
 }

@@ -1,12 +1,12 @@
 import CakeElement from "./CakeElement";
-
+import { useParams } from "react-router-dom";
 import Loader from "../common/Loader";
 import Error from "../common/Error";
 import { useCakes } from "./cakeHooks/useCakes";
 
 function CakesTable() {
-
-    const {cakes ,error , isLoading}=useCakes();
+    const { categoryId } = useParams(); 
+    const {cakes ,error , isLoading}=useCakes({categoryId});
     if (isLoading) return <Loader />;
     if (error) return <Error />;
 
