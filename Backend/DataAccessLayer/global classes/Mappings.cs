@@ -3,6 +3,7 @@ using CakeDeliveryDTO.CakeDTOs;
 using CakeDeliveryDTO.CustomerDTOs;
 using CakeDeliveryDTO.DeliveryDTO;
 using CakeDeliveryDTO.FeedbackDTOs;
+using CakeDeliveryDTO.SalesDTOs;
 using DTOs;
 using System;
 using System.Collections.Generic;
@@ -125,6 +126,14 @@ namespace DataAccessLayer
                 FeedbackDate: (DateTime)reader["FeedbackDate"],
                 Rating: (int)reader["Rating"]
             );
+        }
+
+        public static SalesDTO MapSalesWithDTOFromReader( IDataReader reader)
+        {
+            return new SalesDTO(
+                Sales: (decimal)reader["TotalSales"],
+                Day: reader["DayOfWeek"].ToString() ?? string.Empty
+                );
         }
     }
 }
