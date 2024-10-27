@@ -2,7 +2,7 @@ import CakeElement from "./CakeElement";
 import { useParams } from "react-router-dom";
 import Loader from "../common/Loader";
 import Error from "../common/Error";
-import { useCakes } from "./cakeHooks/useCakes";
+import { useCakes } from "./hooks/useCakes";
 
 function CakesTable() {
     const { categoryId } = useParams(); 

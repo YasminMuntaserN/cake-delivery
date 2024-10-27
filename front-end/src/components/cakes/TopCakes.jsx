@@ -1,7 +1,7 @@
 import CakeElement from "./CakeElement";
 import Loader from "../common/Loader";
 import Error from "../common/Error";
-import { useGetTopCakes } from "./cakeHooks/useTopCakes";
+import { useGetTopCakes } from "./hooks/useTopCakes";
 
 function TopCakes() {
 

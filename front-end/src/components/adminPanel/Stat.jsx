@@ -47,5 +47,5 @@ function Stat() {
     </Modal>
   )
 }
-const styledContainer = "px-12 flex gap-20 items-center ";
+const styledContainer = "px-5 flex gap-20 items-center ";
 export default Stat;

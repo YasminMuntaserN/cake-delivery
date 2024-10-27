@@ -22,7 +22,7 @@ function WeeklySalesChart() {
   
   console.log(SalesData);
   return (
-    <ResponsiveContainer width="100%" height={600}>
+    <ResponsiveContainer width="100%" height={500} className="bg-gray-100">
     <BarChart
         data={SalesData}
         margin={{ top: 20, right: 20, left: 20, bottom: 5 }}

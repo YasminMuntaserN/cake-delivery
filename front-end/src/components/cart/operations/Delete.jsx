@@ -1,20 +1,18 @@
-import { useContext } from "react";
 import Button from "../../../ui/Button";
 import Modal from "../../../ui/Modal";
 import { HiTrash } from "react-icons/hi2";
 import { useCartItems } from "../../../context/CartItemsContext";
-import { useDeleteCake } from "../../cakes/cakeHooks/useDeleteCake";
+import { useCakeOperations } from "../../../context/CakeContext";
 
-function Delete({id  , isDeleting =false}) {
+
+function Delete({id ,isDeleting =false }) {
   const {handleDelete} =useCartItems();
-  const {deleteCakeObject} =useDeleteCake();
+  const {handleDeleteCake}=useCakeOperations();
   const handleClickedDelete =()=>{
     if(isDeleting){
-      console.log("we will delele it  :(");
-      deleteCakeObject(id) 
+      handleDeleteCake(id);
     }else{
-      console.log("worng way");
-      handleDelete(id)
+      handleDelete(id);
     }
   }
   return (
@@ -35,4 +33,3 @@ function Delete({id  , isDeleting =false}) {
 }
 const StyledMessageContainer ='w-[300px] h-[200px]'
 export default Delete
-//()=>{isDeleting ?deleteCakeObject(id) :  handleDelete(id)}

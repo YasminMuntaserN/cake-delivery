@@ -3,7 +3,7 @@ import Modal from '../../ui/Modal';
 import CakeCard from'./CakeCard';
 import CakeItem from './CakeItem';
 import { HiHeart } from 'react-icons/hi2';
-import { useGetCake } from './cakeHooks/useGetCake';
+import { useGetCake } from './hooks/useGetCake';
 
 
 function CakeElement({ cake }) {

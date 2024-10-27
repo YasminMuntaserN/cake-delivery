@@ -1,16 +1,14 @@
 import Loader from "../common/Loader";
 import Error from "../common/Error";
-import { usePagination } from "./cakeHooks/usePagination";
+import { usePagination } from "./hooks/usePagination";
 import { HiArrowRightCircle ,HiArrowLeftCircle} from "react-icons/hi2";
 
 
-function Pagination({ categoryId = -1, pageNumber, OnPageNumber, totalPages }) {
-  const { pagesNum, error, isLoading } = usePagination({ categoryId });
-
+function Pagination({ categoryId = -1, pageNumber, OnPageNumber }) {
+  const {pagesNum , error, isLoading } = usePagination({ categoryId });
   if (isLoading) return <Loader />;
   if (error) return <Error />;
-
-  console.log(pagesNum);
+  const {totalPages} =pagesNum;
 
   return (
       <div>

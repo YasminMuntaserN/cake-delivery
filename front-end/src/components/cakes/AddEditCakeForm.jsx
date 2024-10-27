@@ -2,21 +2,20 @@ import { useForm } from "react-hook-form";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Button from "../../ui/Button";
-import { useAddCake } from "./cakeHooks/useAddCake";
+import { useAddCake } from "./hooks/useAddCake";
 import CategorySelector from "../common/CategorySelector";
-import { useUpdateCake } from "./cakeHooks/useUpdateCake";
+import { useUpdateCake } from "./hooks/useUpdateCake";
 import { useEffect } from "react";
+import { useCakeOperations } from "../../context/CakeContext";
 
 
 function AddEditCakeForm({cake}) {
-  console.log(cake);
   const { register, handleSubmit, formState ,setValue }=useForm();
   // if there is cake is not null then  the EditSession be will true else it will be false
   const isEditSession = Boolean(cake);
-  console.log(`isEditSession: ${isEditSession}`);
   const { errors } = formState;
-  const {addNewCake} =useAddCake();
-  const {updateCake}=useUpdateCake();
+  const { handleAddCake ,handleUpdateCake }=useCakeOperations();
+
   const onSubmit = (data) => {
     console.log(data);
     if (data) {
@@ -29,11 +28,10 @@ function AddEditCakeForm({cake}) {
         imageUrl:isEditSession ?cake.imageUrl : data.image[0].name,
     };
       if(!isEditSession){
-        console.log(cakeData);
-        addNewCake(cakeData)
+        handleAddCake(cakeData);
         }
         else{
-        updateCake({cakeID :cake.cakeID ,...cakeData});
+          handleUpdateCake({cakeID :cake.cakeID ,...cakeData});
       }
     }
   }
@@ -41,6 +39,7 @@ function AddEditCakeForm({cake}) {
   function onError(errors) { 
     console.log(errors);
 }
+
 useEffect(() => {
   if (isEditSession && cake) {
     setValue("name", cake.cakeName);
