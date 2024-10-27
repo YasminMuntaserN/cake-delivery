@@ -1,21 +1,18 @@
 import Stat from "../components/adminPanel/Stat";
 import StockQuantity from "../components/adminPanel/StockQuantity";
 import WeeklySalesChart from "../components/adminPanel/WeeklySalesChart";
-import AdminPageNav from "../ui/AdminPageNav";
 
 function Admin() {
   return (
     <>
-    <AdminPageNav />
-      <Stat />
     <div className ={StyledContainer}>
-      <StockQuantity />
+      {/* <StockQuantity /> */}
       <WeeklySalesChart />
     </div>
     </>
   )
 }
 
-const StyledContainer = "grid grid-cols-[1fr_1fr] gap-10 items-center mt-[-10px]"
+const StyledContainer = " ml-10 items-center mt-10"
 
 export default Admin
