@@ -53,7 +53,8 @@ namespace CakeDeliveryAPI.Controllers
 
             if (categoryInstance.Save())
             {
-                return CreatedAtRoute("GetCategoryById", new { id = categoryInstance.CategoryID }, newCategoryDTO);
+                var locationUrl = Url.Link("GetCategoryById", new { id = categoryInstance.CategoryID });
+                return Ok(locationUrl);
             }
 
             return BadRequest("Unable to create category.");

@@ -4,6 +4,7 @@ using CakeDeliveryDTO.CustomerDTOs;
 using CakeDeliveryDTO.DeliveryDTO;
 using CakeDeliveryDTO.FeedbackDTOs;
 using CakeDeliveryDTO.SalesDTOs;
+using CakeDeliveryDTO.UserDtos;
 using DTOs;
 using System;
 using System.Collections.Generic;
@@ -133,6 +134,15 @@ namespace DataAccessLayer
             return new SalesDTO(
                 Sales: (decimal)reader["TotalSales"],
                 Day: reader["DayOfWeek"].ToString() ?? string.Empty
+                );
+        }
+
+        public static UserDTO MapUserDTOFromReader(IDataReader reader)
+        {
+            return new UserDTO(
+                UserID: (int)reader["UserID"],
+                Email: reader["Email"]?.ToString() ?? string.Empty,
+                Password: reader["Password"]?.ToString() ?? string.Empty
                 );
         }
     }

@@ -46,7 +46,7 @@ public class CakesController : BaseController
 
     // POST: api/cakes
     [HttpPost(Name = "AddCake")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<CakeDTO> AddCake([FromBody] CakeCreateDto newCakeDTO)
     {
@@ -72,7 +72,8 @@ public class CakesController : BaseController
 
         if (cakeInstance.Save())
         {
-            return CreatedAtRoute("GetCakeById", new { id = cakeInstance.CakeID }, newCakeDTO);
+            var locationUrl = Url.Link("GetCakeById", new { id = cakeInstance.CakeID });
+            return Ok(locationUrl);
         }
 
         return BadRequest("Unable to create cake.");
