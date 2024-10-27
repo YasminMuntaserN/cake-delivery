@@ -8,6 +8,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
+import Login from "./pages/Login";
 
 
 const queryClient = new QueryClient({
@@ -31,7 +32,10 @@ function App() {
                         <Route path="cart" element={<Cart />} />
                         <Route path="checkout" element={<Checkout />} />
                         <Route path="contact" element={<Contact />} />
-                        <Route path="admin" element={<Admin />} />
+                    </Route> 
+                    <Route element={<Login />}>
+                        <Route path="admin" element={<Admin />} /> 
+                        <Route path="login" element={<Login />} /> 
                     </Route>
                 </Routes>
             </BrowserRouter>
@@ -40,4 +44,6 @@ function App() {
 }
 
 export default App;
+
+
 

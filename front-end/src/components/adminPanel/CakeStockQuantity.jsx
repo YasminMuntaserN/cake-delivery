@@ -2,7 +2,7 @@ import Delete from "../cart/operations/Delete";
 import Edit from "../cart/operations/Edit";
 
 
-function CakeStockQuantity({cake}) {
+function CakeStockQuantity({cake , isUpdating =false}) {
   const StyledStockQuantity = `rounded-full p-3 w-10 h-5 flex items-center ${
     cake.stockQuantity === 0 
       ? "bg-red-500" 
@@ -17,8 +17,8 @@ function CakeStockQuantity({cake}) {
         <img className={styledImage}  src={cake.imageUrl} alt={cake.cakeName} />
         <p>{cake.cakeName}</p>
         <div className={StyledStockQuantity}><p >{cake.stockQuantity}</p></div>
-        <Delete id={cake.cakeID}/>
-        <Edit cake={cake}/>
+        <Delete isDeleting={true} id={cake.cakeID}/>
+        <Edit isUpdating ={true} cake={cake}/>
     </div>
 );
 }

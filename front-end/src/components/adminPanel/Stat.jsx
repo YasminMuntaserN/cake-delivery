@@ -1,33 +1,51 @@
 import { HiMiniPencil ,HiMiniPlusCircle } from "react-icons/hi2";
 import Stats from "./Stats";
+import Modal from "../../ui/Modal";
+import { useState } from "react";
+import AddEditCakeForm from "../cakes/AddEditCakeForm";
+import AddCategoryForm from "../Categories/AddCategoryForm";
 
 const Operations= [
   {
-    icon :<HiMiniPencil className=" w-8 h-8" /> ,
+    
+    icon :<HiMiniPlusCircle className=" w-8 h-8 text-pink" /> ,
     name: "Add Cake"
   },
   {
-    icon :<HiMiniPlusCircle className="w-8 h-8"/> ,
+    icon :<HiMiniPlusCircle className="w-8 h-8 text-p"/> ,
     name: "Add Category"
   },
   {
-    icon :<HiMiniPlusCircle className="w-8 h-8"/> ,
+    icon :<HiMiniPlusCircle className="w-8 h-8 text-red-400"/> ,
     name: "Add User"
   },
   {
-    icon :<HiMiniPencil className="w-8 h-8 "/>,
+    icon :<HiMiniPencil className="w-8 h-8 text-basic"/>,
     name:  "update User"
   },
 ];
 function Stat() {
-console.log(Operations);
+    const[Operation , setOperation]=useState("");
+    console.log(`Operation: ${Operation}`);
   return (
-    <div className={styledContainer}>
-      {
-        Operations.map((operation ,i)=><Stats key ={i+1 } operation={operation} color={i%2 == 0 ?"peach" :"pink"}/>)
-      }
-    </div>
+    <Modal>
+        <div className={styledContainer}>
+          {
+            Operations.map((operation ,i)=>
+            <Modal.Open onClick={()=>{setOperation(operation.name)}} >
+                <button ><Stats key ={i+1 } operation={operation} color={i%2 == 0 ?"peach" :"pink"}/></button>
+            </Modal.Open>
+          )
+          }
+        </div>
+        <Modal.Window>
+          <div>
+          { (Operation === "Add Cake" ) &&  <AddEditCakeForm/>}
+          { (Operation === "Add Category"  ) &&<AddCategoryForm/>}
+          </div>
+        </Modal.Window>
+    </Modal>
   )
 }
-const styledContainer = "px-12 flex gap-3 items-center ";
+const styledContainer = "px-12 flex gap-20 items-center ";
 export default Stat;

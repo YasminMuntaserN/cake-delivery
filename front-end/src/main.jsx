@@ -5,6 +5,7 @@ import store from "./store";
 import App from './App.jsx'
 import './index.css';
 import { Toaster } from 'react-hot-toast';
+import { CartItemsProvider } from './context/CartItemsContext.jsx';
 
 
 createRoot(document.getElementById('root')).render(
@@ -27,7 +28,9 @@ createRoot(document.getElementById('root')).render(
           color:"pink",
         }
       }}/>
+    <CartItemsProvider>
     <App />
+  </CartItemsProvider>
   </Provider>,
   </StrictMode>,
 )
