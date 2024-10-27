@@ -1,12 +1,18 @@
-function FormRow({error, children}) {
+
+function FormRow({label="",error, children}) {
   return (
     <div className={StyledContainer}>
-      {/* {label &&<label htmlFor={children.props.id}> {label}</label>} */}
+      {label &&<label htmlFor={children.props.id}> {label}</label>}
       {children}
-      {error&& <span className="text-red">{error}</span>}
+      {error&&
+        <span className={StyledError}>
+         {error}
+          </span>}
     </div>
   )
 }
-const StyledContainer ="mb-10";
+const StyledContainer ="flex justify-between flex-nowrap mb-5";
+const StyledError =" ml-10  text-red-700";
 
 export default FormRow
+

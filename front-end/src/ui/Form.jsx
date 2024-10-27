@@ -6,6 +6,6 @@ function Form({children ,onSubmit}) {
   )
 }
 
-const StyledForm ="mx-5 my-10 border-2 border-pink p-10 rounded-lg";
+const StyledForm ="mx-5 my-1 border-2 border-pink p-10 rounded-lg ";
 
 export default Form;
