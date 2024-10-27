@@ -13,7 +13,7 @@ console.log(TopCakes);
 
     return (
       <div className={StyledContainer}>
-        <h2 className={StyledHeader}>The Last Sales </h2>
+        <h2 className={StyledHeader}>The Fresh cakes 😋 </h2>
         <div className={styledSubContainer}>
             {TopCakes.map((cake) => (
                 <CakeElement key={cake.cakeID} cake={cake} />
