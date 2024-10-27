@@ -1,6 +1,6 @@
 import { formatCurrency } from "../../utils/helper";
-import Delete from "./operations/Delete";
-import Edit from "./operations/Edit";
+import Delete from "../common/operations/Delete";
+import Edit from "../common/operations/Edit";
 
 
 function CartItem({ Item }) {

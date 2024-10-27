@@ -3,7 +3,7 @@ import Stats from "./Stats";
 import Modal from "../../ui/Modal";
 import { useState } from "react";
 import AddEditCakeForm from "../cakes/AddEditCakeForm";
-import AddCategoryForm from "../Categories/AddCategoryForm";
+import AddCategoryForm from "../Categories/AddEditCategoryForm";
 
 const Operations= [
   {
