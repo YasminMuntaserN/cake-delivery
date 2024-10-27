@@ -3,11 +3,11 @@ import Modal from "../../../ui/Modal"
 import {HiMiniPencilSquare, HiCalculator ,HiArrowsPointingOut} from "react-icons/hi2";
 import Quantity from "../../cakes/Quantity";
 import Sizes from "../../cakes/Sizes";
+import AddEditCakeForm from "../../cakes/AddEditCakeForm";
 
-function Edit({cake}) {
+function Edit({cake , isUpdating =false}) {
     const [changeQuantity , setChangeQuantity] =useState(false);
     const [changeSize , setChangeSize] =useState(false);
-
 
   return (
     <Modal>
@@ -17,6 +17,7 @@ function Edit({cake}) {
         </Modal.Open>
       </div>
       <Modal.Window>
+        { !isUpdating ?
         <div className={StyledContainer}>
           <div className={StyledOptionsContainer}>
           <button className={StyledOption} onClick={() => setChangeQuantity(!changeQuantity)}>
@@ -31,6 +32,9 @@ function Edit({cake}) {
           {changeQuantity && <Quantity cake={cake} />}
           {changeSize && <Sizes cake={cake} />}
         </div>
+        :
+        <AddEditCakeForm cake={cake}/>
+        }   
       </Modal.Window>
     </Modal>
   )
