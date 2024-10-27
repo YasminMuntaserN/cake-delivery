@@ -9,7 +9,11 @@ import Checkout from "./pages/Checkout";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
-
+import Customers from "./pages/Customers";
+import Categories from "./pages/Categories";
+import Users from "./pages/Users";
+import AdminCakes from "./pages/AdminCakes";
+import AdminLayout from "./components/common/AdminLayout";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -32,11 +36,16 @@ function App() {
                         <Route path="cart" element={<Cart />} />
                         <Route path="checkout" element={<Checkout />} />
                         <Route path="contact" element={<Contact />} />
-                    </Route> 
-                    <Route element={<Login />}>
-                        <Route path="admin" element={<Admin />} /> 
-                        <Route path="login" element={<Login />} /> 
                     </Route>
+                    <Route element={<AdminLayout/>}>
+                    <Route path="login" element={<Login />} />
+                    <Route path="admin" element={<Admin />} />
+                    <Route path="adminCakes" element={<AdminCakes />} />
+                    <Route path="adminCategories" element={<Categories />} />
+                    <Route path="adminCustomers" element={<Customers />} />
+                    <Route path="adminUsers" element={<Users />} />
+                    </Route>
+                    <Route path="*" element={<Navigate to="home" />} />
                 </Routes>
             </BrowserRouter>
         </QueryClientProvider>

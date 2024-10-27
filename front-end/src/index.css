@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  margin: 0;
+}
 @layer components {
 }
 /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
