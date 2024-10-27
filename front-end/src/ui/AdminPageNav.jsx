@@ -1,25 +1,53 @@
 import { NavLink } from "react-router-dom"
-import Logo from "./Logo"
+import Logo from "./Logo";
+import {
+  HiOutlineCalendarDays,
+  HiOutlineCog6Tooth,
+  HiOutlineHome,
+  HiOutlineHomeModern,
+  HiOutlineUsers,
+} from "react-icons/hi2";
 
 function AdminPageNav() {
   return (
-<nav className={StyledNav}>
-  <div className={StyledLogoContainer}>
-        <div className={StyledLogo}>
-          <Logo />
-        </div>
-
-        <div className="flex items-center gap-6 sm:gap-10">
-            <NavLink to="/home" className={StyledLink}>
-              go to the site 🚀
-            </NavLink>
-        </div>
-  </div>
-</nav>
-  )
+    <nav className="bg-gray-300 h-full">
+      <Logo />
+      <ul className={StyledList}>
+        <li>
+          <NavLink className={StyledNavList} to="/admin">
+            <HiOutlineHome />
+            <span>Dashboard</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink className={StyledNavList} to="/adminCakes">
+            <HiOutlineCalendarDays />
+            <span>Cakes</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink className={StyledNavList} to="/adminCategories">
+            <HiOutlineHomeModern />
+            <span>Categories</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink className={StyledNavList} to="/adminCustomers">
+            <HiOutlineCog6Tooth />
+            <span>Customers</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink className={StyledNavList} to="/adminUsers">
+            <HiOutlineUsers />
+            <span>Users</span>
+          </NavLink>
+        </li>
+      </ul>
+    </nav>
+  );
 }
-const StyledNav ="sticky top-0 left-0 bg-white z-[99999] shadow-[5px_5px_15px_-5px_#d7d6d6] animate-slideDown h-[100px] ";
-const StyledLogoContainer ="flex items-center justify-between mt-[-20px] pt-0 px-4 sm:px-10";
-const StyledLogo ="sm:w-[200px] mt-[-20px] flex justify-center sm:justify-start";
-const StyledLink ="text-peach text-2xl font-bold font-sansSerif hover:text-pink transition duration-300 ";
+const StyledList ="flex  flex-col gap-10";
+const StyledNavList ="flex pl-10 items-center gap-3 text-gray-800 text-base font-[20px] py-3 px-6 transition-all duration-300 rounded-lg hover:text-pink text-lg font-[600] hover:bg-peach";
+
 export default AdminPageNav

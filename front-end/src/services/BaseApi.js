@@ -73,7 +73,7 @@ export async function addEntity(entityName, entityData) {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
-            body: entityData, 
+            body: JSON.stringify(entityData), 
         });
         console.log(response);
         if (response.ok) {
