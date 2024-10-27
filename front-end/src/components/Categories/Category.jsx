@@ -1,20 +1,15 @@
-import { getCategories } from "../../services/apiCategories";
 import CategoryElement from "./CategoryElement";
-import { useQuery } from "@tanstack/react-query";
 import Loader from "../common/Loader";
 import Error from "../common/Error";
+import { useCategories } from "./hook/useCategories";
 
 function Category() {
+  const {  data :categories, error , isLoading}=useCategories();
 
-const { data :categories, error, isLoading } = useQuery({
-  queryKey: ["categories"],
-  queryFn: getCategories,
-});
+if (isLoading) return <p>Loading ...</p>;
+if (error) return <p>{error}</p>;
 
-if (isLoading) return  <Loader />;
-
-if (error) return <Error/>;
-
+console.log(categories);
 return (
     <section>
       <div className="mt-11 mb-[-100px] " >
