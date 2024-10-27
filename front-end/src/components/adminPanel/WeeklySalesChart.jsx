@@ -1,9 +1,12 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import useSales from './useSales';
+import {useSales} from './hook/useSales';
 
 function WeeklySalesChart() {
-  const { data } = useSales();
-  console.log(data );
+    const { data, error, isLoading } = useSales();
+
+    if (isLoading) return <p>Loading sales data...</p>;
+    if (error) return <p>Error loading sales data: {error.message}</p>;
+    
   const daysOfWeek = ["Monday", 'Tuesday', "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   
   const dataByDay = data.reduce((acc, current) => {

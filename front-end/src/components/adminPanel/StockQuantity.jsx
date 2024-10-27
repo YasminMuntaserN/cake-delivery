@@ -14,7 +14,6 @@ function StockQuantity() {
         if (isLoading ||pagesNumLoading) return <Loader />;
         if (error || pagesNumError) return <Error />;
         const today = new Date();
-
     return (
         <div>
         <div role="table" className={styledTable}>
