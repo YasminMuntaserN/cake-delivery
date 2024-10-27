@@ -1,9 +1,9 @@
-import StockQuantity from "../components/adminPanel/StockQuantity"
+import StockQuantity from "../components/adminPanel/CakesTable"
 
 function AdminCakes() {
   return (
     <div>
-      <StockQuantity typeToUseWith="cakeTable"/>
+      <StockQuantity/>
     </div>
   )
 }

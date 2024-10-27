@@ -29,7 +29,7 @@ function AddCustomerForm({ onGeocode ,onShowOrder}) {
                 country: addressInfo.at(2)  || ''
             };
 
-            addCustomer(JSON.stringify(customerData),{
+            addCustomer(customerData,{
                 onSuccess :(data)=>{
                     const id= data.customerID;
                     console.log(`id ${id} after adding customer`);

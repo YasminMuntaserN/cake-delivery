@@ -29,7 +29,7 @@ console.log(cart);
       paymentStatus: "Completed",
       deliveryStatus: "Delivered"
     };
-    addOrder(JSON.stringify(orderData), {
+    addOrder(orderData, {
       onSuccess: (newOrderId) => {
         if (newOrderId) {
           const PaymentData = {
@@ -38,7 +38,7 @@ console.log(cart);
             amountPaid: totalPrice,
             paymentStatus: "Completed"
           };
-          addPayment(JSON.stringify(PaymentData),{
+          addPayment(PaymentData,{
             onSuccess: () => {
               console.log(`in the newOrderItem will done`);
               let orderItemData = { };
@@ -51,7 +51,7 @@ console.log(cart);
                 pricePerItem: item.cakeObject.price
               };
               console.log(`orderItemData: ${orderItemData} form map`);
-              newOrderItem(JSON.stringify(orderItemData));
+              newOrderItem(orderItemData);
             }
           )}
           });
