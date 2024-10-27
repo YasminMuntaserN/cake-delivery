@@ -13,7 +13,7 @@ export async function getAll(entityName) {
         }
 
         const data = await res.json();
-
+        console.log(`data is getAll: ${JSON.stringify(data)}`);
         return data;  
     } catch (error) {
 
@@ -82,10 +82,65 @@ export async function addEntity(entityName, entityData) {
             return data.split('/').pop();
         } else {
             const errorText = await response.text();
-            throw new Error(`Error adding customer: ${errorText}`);
+            throw new Error(`Error adding : ${errorText}`);
         }
     } catch (error) {
         console.error(`Error adding ${entityName}:`, error);
         throw error;
     }
 }
+
+export async function EditEntity(entityName, entityData ,id ) {
+    console.log(`id: ${id}`); 
+    console.log(`${API_URL}/${entityName}/${id}`); 
+
+    try {
+        const response = await fetch(`${API_URL}/${entityName}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(entityData), 
+        });
+        console.log(response);
+        if (response.ok) {
+            const data = await response.json();
+            
+            return data;
+        } else {
+            const errorText = await response.text();
+            throw new Error(`Error Updating : ${errorText}`);
+        }
+    } catch (error) {
+        console.error(`Error Updating ${entityName}:`, error);
+        throw error;
+    }
+}
+
+export async function DeleteEntity(entityName,id ) {
+    console.log(`id: ${id}`); 
+    console.log(`${API_URL}/${entityName}/${id}`); 
+
+    try {
+        const response = await fetch(`${API_URL}/${entityName}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        });
+        console.log(response);
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            const errorText = await response.text();
+            throw new Error(`Error Deleting : ${errorText}`);
+        }
+    } catch (error) {
+        console.error(`Error Deleting ${entityName}:`, error);
+        throw error;
+    }
+}
+

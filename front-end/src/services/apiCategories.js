@@ -1,3 +1,5 @@
-import { getAll } from "./BaseApi";
+import { getAll ,addEntity } from "./BaseApi";
 
-export const getCategories = async () => await getAll("categories");
+export const getAllCategories = async () => await getAll("categories");
+
+export const addNewCategory = async (categoryInfo) => await addEntity("categories" ,categoryInfo);

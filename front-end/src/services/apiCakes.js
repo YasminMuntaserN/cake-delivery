@@ -1,22 +1,22 @@
-import { getAll ,getById ,getBy} from "./BaseApi";
+import { getAll ,getById ,getBy, addEntity, EditEntity ,DeleteEntity} from "./BaseApi";
 
 const API_URL = import.meta.env.VITE_API_URL+'/cakes';
 
 export const getCakes = async () => await getAll("cakes");
 
-
 export const getCakesByCategory = async (categoryId) => await getBy("cakes","category" ,categoryId);
-
-
 
 export const getCakeByName = async (cakeName) => await getBy("cake","name" ,cakeName);
 
-
 export const getCakeById = async (cakeId) => await getById("cakes",cakeId);
 
+export const addNewCake = async (cakeInfo) => await addEntity("cakes" ,cakeInfo);
 
 export const fetchCakes = async (pageNumber) => await getByPageNumAndPgeSize("cakes",pageNumber);
 
+export const editCake = async (cakeInfo) => await EditEntity("cakes",cakeInfo,cakeInfo.cakeID);
+
+export const deleteCake = async (cakeId) => await DeleteEntity("cakes",cakeId);
 
 export async function getTotalPages(Id) {
     console.log(`${API_URL}/TotalPages/number/${Id}`);
@@ -53,7 +53,6 @@ export async function getTotalPages(Id) {
 }
 
 export async function getByPageNumAndPgeSize(entityName ,pageNumber) {
-
 if (pageNumber <= 0) {
     throw new Error("Page number and page size must be greater than zero.");
 }
@@ -79,7 +78,6 @@ try {
     throw error; 
 }
 }
-
 
 export async function getTopCakes(){
     try {

@@ -1,10 +1,12 @@
-import Stat from "../components/adminPanel/Stat"
-import StockQuantity from "../components/adminPanel/StockQuantity"
-import WeeklySalesChart from "../components/adminPanel/WeeklySalesChart"
+import Stat from "../components/adminPanel/Stat";
+import StockQuantity from "../components/adminPanel/StockQuantity";
+import WeeklySalesChart from "../components/adminPanel/WeeklySalesChart";
+import AdminPageNav from "../ui/AdminPageNav";
 
 function Admin() {
   return (
     <>
+    <AdminPageNav />
       <Stat />
     <div className ={StyledContainer}>
       <StockQuantity />
