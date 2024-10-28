@@ -6,6 +6,7 @@ import { useCakeOperations } from "../../context/CakeContext";
 import {useCakesPerPage} from "../cakes/hooks/useCakesPerPage";
 import TableHeader from "../../ui/TableHeader";
 import Table from "../../ui/Table";
+import Empty from "../../ui/Empty";
 
 function CakesTable() { 
 
@@ -25,9 +26,13 @@ function CakesTable() {
                     <div>Delete</div>
                     <div>Edit</div>
                 </TableHeader>
-                {cakes.map((cake) => (
+                {
+                cakes ? 
+                cakes.map((cake) => (
                     <CakeStockQuantity  cake={cake}  key={cake.cakeID} />
-                ))}
+                )) :<Empty resourceName="Cakes" />
+                }
+
             </Table>
         <Pagination pageNumber={pageNumber} OnPageNumber ={setPageNumber}/>
         </div>

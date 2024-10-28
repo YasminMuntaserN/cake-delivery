@@ -2,26 +2,32 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import {useSales} from './hook/useSales';
 
 function WeeklySalesChart() {
-    const { data, error, isLoading } = useSales();
+    const { data , error, isLoading } = useSales();
 
     if (isLoading) return <p>Loading sales data...</p>;
     if (error) return <p>Error loading sales data: {error.message}</p>;
     
-  const daysOfWeek = ["Monday", 'Tuesday', "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  
-  const dataByDay = data.reduce((acc, current) => {
-      acc[current.day] = current.sales;
-      return acc;
-  }, {});
-  
-  console.log(dataByDay);
-  const SalesData = daysOfWeek.map(day => ({
-      day,
-      sales: dataByDay[day] || 0 
-  }));
-  
-  console.log(SalesData);
-  return (
+    const daysOfWeek = ["Monday", 'Tuesday', "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    let SalesData ;
+    if(data){
+    const dataByDay = data.reduce((acc, current) => {
+        acc[current.day] = current.sales;
+        return acc;
+    }, {});
+
+    console.log(dataByDay);
+    SalesData = daysOfWeek.map(day => ({
+        day,
+        sales: dataByDay[day] || 0 
+    }));
+    }else{
+        SalesData = daysOfWeek.map(day => ({
+            day,
+            sales: 0 
+        }));
+    }
+    console.log(SalesData);
+    return (
     <ResponsiveContainer width="100%" height={500} className="bg-gray-100">
     <BarChart
         data={SalesData}

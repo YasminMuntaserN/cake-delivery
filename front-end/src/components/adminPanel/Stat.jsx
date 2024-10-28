@@ -29,8 +29,8 @@ function Stat() {
         <div className={styledContainer}>
           {
             Operations.map((operation ,i)=>
-            <Modal.Open onClick={()=>{setOperation(operation.name)}} >
-                <button ><Stats key ={i+1 } operation={operation} color={i%2 == 0 ?"peach" :"pink"}/></button>
+            <Modal.Open key ={i+1} onClick={()=>{setOperation(operation.name)}} >
+                <button ><Stats operation={operation} color={i%2 == 0 ?"peach" :"pink"}/></button>
             </Modal.Open>
           )
           }

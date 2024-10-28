@@ -64,3 +64,6 @@ export const getTotalPrice = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.cakeObject.price * item.quantity, 0);
 export const CartItemExist=(id ,state) => state.cart.filter(item => item.cakeObject.cakeID === id);
 
+export const getQuantity = (state ,id) =>state.cart.map((item) => item.cakeObject.cakeID=== id )
+
+

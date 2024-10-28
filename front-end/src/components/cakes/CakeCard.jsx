@@ -18,13 +18,12 @@ function CakeCard({ cake }) {
   );
 }
 
-const styleContainer = "flex rounded-lg overflow-hidden p-2 ";
-const styledImageContainer = "w-1/2 h-auto overflow-hidden sm:w-1/4 "; 
-const styledImage = "w-full h-full object-cover object-center transition-transform duration-500 transform hover:scale-110 ";
-const styledDetails = "flex flex-col justify-center p-4 w-1/2"; 
+const styleContainer = "grid grid-cols-[auto_auto] gap-4 p-5";
+const styledImageContainer = "mr-10"; 
+const styledImage = "";
+const styledDetails = ""; 
 const styleName = "font-bold text-xl text-pink text-center sm:text-2xl mb-1";
 const styleCaption = "text-sm text-peach text-center sm:text-md mb-2";
 const styleDescription = "mt-2 font-light text-basic lg:text-lg sm:text-md text-center";
-
 
 export default CakeCard;

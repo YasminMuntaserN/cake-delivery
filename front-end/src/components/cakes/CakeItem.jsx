@@ -1,13 +1,18 @@
 import Button from "../../ui/Button";
 import { formatCurrency } from '../../utils/helper';
-import {useState } from 'react';
+import { useState } from 'react';
 import { useCartItems } from '../../context/CartItemsContext';
 import Sizes from './Sizes';
 import Quantity from './Quantity';
 
 function CakeItem({ cake }) {
   const { handleAdd } = useCartItems();
-  const [isAdded , setIsAdded]=useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+
+  const handleAddToCart = () => {
+    handleAdd(cake);
+    setIsAdded(true);
+  };
 
   return (
     <>
@@ -21,13 +26,11 @@ function CakeItem({ cake }) {
         <span className={StylePrice}>{formatCurrency(cake.price)}</span>
         {!isAdded ? (
           <div>
-            <Button onClick={() => {handleAdd(cake);}}>
-              Add To Cart
-            </Button>
+            <Button onClick={handleAddToCart}>Add To Cart</Button>
           </div>
         ) : (
           <div>
-            <Quantity cake={cake} />
+            <Quantity cake={cake} onIsAdded={setIsAdded} />
             <Sizes cake={cake} />
           </div>
         )}
@@ -42,3 +45,4 @@ const StyledName = "mt-[100px] mb-5 text-center text-basic";
 const StylePrice = 'mr-0 text-pink';
 
 export default CakeItem;
+
