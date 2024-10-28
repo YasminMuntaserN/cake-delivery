@@ -4,14 +4,13 @@ import Form from "../../ui/Form";
 import Button  from "../../ui/Button";
 import FormRow from "../../ui/FormRow";
 import CustomerAddressInput from "./CustomerAddressInput";
-import { AddCustomer, UpdateCustomerId } from "./customerSlice";
-import {useCustomer} from "./hooks/useCustomer";
-import { useEffect } from "react";
+import { AddCustomer ,UpdateCustomerId} from "./customerSlice";
+import {useAddCustomer} from "./hooks/useAddCustomer";
 
 function AddCustomerForm({ onGeocode ,onShowOrder}) {
     const dispatch =useDispatch();
     const { register, handleSubmit, formState  } = useForm();
-    const  {addCustomer} =useCustomer();
+    const  {addCustomer} =useAddCustomer();
     const { errors } = formState;
 
 
@@ -33,7 +32,10 @@ function AddCustomerForm({ onGeocode ,onShowOrder}) {
                 onSuccess :(data)=>{
                     const id= data.customerID;
                     console.log(`id ${id} after adding customer`);
-                    dispatch(AddCustomer({id,...customerData }));
+                    dispatch(AddCustomer(customerData));
+                    dispatch(UpdateCustomerId(id));
+
+                    
                     onShowOrder(true);
                 }
             });

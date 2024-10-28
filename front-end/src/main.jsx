@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')).render(
       <Toaster
         position="top-center"
         gutter={12}
-        containerStyle={{ marginTop: "100px" }}
+        containerStyle={{ marginTop: "150px" }}
         toastOptions={{
           success: {
             duration: 3000,
