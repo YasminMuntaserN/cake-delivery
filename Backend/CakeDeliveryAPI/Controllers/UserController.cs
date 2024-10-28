@@ -135,5 +135,12 @@ namespace CakeDeliveryAPI.Controllers
             return Ok(isExsist);
 
         }
+
+        // DELETE: api/Users/{id}
+        [HttpDelete("{id}", Name = "DeleteUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult DeleteCake(int id)
+          => DeleteEntity<Users>(id, Users.Delete, "User");
     }
 }

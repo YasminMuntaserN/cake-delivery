@@ -57,6 +57,20 @@ namespace DataAccessLayer
 
 
         /// <summary>
+        /// Delete User from the database.
+        /// </summary>
+        /// <param name="id">id for deleting user.</param>
+        /// <returns>True if successful, otherwise false.</returns>
+        public static bool DeleteUser(int UserId)
+        {
+            return DataAccessHelper.Delete(
+                "sp_DeleteUser",
+                "UserID",
+                UserId
+            );
+        }
+
+        /// <summary>
         /// Retrieves all Users from the database.
         /// </summary>
         /// <returns>A list of UserDTO objects.</returns>

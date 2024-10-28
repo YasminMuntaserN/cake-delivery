@@ -73,6 +73,11 @@ namespace Business_Layer.User
         public static bool ExsistByPasswordAndEmail(string Email, string Password)
           => UserData.ExsistByPasswordAndEmail(Email, Password);
 
+        public static bool Delete(int id)
+        {
+            return UserData.DeleteUser(id);
+        } 
+
     }
 }
 
