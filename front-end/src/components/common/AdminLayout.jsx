@@ -6,12 +6,14 @@ function AdminLayout() {
   return (
     <div className={StyledContainer}>
         <AdminPageNav />
-      <main className="pr-10 bg-gray-50">
+      <main className={StyledMain}>
         <Stat />
         <Outlet/>
       </main>
     </div>
   )
 }
-const StyledContainer ="grid grid-cols-[15rem_1fr] grid-rows-[auto_1fr] ";
+const StyledContainer ="grid grid-cols-[15rem_1fr]";
+const StyledMain ="pr-10 bg-gray-50 h-screen overflow-y-auto";
+
 export default AdminLayout

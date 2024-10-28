@@ -5,7 +5,6 @@ import Error from "../common/Error";
 import { useQuery } from "@tanstack/react-query";
 import { getCakeByName } from '../../services/apiCakes';
 import { useNavigate } from "react-router-dom";
-import { HiCake } from "react-icons/hi2";
 import CategorySelector from './CategorySelector';
 
 
@@ -23,9 +22,8 @@ function SearchBar() {
 	const { data: cake, error, isLoading } = useQuery({
 		queryKey: ['cakes', cakeName],
 		queryFn: () => getCakeByName(cakeName),
-		enabled: !!cakeName, 
 	});
-
+    console.log(cake);	
 	if (isLoading) return <Loader />;
 	if (error) return <Error />;
 
@@ -37,13 +35,6 @@ function SearchBar() {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className={styledContainer}>
-				<input
-					{...register('cakeName')}
-					type="text"
-					placeholder="Search for cakes..."
-					className={styledInput}
-				/>
-				<i><HiCake className="ml-[-210px] text-basic text-2xl"/></i>
         <CategorySelector register={register} OnCategoryChange={handleCategoryChange}/>
 			</div>
 		</form>

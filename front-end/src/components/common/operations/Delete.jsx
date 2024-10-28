@@ -12,7 +12,7 @@ function Delete({id ,isDeleting =false ,entity}) {
   const {handleDeleteCake}=useCakeOperations();
   const {deleteCategoryObject}=useDeleteCategory();
   const {deleteUserObject}=useDeleteUser();
-
+  console.log(isDeleting);
   const handleCakeDelete =()=>{
     if(isDeleting){
       handleDeleteCake(id);// in this we will remove item from cart 

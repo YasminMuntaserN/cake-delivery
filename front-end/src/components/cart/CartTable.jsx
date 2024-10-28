@@ -1,6 +1,7 @@
-import CartItem from "./CartItem";
 import { getCart } from "../cart/cartSlice";
 import { useSelector } from "react-redux";
+import Empty from "../../ui/Empty";
+import CartItem from "./CartItem";
 
 function CartTable() {
     const cart = useSelector(getCart);
@@ -18,9 +19,11 @@ function CartTable() {
                 <div>Edit</div>
                 <div></div>
             </header>
-            {cart.map((Item) => (
-                <CartItem Item={Item}  key={Item.cakeObject.cakeID} />
-            ))}
+            {  
+            cart.length > 0 ?
+            cart.map((item)=><CartItem item={item} key={item.cakeObject.cakeID}/>)
+            :<Empty resourceName="items in the cart" />
+            }
         </div>
     );
 }
