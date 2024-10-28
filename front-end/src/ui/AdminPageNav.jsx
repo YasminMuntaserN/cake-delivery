@@ -6,6 +6,7 @@ import {
   HiOutlineHome,
   HiOutlineHomeModern,
   HiOutlineUsers,
+  HiOutlineRocketLaunch
 } from "react-icons/hi2";
 
 const pages=[
@@ -33,6 +34,11 @@ const pages=[
     to:"/adminUsers",
     icon:<HiOutlineCog6Tooth />,
     name:"Users"
+  },
+  {
+    to:"/home",
+    icon:<HiOutlineRocketLaunch />,
+    name:"App"
   }
 
 ];
