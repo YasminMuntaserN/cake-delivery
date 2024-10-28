@@ -1,4 +1,14 @@
+import { addEntity, DeleteEntity, EditEntity, getAll } from "./BaseApi";
 const API_URL = import.meta.env.VITE_API_URL;
+
+export const getUsers= async()=> await getAll("Users");
+
+export const deleteUser= async(id)=> await DeleteEntity("Users" ,id);
+
+export const addNewUser = async(user)=>await addEntity("Users" ,user);
+
+export const editUser = async(user)=>await EditEntity("Users" ,user ,user.userID);
+
 
 export async function Exist(data){
   const {email ,password} = data;  
