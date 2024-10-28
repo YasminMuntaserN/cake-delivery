@@ -4,7 +4,7 @@ import Form from "../ui/Form";
 import FormRow from "../ui/FormRow";
 import { useNavigate } from "react-router-dom";
 import Logo from "../ui/Logo";
-import {useExistUser} from "../components/user/useExistUser";
+import {useExistUser} from "../components/user/hooks/useExistUser";
 import toast from "react-hot-toast";
 
 function Login() {
