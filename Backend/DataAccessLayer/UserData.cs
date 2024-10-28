@@ -67,6 +67,18 @@ namespace DataAccessLayer
                 Mappings.MapUserDTOFromReader
             );
         }
+
+
+        public static bool ExsistByPasswordAndEmail(string Email , string Password)
+        {
+            return DataAccessHelper.Exists(
+                "sp_ExsistByEamilAndPassword",
+                "Email",
+                Email,
+                "Password",
+                Password
+            );
+        }
     
     }
 }

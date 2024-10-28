@@ -118,5 +118,22 @@ namespace CakeDeliveryAPI.Controllers
         }
 
 
+        // Get: api/Users/{Email ,password}
+        [HttpGet("{Email}/{Password}", Name = "ExsistByPasswordAndEmailassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult ExsistByPasswordAndEmailassword(string Email, string Password)
+        {
+            if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
+            {
+                return BadRequest("Invalid User data.");
+            }
+
+            bool isExsist = Users.ExsistByPasswordAndEmail(Email.Trim(), Password.Trim());
+            Console.WriteLine(isExsist);
+
+            return Ok(isExsist);
+
+        }
     }
 }

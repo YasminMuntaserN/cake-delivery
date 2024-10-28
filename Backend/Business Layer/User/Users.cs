@@ -70,6 +70,9 @@ namespace Business_Layer.User
         public static List<UserDTO> All()
             => UserData.GetAllUsers();
 
+        public static bool ExsistByPasswordAndEmail(string Email, string Password)
+          => UserData.ExsistByPasswordAndEmail(Email, Password);
+
     }
 }
 

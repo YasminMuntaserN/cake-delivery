@@ -46,12 +46,13 @@ namespace CakeDeliveryAPI.Controllers
                 return BadRequest($"Invalid ID: {id}");
             }
 
-            if (deleteFunc(id))
+            bool isDeleted = deleteFunc(id);
+            if (isDeleted)
             {
-                return Ok($"{entityName} with ID {id} has been deleted.");
+                return Ok(new { Message = $"{entityName} with ID {id} has been successfully deleted." });
             }
 
-            return NotFound($"{entityName} with ID {id} not found. No rows deleted.");
+            return NotFound(new { Error = $"{entityName} with ID {id} not found. No rows deleted." });
         }
 
 

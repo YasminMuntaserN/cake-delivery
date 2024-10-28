@@ -123,7 +123,6 @@ public class CakesController : BaseController
     [HttpDelete("{id}", Name = "DeleteCake")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-
     public ActionResult DeleteCake(int id)
       => DeleteEntity<Cake>(id, Cake.Delete, "Cake");
 

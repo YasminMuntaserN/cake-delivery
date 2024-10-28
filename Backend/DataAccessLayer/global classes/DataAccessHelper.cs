@@ -229,7 +229,6 @@ namespace DataAccessLayer
                 HandleException(ex);
             }
 
-            // If rowsAffected > 0, it means the record was successfully deleted
             return (rowsAffected > 0);
         }
 
@@ -314,6 +313,43 @@ namespace DataAccessLayer
             }
         }
 
+        public static bool Exists<T1, T2>(string storedProcedureName, string parameterName1, T1 value1, string parameterName2, T2 value2)
+        {
+            bool isFound = false;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue($"@{parameterName1}", (object)value1 ?? DBNull.Value);
+                        command.Parameters.AddWithValue($"@{parameterName2}", (object)value2 ?? DBNull.Value);
+
+                        SqlParameter returnParameter = new SqlParameter("@ReturnValue", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(returnParameter);
+
+                        command.ExecuteNonQuery();
+
+                        isFound = (int)returnParameter.Value == 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                isFound = false;
+                HandleException(ex);
+            }
+
+            return isFound;
+        }
 
         // Add parameters from a DTO object to a SqlCommand
         /// <summary>
