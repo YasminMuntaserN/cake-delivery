@@ -4,6 +4,7 @@ import Modal from "../../ui/Modal";
 import { useState } from "react";
 import AddEditCakeForm from "../cakes/AddEditCakeForm";
 import AddCategoryForm from "../Categories/AddEditCategoryForm";
+import AddEditUserForm from "../user/AddEditUserForm";
 
 const Operations= [
   {
@@ -18,10 +19,6 @@ const Operations= [
   {
     icon :<HiMiniPlusCircle className="w-8 h-8 text-red-400"/> ,
     name: "Add User"
-  },
-  {
-    icon :<HiMiniPencil className="w-8 h-8 text-basic"/>,
-    name:  "update User"
   },
 ];
 function Stat() {
@@ -40,7 +37,8 @@ function Stat() {
         </div>
         <Modal.Window>
           <div>
-          { (Operation === "Add Cake" ) &&  <AddEditCakeForm/>}
+          { (Operation === "Add User"  )     &&<AddEditUserForm/>}
+          { (Operation === "Add Cake" )      &&<AddEditCakeForm/>}
           { (Operation === "Add Category"  ) &&<AddCategoryForm/>}
           </div>
         </Modal.Window>

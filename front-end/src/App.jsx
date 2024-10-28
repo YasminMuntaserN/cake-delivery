@@ -37,13 +37,13 @@ function App() {
                         <Route path="checkout" element={<Checkout />} />
                         <Route path="contact" element={<Contact />} />
                     </Route>
-                    <Route element={<AdminLayout/>}>
                     <Route path="login" element={<Login />} />
-                    <Route path="admin" element={<Admin />} />
-                    <Route path="adminCakes" element={<AdminCakes />} />
-                    <Route path="adminCategories" element={<Categories />} />
-                    <Route path="adminCustomers" element={<Customers />} />
-                    <Route path="adminUsers" element={<Users />} />
+                    <Route element={<AdminLayout />}>
+                        <Route path="admin" element={<Admin />} />
+                        <Route path="adminCakes" element={<AdminCakes />} />
+                        <Route path="adminCategories" element={<Categories />} />
+                        <Route path="adminCustomers" element={<Customers />} />
+                        <Route path="adminUsers" element={<Users />} />
                     </Route>
                     <Route path="*" element={<Navigate to="home" />} />
                 </Routes>
