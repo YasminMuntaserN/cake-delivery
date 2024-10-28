@@ -3,8 +3,8 @@ import Delete from "../common/operations/Delete";
 import Edit from "../common/operations/Edit";
 
 
-function CartItem({ Item }) {
-    const {cakeObject, quantity, sizeId } = Item;
+function CartItem({ item }) {
+    const {cakeObject, quantity, sizeId } = item;
     const size= sizeId===1 ?"Small" : sizeId==   2 ?"medium":"large";
     return (
         <div className={styledRow }>
@@ -14,7 +14,7 @@ function CartItem({ Item }) {
             <p>{quantity}</p>
             <p className="text-pink">{formatCurrency(cakeObject.price)}</p>
             <p>{size}</p>
-            <Delete id={cakeObject.cakeID}/>
+            <Delete id={cakeObject.cakeID} isDeleting ={false} entity="Cake"/>
             <Edit cake={cakeObject}/>
         </div>
     );

@@ -3,6 +3,7 @@ import Quantity from "../cakes/Quantity";
 
 function CartOverviewItem({item}) {
   const {cakeObject, quantity } = item;
+  
   console.log(cakeObject);
   return (
     <li className={StyledContainer}>

@@ -1,7 +1,8 @@
 import Modal from "../../ui/Modal"
-import CartOverviewItem from "./CartOverviewItem";
 import { useSelector } from "react-redux";
 import { getCart } from "./cartSlice";
+import Empty from "../../ui/Empty";
+import CartOverviewItem from "../cart/CartOverviewItem";
 
 function CartOverview() {
   const cart = useSelector(getCart);
@@ -19,8 +20,9 @@ function CartOverview() {
       <Modal.Window type="List">
           <ul className ={StyledList}>
           {
-            // cart.length ===0 ?<p>There is no items  </p> :
+            cart.length > 0 ?
             cart.map((item)=><CartOverviewItem item={item} key={item.cakeObject.cakeID}/>)
+            :<Empty resourceName="items in the cart" />
           }
         </ul>
       </Modal.Window>
