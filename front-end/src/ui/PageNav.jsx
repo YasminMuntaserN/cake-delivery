@@ -52,7 +52,7 @@ function PageNav() {
 </nav>
 )}
 
-const StyledNav="sticky top-0 left-0 bg-white z-[99999] shadow-[5px_5px_15px_-5px_#d7d6d6] animate-slideDown";
+const StyledNav="sticky top-0 left-0 bg-white z-[99999] shadow-[5px_5px_15px_-5px_#d7d6d6]  animate-slideDown";
 const StyledContainer ="flex items-center justify-between mt-[-20px] px-4 sm:px-10";
 const StyledLogoContainer ="sm:w-[200px] flex justify-center sm:justify-start";
 const StyledSide ="flex items-center gap-6 sm:gap-10";

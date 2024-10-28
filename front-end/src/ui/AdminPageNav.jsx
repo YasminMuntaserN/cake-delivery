@@ -44,11 +44,11 @@ const pages=[
 ];
 function AdminPageNav() {
   return (
-    <nav className="bg-gray-300 h-full">
+    <nav className="bg-gray-300">
       <Logo />
       <ul className={StyledList}>
 {     pages.map((page)=>(
-        <li>
+        <li key={page.name}>
           <NavLink className={({ isActive }) =>`flex pl-10 items-center gap-3 text-gray-800 text-base font-[20px] py-3 px-6 transition-all duration-300  hover:text-pink hover:bg-peach ${isActive &&'text-pink bg-gray-50'}`}
             to={page.to}>
             {page.icon}

@@ -17,7 +17,6 @@ function CartItemsProvider({ children }) {
   const cart = useSelector(getCart);
 
   const handleAdd = (cake) => {
-    console.log("handleAdd");
     dispatch(addItem(cake));
     console.log(`Added without quantity`);
   };

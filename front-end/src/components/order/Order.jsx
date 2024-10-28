@@ -9,19 +9,20 @@ import PaymentOptions from "../payment/PaymentOptions";
 import AddCustomerFeedback from "../customerFeedback/AddCustomerFeedback";
 import { useCartItems } from "../../context/CartItemsContext";
 import useOrderItem from "./hooks/useOrderItems";
+import { getCustomerId } from "../customer/customerSlice";
 
 function Order() {
   const [paymentMethod, setPaymentMethod] = useState("Credit Card");
-  // const customerId = useSelector((state) =>  state.customer.id);
-  const customerId = 132;
+  const customerId = useSelector(getCustomerId);
   const totalPrice = useSelector(getTotalPrice);
   const { addPayment, id: paymentId } = usePayment();
   const { addOrder } = useOrder();
   const {newOrderItem}=useOrderItem();
+  console.log(customerId);
   const{cart}=useCartItems();
   const date = new Date();
 
-console.log(cart);
+
   function handleOrder() {
     const orderData = {
       customerID: customerId,
@@ -29,6 +30,7 @@ console.log(cart);
       paymentStatus: "Completed",
       deliveryStatus: "Delivered"
     };
+    console.log(orderData);
     addOrder(orderData, {
       onSuccess: (newOrderId) => {
         if (newOrderId) {
@@ -38,6 +40,7 @@ console.log(cart);
             amountPaid: totalPrice,
             paymentStatus: "Completed"
           };
+         console.log(PaymentData);
           addPayment(PaymentData,{
             onSuccess: () => {
               console.log(`in the newOrderItem will done`);

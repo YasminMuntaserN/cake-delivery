@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function StartRating({maxRating =5 , onRating}) {
+function StartRating({maxRating =5 , onRating ,fixedRating =-1}) {
   const [rating ,setRating] =useState(0);
   const [tempRating ,setTempRating]=useState(rating);
   const handleRating =(i)=>{
@@ -10,16 +10,20 @@ function StartRating({maxRating =5 , onRating}) {
   return ( 
     <div className={StyledStarsContainer}>
       {
-        Array.from({length:maxRating } ,(_, i) =>
-          ( <Star 
+          fixedRating ===-1 ?
+          (Array.from({length:(maxRating) } ,(_, i) =>
+            <Star 
             key={i+1}
             full={tempRating ? tempRating >= i+1 : rating >= i+1}
             onRate={()=>handleRating(i)}
             onHoverIn={()=>setTempRating(i+1)}
-            onHoverOut={()=>setTempRating(0)}/>)
-        )
-      }
-      <p className={StyledRatingNum}>{rating} / 5</p>
+            onHoverOut={()=>setTempRating(0)}/>
+          )):
+          ( Array.from({length:fixedRating } ,(_, i) =>
+          <Star key={i+1} full={true}/>
+          ))
+    }
+      {fixedRating ===-1 && <p className={StyledRatingNum}>{rating} / 5</p>}
     </div>
   )
 }

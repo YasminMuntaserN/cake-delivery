@@ -9,14 +9,12 @@ function useOrderItem() {
 const { mutate: newOrderItem, isLoading: isAdding } = useMutation({
     mutationFn: addNewOrderItem,
     onSuccess: (data) => {
-    toast.success("Order item added successfully");
     queryClient.invalidateQueries({ queryKey: ["orderItems"] });
     console.log(` Order item added successfully for ${data}`);
     },
     onError: (err) => {
     toast.error(err.message || "An error occurred");
     console.log(`order items ${err}`);
-
     },
 });
 
