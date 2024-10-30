@@ -1,11 +1,11 @@
 import Delete from "../common/operations/Delete";
 import Edit from "../common/operations/Edit";
+import Image from "../../ui/Image";
 
 function CategoryRow({category }) {
-  console.log(`category CategoryRow: ${category}`);  
   return (
     <div className={styledRow }>
-        <img className={styledImage}  src={category.categoryImageUrl} alt={category.categoryName} />
+        <Image src={category.categoryImageUrl}   alt={category.categoryName} className={styledImage} entity="categories"/>
         <p>{category.categoryName}</p>
         <Delete id={category.categoryID} entity="Category"/>
         <Edit category={category}/>

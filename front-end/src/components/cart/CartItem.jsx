@@ -1,3 +1,4 @@
+import Image from "../../ui/Image";
 import { formatCurrency } from "../../utils/helper";
 import Delete from "../common/operations/Delete";
 import Edit from "../common/operations/Edit";
@@ -9,7 +10,7 @@ function CartItem({ item }) {
     return (
         <div className={styledRow }>
             <p></p>
-            <img className={styledImage}  src={cakeObject.imageUrl} alt={cakeObject.cakeName} />
+            <Image src={cakeObject.imageUrl} alt={cakeObject.cakeName} className={styledImage} entity="cakes"/>
             <p>{cakeObject.cakeName}</p>
             <p>{quantity}</p>
             <p className="text-pink">{formatCurrency(cakeObject.price)}</p>

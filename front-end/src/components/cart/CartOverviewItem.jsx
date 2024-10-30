@@ -7,7 +7,11 @@ function CartOverviewItem({item}) {
   console.log(cakeObject);
   return (
     <li className={StyledContainer}>
-      <img className={StyledImage} src={cakeObject.imageUrl} alt={cakeObject.cakeName}/>
+         {!(cakeObject.imageUrl.includes("/uploads/cakes"))?
+            <img src={cakeObject.imageUrl} alt={cakeObject.cakeName} className={StyledImage} />
+            :
+            <img src={`https://localhost:7085${cakeObject.imageUrl}`} alt={cakeObject.cakeName} className={StyledImage} />
+            }
         <div className={StyledSubContainer}>
           <p className={StyledQuantityContainer}>{quantity} x
           <span className="text-pink">{formatCurrency(cakeObject.price)}</span></p>

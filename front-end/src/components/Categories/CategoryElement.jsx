@@ -1,15 +1,12 @@
 import {  NavLink } from "react-router-dom";
+import Image from "../../ui/Image";
 
 function CategoryElement({Category}) {
     return (
     <NavLink to={`/cakes/${Category.categoryID}`}>
       <div className={StyledContainer}>
             <div className={StyledSubContainer} >
-              <img
-                className="w-12 h-12 absolute top-[20%] left-[25%] "
-                src={Category.categoryImageUrl}
-                alt="category__item"
-              />
+              <Image src={Category.categoryImageUrl}  alt="category__item" className="w-12 h-12 absolute top-[20%] left-[25%] " entity="categories"/>
             </div>
         <h6>{Category.categoryName}</h6>
       </div>

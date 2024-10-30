@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useCartItems } from '../../context/CartItemsContext';
 import Sizes from './Sizes';
 import Quantity from './Quantity';
+import Image from "../../ui/Image";
 
 function CakeItem({ cake }) {
   const { handleAdd } = useCartItems();
@@ -17,7 +18,7 @@ function CakeItem({ cake }) {
   return (
     <>
       <div className={StyledContainer}>
-        <img src={cake.imageUrl} alt={cake.cakeName} className={StyledImage} />
+        <Image src={cake.imageUrl} alt={cake.cakeName} className={StyledImage}  entity="cakes" />
       </div>
       <div className={StyledName}>
         <p>{cake.cakeName}</p>

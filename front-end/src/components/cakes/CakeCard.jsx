@@ -1,3 +1,4 @@
+import Image from "../../ui/Image";
 import { formatCurrency } from "../../utils/helper";
 
 function CakeCard({ cake }) {
@@ -6,7 +7,7 @@ function CakeCard({ cake }) {
   return (
     <div className={styleContainer}>
       <div className={styledImageContainer}>
-        <img src={cake.imageUrl} className={styledImage} alt={cake.cakeName} />
+      <Image src={cake.imageUrl} alt={cake.cakeName}  entity="cakes" />
       </div>
       <div className={styledDetails}>
         <h2 className={styleName}>{cake.cakeName}</h2>
@@ -20,7 +21,6 @@ function CakeCard({ cake }) {
 
 const styleContainer = "grid grid-cols-[auto_auto] gap-4 p-5";
 const styledImageContainer = "mr-10"; 
-const styledImage = "";
 const styledDetails = ""; 
 const styleName = "font-bold text-xl text-pink text-center sm:text-2xl mb-1";
 const styleCaption = "text-sm text-peach text-center sm:text-md mb-2";
