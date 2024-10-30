@@ -6,6 +6,5 @@ export function useGetTopCakes() {
     queryKey: ["cakes"],
     queryFn: getTopCakes,
   });
-   console.log(TopCakes);
   return { TopCakes, error, isLoading };
 }

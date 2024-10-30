@@ -3,22 +3,25 @@ import FormRow from "../../ui/FormRow";
 import { useDispatch } from "react-redux";
 import { fetchAddress } from "./customerSlice";
 
-function CustomerAddressInput({ errors, register, StyledInput, onGeocode }) {
+function CustomerAddressInput({ errors, register, StyledInput, onGeocode,setValue={setValue} }) {
   const dispatch = useDispatch();
-  const [address , setAddress]=useState();
+  // const [address , setAddress]=useState();
 
   const handleGeolocation = async () => {
     try {
       const { address, position } = await dispatch(fetchAddress()).unwrap();
       
       onGeocode(position); 
-      setAddress(address);
+      // setAddress(address);
+      setValue("address", address); 
     } catch (error) {
       console.error("Error fetching position:", error);
     }
   };
 
-  useEffect(()=>handleGeolocation ,[]);
+  useEffect(() => {
+    handleGeolocation(); 
+  }, []);
 
   return (
     <div className="relative">
@@ -28,7 +31,6 @@ function CustomerAddressInput({ errors, register, StyledInput, onGeocode }) {
           placeholder="Address"
           type="text"
           readOnly={true}
-          value={address}
           id="address"
           {...register("address")}
         />

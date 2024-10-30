@@ -4,19 +4,23 @@ import Form from "../../ui/Form";
 import Button  from "../../ui/Button";
 import FormRow from "../../ui/FormRow";
 import CustomerAddressInput from "./CustomerAddressInput";
-import { AddCustomer ,UpdateCustomerId} from "./customerSlice";
+import { AddCustomer} from "./customerSlice";
 import {useAddCustomer} from "./hooks/useAddCustomer";
 
 function AddCustomerForm({ onGeocode ,onShowOrder}) {
     const dispatch =useDispatch();
-    const { register, handleSubmit, formState  } = useForm();
+    const { register, handleSubmit, formState ,setValue } = useForm();
     const  {addCustomer} =useAddCustomer();
     const { errors } = formState;
 
 
     const onSubmit = (data) => {
+        console.log(data);  
         if (data) {
             const addressInfo = data.address ? data.address.split(",") : [];
+            console.log(data.address);
+            console.log(`${addressInfo.at(0)} ${addressInfo.at(1)}  ${addressInfo.at(2)} `);
+
             const customerData = {
                 firstName: data.firstName,
                 lastName: data.lastName,
@@ -30,12 +34,7 @@ function AddCustomerForm({ onGeocode ,onShowOrder}) {
 
             addCustomer(customerData,{
                 onSuccess :(data)=>{
-                    const id= data.customerID;
-                    console.log(`id ${id} after adding customer`);
-                    dispatch(AddCustomer(customerData));
-                    dispatch(UpdateCustomerId(id));
-
-                    
+                    dispatch(AddCustomer({id:data ,...customerData}));
                     onShowOrder(true);
                 }
             });
@@ -97,7 +96,7 @@ function AddCustomerForm({ onGeocode ,onShowOrder}) {
             />
         </FormRow>
 
-        <CustomerAddressInput errors={errors} register={register} StyledInput={StyledInput} onGeocode={onGeocode} />
+        <CustomerAddressInput errors={errors} register={register} StyledInput={StyledInput} onGeocode={onGeocode} setValue={setValue} />
 
         <FormRow className="form-row">
         <Button type="submit" >Submit</Button>

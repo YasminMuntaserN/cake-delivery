@@ -6,7 +6,7 @@ export function useUpdateCategory() {
 const queryClient = useQueryClient();
 
 const { mutate: updateCategory, isLoading } = useMutation({
-    mutationFn: editCategory,
+    mutationFn:({ categoryInfo, categoryID }) => editCategory(categoryInfo ,categoryID),
     onSuccess: () => {
     toast.success("Category Updated successfully");
     queryClient.invalidateQueries({ queryKey: ["categories"] });

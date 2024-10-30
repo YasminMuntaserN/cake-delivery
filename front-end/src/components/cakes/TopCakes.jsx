@@ -8,18 +8,16 @@ function TopCakes() {
     const {TopCakes,error , isLoading}=useGetTopCakes();
     if (isLoading) return <Loader />;
     if (error) return <Error />;
-console.log(TopCakes);
-
 
     return (
-      <div className={StyledContainer}>
+      <section className={StyledContainer}>
         <h2 className={StyledHeader}>The Fresh cakes 😋 </h2>
         <div className={styledSubContainer}>
             {TopCakes.map((cake) => (
                 <CakeElement key={cake.cakeID} cake={cake} />
             ))}
         </div>
-      </div>
+      </section>
     );
 }
 const styledSubContainer = "mt-10 flex justify-center flex-wrap gap-10 relative";

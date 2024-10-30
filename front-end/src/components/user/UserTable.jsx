@@ -10,7 +10,6 @@ function UserTable() {
     const {data:users , error , isLoading}= useUsers();;
         if (isLoading) return <Loader />;
         if (error ) return <Error />;
-        console.log(users);
     return (
             <Table>
                 <TableHeader gridColumns="grid-cols-[1fr_1fr_1fr_1fr]">

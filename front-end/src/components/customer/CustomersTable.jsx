@@ -10,7 +10,6 @@ function CustomersTable() {
     const {data:customers , error , isLoading}= useCustomers();;
         if (isLoading) return <Loader />;
         if (error ) return <Error />;
-        console.log(customers);
     return (
             <Table>
                 <TableHeader gridColumns="grid-cols-[2fr_2fr_2fr_1fr_1fr_1fr]">

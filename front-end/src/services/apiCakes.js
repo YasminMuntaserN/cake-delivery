@@ -14,23 +14,19 @@ export const addNewCake = async (cakeInfo) => await addEntity("cakes" ,cakeInfo)
 
 export const fetchCakes = async (pageNumber) => await getByPageNumAndPgeSize("cakes",pageNumber);
 
-export const editCake = async (cakeInfo) => await EditEntity("cakes",cakeInfo,cakeInfo.cakeID);
+export const editCake = async (cakeInfo,Id) => await EditEntity("cakes",cakeInfo,Id);
 
 export const deleteCake = async (cakeId) => await DeleteEntity("cakes",cakeId);
 
 export async function getTotalPages(Id) {
-    console.log(`${API_URL}/TotalPages/number/${Id}`);
     try {
-        console.log("getTotalPages method called with categoryId:", Id);
         const apiUrl = `${API_URL}/TotalPages/number/${Id}`;
-        console.log('apiUrl:', apiUrl);
         const res = await fetch(apiUrl, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
             },
         });
-        console.log('res:', res);
 
         if (!res.ok) {
             const errorDetails = await res.text(); 
@@ -39,7 +35,6 @@ export async function getTotalPages(Id) {
         }
 
         const data = await res.json();
-        console.log('Pagination data received:', data);
 
         if (!data.totalRows || !data.totalPages) {
             throw new Error("Invalid response structure for total pages");
@@ -56,9 +51,6 @@ export async function getByPageNumAndPgeSize(entityName ,pageNumber) {
 if (pageNumber <= 0) {
     throw new Error("Page number and page size must be greater than zero.");
 }
-console.log(` pageNumber ${pageNumber}`);
-console.log(`${API_URL}/page/number/${pageNumber}?pageSize=${5}`);
-
 try {
     const res = await fetch(`${API_URL}/page/number/${pageNumber}?pageSize=${5}`, {
         headers: {
@@ -92,7 +84,6 @@ export async function getTopCakes(){
         }
 
         const data = await res.json();
-        console.log(data);  
         return data;  
     } catch (error) {
 

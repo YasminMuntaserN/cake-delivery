@@ -6,7 +6,7 @@ export function useAddCategory() {
 const queryClient = useQueryClient();
 
 const { mutate: addCategory, isLoading: isAdding } = useMutation({
-    mutationFn: addNewCategory,
+    mutationFn : addNewCategory,
     onSuccess: (data) => {
     const newCategoryId = data.id;  
     toast.success("Category added successfully");

@@ -15,7 +15,6 @@ function WeeklySalesChart() {
         return acc;
     }, {});
 
-    console.log(dataByDay);
     SalesData = daysOfWeek.map(day => ({
         day,
         sales: dataByDay[day] || 0 
@@ -26,8 +25,9 @@ function WeeklySalesChart() {
             sales: 0 
         }));
     }
-    console.log(SalesData);
     return (
+    <>    
+    <h1 className="text-4xl text-basic text-center m-3 font-['Open_Sans'] font-extrabold ">This week sales</h1>
     <ResponsiveContainer width="100%" height={500} className="bg-gray-100">
     <BarChart
         data={SalesData}
@@ -40,6 +40,7 @@ function WeeklySalesChart() {
         <Bar dataKey="sales" fill="#cf8999" />
     </BarChart>
 </ResponsiveContainer>
+</> 
 );
 }
 

@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import Map from "../ui/Map"
-import { useSelector } from "react-redux";
-import { getCustomer, getCustomerId } from "../components/customer/customerSlice";
 import Order from "../components/order/Order";
 import AddCustomerForm from "../components/customer/AddCustomerForm";
 
@@ -12,7 +10,6 @@ function Checkout() {
   const handleGeocode = (position) => {
     setCoordinates(position);
   };
-  console.log(ShowOrder);
   return (
     <>
       <h2 className={StyledHeader}> Please Fill Out Your Information</h2>

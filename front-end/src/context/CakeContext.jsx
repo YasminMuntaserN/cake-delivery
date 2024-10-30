@@ -14,11 +14,11 @@ function CakeProvider({ children }) {
   
   function handleAddCake(cakeInfo){
     addNewCake(cakeInfo);
-    setPageNumber((prevPageNumber) => (prevPageNumber + 1));
+    // setPageNumber((prevPageNumber) => (prevPageNumber + 1));
   }
   
-  function handleUpdateCake(cakeInfo){
-    updateCake(cakeInfo);
+  function handleUpdateCake({cakeInfo,cakeID}){
+    updateCake({cakeInfo,cakeID});
   }
 
   function handleDeleteCake(id) {

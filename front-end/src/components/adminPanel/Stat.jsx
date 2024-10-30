@@ -23,7 +23,6 @@ const Operations= [
 ];
 function Stat() {
     const[Operation , setOperation]=useState("");
-    console.log(`Operation: ${Operation}`);
   return (
     <Modal>
         <div className={styledContainer}>

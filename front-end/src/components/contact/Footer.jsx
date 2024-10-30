@@ -4,30 +4,30 @@ import QuickLinks from "./QuickLinks";
 import GetInTouch from "./GetInTouch";
 
 const Footer = () => {
-  return (
-    <div className={StyledContainer}>
-    <div className={StyledFirstBox}>
-        <div className={StyledOverviewBox}>
-            <Link to="/home">
-                <h1 className={StyledShopName}>
-                    <img src="./logo.png" alt="logo" className={StyledLogo}/>SweetCake
-                </h1>
-            </Link>
-            <p className=" text-gray-700 mt-[-10px] mb-5">
-            we believe that every celebration deserves a centerpiece as sweet and memorable as the moment itself. Whether it's birthdays, weddings, anniversaries, or any special occasion, we deliver freshly baked, hand-crafted cakes right to your doorstep! 🏡✨
-            </p>
-      </div>
+return (
+<div className={StyledContainer}>
+<div className={StyledFirstBox}>
+    <div className={StyledOverviewBox}>
+        <Link to="/home">
+            <h1 className={StyledShopName}>
+                <img src="./logo.png" alt="logo" className={StyledLogo}/>SweetCake
+            </h1>
+        </Link>
+        <p className=" text-gray-700 mt-[-10px] mb-5">
+        we believe that every celebration deserves a centerpiece as sweet and memorable as the moment itself. Whether it's birthdays, weddings, anniversaries, or any special occasion, we deliver freshly baked, hand-crafted cakes right to your doorstep! 🏡✨
+        </p>
     </div>
+</div>
 
-          <div className="lg:w-2/3 md:w-1/2">
-              <div className="flex flex-wrap gx-5">
-                  <GetInTouch/>
-                  <QuickLinks/>
-                  <ContactLinks />
-              </div>
-          </div>
-      </div>
-  );
+        <div className="lg:w-2/3 md:w-1/2">
+            <div className="flex flex-wrap gx-5">
+                <GetInTouch/>
+                <QuickLinks/>
+                <ContactLinks />
+            </div>
+        </div>
+    </div>
+);
 };
 
 const StyledContainer ="flex flex-wrap p-5 bg-gray-300 ";

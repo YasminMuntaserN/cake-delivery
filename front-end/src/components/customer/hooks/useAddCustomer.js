@@ -17,8 +17,5 @@ export function useAddCustomer() {
             toast.error(err.message || 'An error occurred');
         },
     });
-
-    console.log(id);
-
     return { isAdding, addCustomer ,id }; 
 }

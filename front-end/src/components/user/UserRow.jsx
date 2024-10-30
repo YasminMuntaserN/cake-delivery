@@ -2,7 +2,6 @@ import Delete from "../common/operations/Delete";
 import UpdateUser from "./UpdateUser";
 
 function UserRow({user }) {
-  console.log(`user userRow: ${user}`);  
   return (
     <div className={styledRow }>
         <p>{user.email}</p>

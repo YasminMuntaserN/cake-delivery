@@ -10,6 +10,7 @@ import AddCustomerFeedback from "../customerFeedback/AddCustomerFeedback";
 import { useCartItems } from "../../context/CartItemsContext";
 import useOrderItem from "./hooks/useOrderItems";
 import { getCustomerId } from "../customer/customerSlice";
+import { json } from "react-router-dom";
 
 function Order() {
   const [paymentMethod, setPaymentMethod] = useState("Credit Card");
@@ -30,7 +31,6 @@ function Order() {
       paymentStatus: "Completed",
       deliveryStatus: "Delivered"
     };
-    console.log(orderData);
     addOrder(orderData, {
       onSuccess: (newOrderId) => {
         if (newOrderId) {
@@ -40,20 +40,17 @@ function Order() {
             amountPaid: totalPrice,
             paymentStatus: "Completed"
           };
-         console.log(PaymentData);
           addPayment(PaymentData,{
             onSuccess: () => {
-              console.log(`in the newOrderItem will done`);
               let orderItemData = { };
               cart.map((item)=>{
                 orderItemData ={
-                orderID: 48,
+                orderID: newOrderId,
                 cakeID: item.cakeObject.cakeID,
                 sizeID: item.sizeId,
                 quantity: item.quantity,
                 pricePerItem: item.cakeObject.price
               };
-              console.log(`orderItemData: ${orderItemData} form map`);
               newOrderItem(orderItemData);
             }
           )}

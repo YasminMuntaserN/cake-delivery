@@ -3,18 +3,18 @@ import toast from "react-hot-toast";
 import { editCake } from "../../../services/apiCakes";
 
 export function useUpdateCake() {
-const queryClient = useQueryClient();
+    const queryClient = useQueryClient();
 
-const { mutate: updateCake, isLoading } = useMutation({
-    mutationFn: editCake,
-    onSuccess: () => {
-    toast.success("Cake Updated successfully");
-    queryClient.invalidateQueries({ queryKey: ["cakes"] });
-    },
-    onError: (err) => {
-    toast.error(err.message || "An error occurred");
-    },
-});
+    const { mutate: updateCake, isLoading } = useMutation({
+        mutationFn: ({ cakeInfo, cakeID }) => editCake(cakeInfo, cakeID), 
+        onSuccess: () => {
+            toast.success("Cake Updated successfully");
+            queryClient.invalidateQueries({ queryKey: ["cakes"] });
+        },
+        onError: (err) => {
+            toast.error(err.message || "An error occurred");
+        },
+    });
 
-return { isLoading, updateCake }; 
+    return { isLoading, updateCake }; 
 }

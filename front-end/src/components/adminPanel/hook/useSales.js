@@ -5,7 +5,6 @@ export function useSales() {
     queryKey: ["sales"],
     queryFn: getSales,
   })
-  console.log(`data is: ${data}`);
   return { data , error , isLoading}
 };
 

@@ -3,7 +3,6 @@ import { addNewOrderItem } from "../../../services/apiOrderItem";
 import toast from "react-hot-toast";
 
 function useOrderItem() {
-  console.log("we are here in useOrderItem");
   const queryClient = useQueryClient();
 
 const { mutate: newOrderItem, isLoading: isAdding } = useMutation({

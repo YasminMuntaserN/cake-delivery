@@ -4,7 +4,6 @@ import { addNewCake } from "../../../services/apiCakes";
 
 export function useAddCake() {
 const queryClient = useQueryClient();
-
 const { mutate: addCake, isLoading: isAdding } = useMutation({
     mutationFn: addNewCake,
     onSuccess: (data) => {
@@ -16,7 +15,7 @@ const { mutate: addCake, isLoading: isAdding } = useMutation({
     onError: (err) => {
     toast.error(err.message || "An error occurred");
     },
-});
-
+}
+);
 return { isAdding, addCake }; 
 }

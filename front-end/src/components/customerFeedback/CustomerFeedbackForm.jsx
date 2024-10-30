@@ -31,7 +31,7 @@ const onSubmit = (data) => {
     FeedbackDate: new Date(),
     Rating: rating, 
   };
-  addCustomerFeedback(JSON.stringify(feedbackData),{
+  addCustomerFeedback(feedbackData,{
     onSuccess:()=>{
       navigate("/home");
       handleClear();

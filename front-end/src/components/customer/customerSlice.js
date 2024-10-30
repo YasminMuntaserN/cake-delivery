@@ -39,15 +39,9 @@ const customerSlice = createSlice({
   initialState,
   reducers:{
     AddCustomer(state, action) {
-      console.log( action.payload);
       const {id,firstName, lastName, email, phoneNumber, address, postalCode } = action.payload;
       return { 
         ...state,id, firstName, lastName, email, phoneNumber, postalCode, address };
-    },
-    UpdateCustomerId(state, action) {
-      console.log( action.payload);
-      const {id } = action.payload;
-      return { ...state,id};
     },
   },
   extraReducers: (builder) => {
@@ -58,7 +52,7 @@ const customerSlice = createSlice({
   },
 });
 export const {
-  AddCustomer ,UpdateCustomerId
+  AddCustomer
 } = customerSlice.actions;
 
 export default customerSlice.reducer;

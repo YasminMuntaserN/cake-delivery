@@ -1,6 +1,6 @@
 import Delete from "../common/operations/Delete";
 import Edit from "../common/operations/Edit";
-
+import Image from "../../ui/Image";
 
 function CakeRow({cake ,onPageNumber}) {
 
@@ -11,10 +11,9 @@ function CakeRow({cake ,onPageNumber}) {
       ? "bg-blue-500" 
       : "bg-green-500"
   }`;
-  console.log(StyledStockQuantity);
   return (
     <div className={styledRow }>
-        <img className={styledImage}  src={cake.imageUrl} alt={cake.cakeName} />
+        <Image src={cake.imageUrl} alt={cake.cakeName} className={styledImage}  entity="cakes" />
         <p>{cake.cakeName}</p>
         <div className={StyledStockQuantity}><p >{cake.stockQuantity}</p></div>
           <div>{cake.price}</div>

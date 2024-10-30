@@ -10,7 +10,6 @@ function CategoriesTable() {
     const {data:categories , error , isLoading}= useCategories();;
         if (isLoading) return <Loader />;
         if (error ) return <Error />;
-        console.log(`categories: ${categories}`);
     return (
             <Table>
                 <TableHeader gridColumns="grid-cols-[1fr_1fr_1fr_1fr]">

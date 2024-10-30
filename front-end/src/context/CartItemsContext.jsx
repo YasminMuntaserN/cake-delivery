@@ -18,16 +18,13 @@ function CartItemsProvider({ children }) {
 
   const handleAdd = (cake) => {
     dispatch(addItem(cake));
-    console.log(`Added without quantity`);
   };
 
   const handleInc = (id) => {
-    console.log(`handleInc ${id}`);
     dispatch(SetNewIncQuantity(id));
   };
 
   const handleDec = (id) => {
-    console.log(`handleDec ${id}`);
     dispatch(SetNewDecQuantity(id));
   };
 
@@ -36,13 +33,11 @@ function CartItemsProvider({ children }) {
   };
 
   const handleDelete = (id) => {
-    console.log(`delete ${id}`);
     dispatch(deleteItem(id));
   };
   const handleClear = () => {
     dispatch(clearCart());
   };
-  console.log(cart);
 
   return (
     <CartItemsContext.Provider
