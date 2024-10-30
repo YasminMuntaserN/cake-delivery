@@ -13,7 +13,6 @@ export async function getAll(entityName) {
         }
 
         const data = await res.json();
-        console.log(`data is getAll: ${JSON.stringify(data)}`);
         return data;  
     } catch (error) {
 
@@ -65,24 +64,37 @@ try {
 }
 
 export async function addEntity(entityName, entityData) {
-    console.log(`entityData: ${entityData}`); 
     try {
-        const response = await fetch(`${API_URL}/${entityName}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify(entityData), 
-        });
-        console.log(response);
+        let response;
+        if (entityName === "cakes"|| entityName ==="categories") {
+            response = await fetch(`${API_URL}/${entityName}`, {
+                method: 'POST',
+                body: entityData,
+            });
+        } else {
+            response = await fetch(`${API_URL}/${entityName}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(entityData),
+            });
+        }
+
+        
         if (response.ok) {
-            const data = await response.json();
-            
-            return data.split('/').pop();
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                const data = await response.json();
+                return data.split('/').pop();
+            } else if (contentType && contentType.includes("text/plain")) {
+                const data = await response.text();
+                return data.split('/').pop();
+            }
         } else {
             const errorText = await response.text();
-            throw new Error(`Error adding : ${errorText}`);
+            throw new Error(`Error adding: ${errorText}`);
         }
     } catch (error) {
         console.error(`Error adding ${entityName}:`, error);
@@ -91,19 +103,23 @@ export async function addEntity(entityName, entityData) {
 }
 
 export async function EditEntity(entityName, entityData ,id ) {
-    console.log(`id: ${id}`); 
-    console.log(`${API_URL}/${entityName}/${id}`); 
-
     try {
-        const response = await fetch(`${API_URL}/${entityName}/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify(entityData), 
-        });
-        console.log(response);
+        let response;
+        if (entityName === "cakes" || entityName ==="categories") {
+            response = await fetch(`${API_URL}/${entityName}/${id}`, {
+                method: 'PUT',
+                body: entityData,
+            });
+        } else {
+            response = await fetch(`${API_URL}/${entityName}/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(entityData), 
+            });
+        }
         if (response.ok) {
             const data = await response.json();
             
@@ -119,9 +135,6 @@ export async function EditEntity(entityName, entityData ,id ) {
 }
 
 export async function DeleteEntity(entityName,id ) {
-    console.log(`id: ${id}`); 
-    console.log(`${API_URL}/${entityName}/${id}`); 
-
     try {
         const response = await fetch(`${API_URL}/${entityName}/${id}`, {
             method: 'DELETE',
@@ -130,7 +143,6 @@ export async function DeleteEntity(entityName,id ) {
                 'Accept': 'application/json',
             }
         });
-        console.log(response);
         if (response.ok) {
             const data = await response.json();
             return data;

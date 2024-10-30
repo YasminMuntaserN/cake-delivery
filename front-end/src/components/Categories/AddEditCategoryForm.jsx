@@ -18,18 +18,26 @@ function AddEditCategoryForm({ category}) {
   const onSubmit = (data) => {
     console.log(data);
     if (data) {
-        const categoryData = {
-          categoryName: data.name,
-          categoryImageURL:isEditSession?category.categoryImageUrl : data.image[0].name,
-        };
-        if(!isEditSession){
-        console.log(categoryData);
-        addCategory(categoryData);
-        }else{
-          updateCategory({categoryID: category.categoryID ,...categoryData});
+    const formData = new FormData();
+    formData.append("CategoryName", data.name);
+    if (!isEditSession) {
+              if (data.photo && data.photo.length > 0) {
+                  formData.append("photo", data.photo[0]); 
+              } else {
+                  console.error("No photo selected"); 
+              }
+              addCategory(formData);  
+      } else {
+              formData.append("CategoryID", category.categoryID);
+              if (data.photo && data.photo.length > 0) {
+                  formData.append("photo", data.photo[0]); 
+              } else {
+                  formData.append("CategoryImageUrl", category.categoryImageUrl); 
+              }
+              updateCategory({categoryInfo: formData,categoryID: category.categoryID}); 
         }
-      }
     }
+  }
 
   function onError(errors) { 
     console.log(errors);
@@ -54,14 +62,16 @@ function AddEditCategoryForm({ category}) {
           </FormRow>
 
           <FormRow label="Category photo">
-            <input
-                type= "file"
-                className={StyledInput}
-                id="imageUrl"
-                accept="image/*"
-                {...register("image",{required: isEditSession ? false : "This field is required"
-                })} />
-            </FormRow>
+                <input
+              type="file"
+              className={StyledInput}
+              id="photo" 
+              accept="image/*"
+              {...register("photo", {
+                required: isEditSession ? false : "This field is required"
+              })} 
+            />
+          </FormRow>
           <Button type="Save" onClick={handleSubmit(onSubmit, onError)}>Save</Button>
           <Button type="Cancel">Cancel</Button>
       </Form>
