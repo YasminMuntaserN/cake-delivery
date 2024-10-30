@@ -5,14 +5,19 @@ import { useCartItems } from '../../context/CartItemsContext';
 import Sizes from './Sizes';
 import Quantity from './Quantity';
 import Image from "../../ui/Image";
+import toast from "react-hot-toast";
 
 function CakeItem({ cake }) {
   const { handleAdd } = useCartItems();
   const [isAdded, setIsAdded] = useState(false);
 
   const handleAddToCart = () => {
+    if(cake.stockQuantity === 0){
+      toast.error("This cake is currently out of stock and cannot be purchased 🥲");
+    }else{
     handleAdd(cake);
     setIsAdded(true);
+    }
   };
 
   return (

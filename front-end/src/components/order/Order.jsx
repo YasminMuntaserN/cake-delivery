@@ -11,6 +11,7 @@ import { useCartItems } from "../../context/CartItemsContext";
 import useOrderItem from "./hooks/useOrderItems";
 import { getCustomerId } from "../customer/customerSlice";
 import { json } from "react-router-dom";
+import { useStockQuantity } from "../cakes/hooks/useStockQuantity";
 
 function Order() {
   const [paymentMethod, setPaymentMethod] = useState("Credit Card");
@@ -19,7 +20,7 @@ function Order() {
   const { addPayment, id: paymentId } = usePayment();
   const { addOrder } = useOrder();
   const {newOrderItem}=useOrderItem();
-  console.log(customerId);
+  const {updateCakeStockQuantity}=useStockQuantity();
   const{cart}=useCartItems();
   const date = new Date();
 
@@ -52,6 +53,11 @@ function Order() {
                 pricePerItem: item.cakeObject.price
               };
               newOrderItem(orderItemData);
+              if((item.cakeObject.stockQuantity - item.quantity ) < 0){
+              updateCakeStockQuantity({cakeID :item.cakeObject.cakeID ,stockQuantiy : item.cakeObject.stockQuantity})
+              }else{
+              updateCakeStockQuantity({cakeID :item.cakeObject.cakeID ,stockQuantiy : item.quantity})
+              }
             }
           )}
           });

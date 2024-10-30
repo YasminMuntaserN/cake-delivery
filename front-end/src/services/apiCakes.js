@@ -91,3 +91,27 @@ export async function getTopCakes(){
         throw error; 
     }
 }
+
+export async function ChangeStockQuantity(cakeID ,StockQuantiy) {
+    try {
+        //https://localhost:7085/api/cakes/StockQuantiy/2/cakeID/63
+        const response = await fetch(`${API_URL}/StockQuantiy/${StockQuantiy}/cakeID/${cakeID}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        });
+        if (response.ok) {
+            const data = await response.json();
+            
+            return data;
+        } else {
+            const errorText = await response.text();
+            throw new Error(`Error Updating Stock Quantity`);
+        }
+    } catch (error) {
+        console.error(`Error Updating Stock Quantity`, error);
+        throw error;
+    }
+}
