@@ -2,9 +2,7 @@ import { useForm } from "react-hook-form";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Button from "../../ui/Button";
-import { useAddCake } from "./hooks/useAddCake";
 import CategorySelector from "../common/CategorySelector";
-import { useUpdateCake } from "./hooks/useUpdateCake";
 import { useEffect } from "react";
 import { useCakeOperations } from "../../context/CakeContext";
 
@@ -19,22 +17,37 @@ function AddEditCakeForm({cake}) {
   const onSubmit = (data) => {
     console.log(data);
     if (data) {
-      const cakeData = {
-        cakeName: data.name,
-        description: data.description,
-        price: data.price,
-        stockQuantity:  data.stockQuantity,
-        categoryID: data.categoryId,
-        imageUrl:isEditSession ?cake.imageUrl : data.image[0].name,
-    };
-      if(!isEditSession){
-        handleAddCake(cakeData);
-        }
-        else{
-          handleUpdateCake({cakeID :cake.cakeID ,...cakeData});
-      }
+      const formData = new FormData();
+          formData.append("CakeName", data.name);
+          formData.append("Description", data.description);
+          formData.append("Price", data.price);
+          formData.append("StockQuantity", data.stockQuantity);
+          formData.append("CategoryID", data.categoryId);
+
+      
+          if (!isEditSession) {
+            if (data.photo && data.photo.length > 0) {
+                formData.append("photo", data.photo[0]); 
+            } else {
+                console.error("No photo selected"); 
+            }
+            handleAddCake(formData);  
+        } else {
+            if (cake && cake.cakeID) {
+              console.log( cake.cakeID);
+                formData.append("CakeID", cake.cakeID);
+                if (data.photo && data.photo.length > 0) {
+                    formData.append("photo", data.photo[0]); 
+                } else {
+                    formData.append("ImageUrl", cake.imageUrl); 
+                }
+                handleUpdateCake({cakeInfo: formData,cakeID: cake.cakeID}); 
+            } else {
+                console.error("No valid cake ID found"); 
+            }
+          }
     }
-  }
+};
 
   function onError(errors) { 
     console.log(errors);
@@ -53,7 +66,11 @@ useEffect(() => {
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
       {isEditSession && cake.imageUrl && (
-        <img src={cake.imageUrl} alt="Current Cake" className={StyledImage} />
+        (!(cake.imageUrl.includes("/uploads/cakes"))?
+          <img src={cake.imageUrl} alt={cake.cakeName} className={StyledImage} />
+          :
+          <img src={`https://localhost:7085${cake.imageUrl}`} alt={cake.cakeName} className={StyledImage} />
+      )
       )}
       <FormRow label="Cake Name" error={errors?.name?.message}>
       <input
@@ -100,14 +117,16 @@ useEffect(() => {
       </FormRow>
 
       <FormRow label="Cake photo">
-        <input
-            type= "file"
-            className={StyledInput}
-            id="imageUrl"
-            accept="image/*"
-            {...register("image",{required: isEditSession ? false : "This field is required"
-            })} />
-        </FormRow>
+      <input
+        type="file"
+        className={StyledInput}
+        id="photo" 
+        accept="image/*"
+        {...register("photo", {
+          required: isEditSession ? false : "This field is required"
+        })} 
+      />
+    </FormRow>
 
       <Button type="submit" onClick={handleSubmit(onSubmit, onError)}>Save</Button>
       </Form>
