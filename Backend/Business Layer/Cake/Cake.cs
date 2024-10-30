@@ -1,5 +1,6 @@
 ﻿using CakeDeliveryDTO.CakeDTOs;
 using DataAccessLayer;
+using Microsoft.AspNetCore.Http;
 
 namespace Business_Layer.Cake
 {
@@ -21,6 +22,7 @@ namespace Business_Layer.Cake
         public int StockQuantity { get; set; }
         public int CategoryID { get; set; }
         public string ImageUrl { get; set; }
+        public IFormFile ImageFile { get; set; }  
 
         public Cake(CakeDTO cakeDto, enMode mode = enMode.AddNew)
         {
@@ -31,19 +33,20 @@ namespace Business_Layer.Cake
             StockQuantity = cakeDto.StockQuantity;
             CategoryID = cakeDto.CategoryID;
             ImageUrl = cakeDto.ImageUrl;
-
             Mode = mode;
         }
 
-        // Convert to DTO
         public CakeDTO ToCakeDto() =>
             new CakeDTO(CakeID, CakeName, Description, Price, StockQuantity, CategoryID, ImageUrl);
+
 
         private bool _Add()
         {
             CakeID = CakeData.Add(new CakeCreateDto(CakeName, Description, Price, StockQuantity, CategoryID, ImageUrl));
             return CakeID.HasValue;
         }
+
+
 
 
         private bool _Update()

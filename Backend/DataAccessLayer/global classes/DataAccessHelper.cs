@@ -30,11 +30,11 @@ namespace DataAccessLayer
             }
         }
 
-        // Insert a new record and return the new ID
+   
         public static int? Add<T>(string storedProcedureName, string outputParameterName, T entity)
         {
             int? newId = null;
-
+            Console.WriteLine(entity);
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
@@ -42,6 +42,7 @@ namespace DataAccessLayer
                     using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
+
 
                         // Add input parameters from the DTO
                         AddParametersFromDto(command, entity);
@@ -360,13 +361,14 @@ namespace DataAccessLayer
         /// </summary>
         private static void AddParametersFromDto<T>(SqlCommand command, T dto)
         {
-            // Use reflection to add parameters dynamically
             foreach (var property in typeof(T).GetProperties())
             {
                 var value = property.GetValue(dto);
+
                 var parameter = new SqlParameter($"@{property.Name}", value ?? DBNull.Value);
                 command.Parameters.Add(parameter);
             }
         }
+
     }
 }

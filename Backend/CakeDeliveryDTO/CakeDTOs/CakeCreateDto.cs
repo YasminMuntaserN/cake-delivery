@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,7 @@ namespace CakeDeliveryDTO.CakeDTOs
         string Description,
         decimal Price,
         int StockQuantity,
-        int CategoryID, 
-        string ImageUrl
-    );
-
+        int CategoryID,
+        string? ImageUrl  = null
+        );
 }

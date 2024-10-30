@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Validation\Validation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\categories\" />
+  </ItemGroup>
+
 </Project>

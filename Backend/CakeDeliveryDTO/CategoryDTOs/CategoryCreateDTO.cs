@@ -11,5 +11,5 @@ namespace CakeDeliveryDTO;
 /// 
 public record CategoryCreateDto(
     string CategoryName,
-    string CategoryImageURL
+    string? CategoryImageURL = null
 );

@@ -12,7 +12,7 @@ namespace Business_Layer.Order
         public override ValidationResult Validate(Order order)
         {
             if (!HasValidOrderID(order.CustomerID))
-                AddError("OrderID is invalid.");
+                AddError("CustomerID is invalid.");
 
             if (!HasValidOrderDate(order.OrderDate))
                 AddError("OrderDate cannot be in the future.");

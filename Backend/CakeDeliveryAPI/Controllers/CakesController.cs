@@ -1,10 +1,11 @@
 ﻿using Business_Layer.Cake;
-using Business_Layer.Order;
 using CakeDeliveryAPI.Controllers;
 using CakeDeliveryDTO.CakeDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 [Route("api/cakes")]
 [ApiController]
@@ -44,32 +45,23 @@ public class CakesController : BaseController
         => GetEntityByIdentifier(cakeName, Cake.FindCakeByName, cake => Ok(cake));
 
 
-    // POST: api/cakes
     [HttpPost(Name = "AddCake")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<CakeDTO> AddCake([FromBody] CakeCreateDto newCakeDTO)
+    public async Task<ActionResult<CakeCreateDto>> AddCake([FromForm] CakeCreateDto newCakeDTO, IFormFile photo)
     {
-        if (newCakeDTO == null || string.IsNullOrEmpty(newCakeDTO.CakeName))
-        {
-            return BadRequest("Invalid cake data.");
-        }
+            if (newCakeDTO == null || photo == null || photo.Length == 0)
+                return BadRequest("Invalid cake data or photo.");
 
-        Cake cakeInstance = new Cake(
-            new CakeDTO(null, newCakeDTO.CakeName, newCakeDTO.Description, newCakeDTO.Price, newCakeDTO.StockQuantity, newCakeDTO.CategoryID, newCakeDTO.ImageUrl),
+        var ImageUrl = await HelperClass.SaveImageAsync(photo, "cakes");
+        if (ImageUrl == null) return BadRequest("Failed to save the image.");
+
+        var cakeInstance = new Cake(
+            new CakeDTO(null, newCakeDTO.CakeName, newCakeDTO.Description, newCakeDTO.Price, newCakeDTO.StockQuantity, newCakeDTO.CategoryID, ImageUrl),
             Cake.enMode.AddNew
         );
 
-        var validationResult = _validator.Validate(cakeInstance);
-        if (!validationResult.IsValid)
-        {
-            return BadRequest(new
-            {
-                Success = false,
-                Errors = validationResult.Errors
-            });
-        }
-
+        // Save the Cake instance to the database
         if (cakeInstance.Save())
         {
             var locationUrl = Url.Link("GetCakeById", new { id = cakeInstance.CakeID });
@@ -80,12 +72,13 @@ public class CakesController : BaseController
     }
 
 
+
     // PUT: api/cakes/{id}
     [HttpPut("{id}", Name = "UpdateCake")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<CakeDTO> UpdateCake(int id, CakeDTO updatedCake)
+    public async Task<ActionResult<CakeDTO>> UpdateCake(int id, [FromForm] CakeDTO updatedCake, IFormFile? photo = null)
     {
         if (id < 1 || updatedCake == null || string.IsNullOrEmpty(updatedCake.CakeName))
         {
@@ -97,8 +90,18 @@ public class CakesController : BaseController
         {
             return NotFound($"Cake with ID {id} not found.");
         }
-
-        Cake cakeInstance = new Cake(updatedCake, Cake.enMode.Update);
+        Cake cakeInstance;
+        if (photo != null)
+        {
+            var ImageUrl = await HelperClass.SaveImageAsync(photo, "cakes");
+            if (ImageUrl == null) return BadRequest("Failed to save the image.");
+            cakeInstance = new Cake(new CakeDTO(updatedCake.CakeID, updatedCake.CakeName, updatedCake.Description
+                , updatedCake.Price, updatedCake.StockQuantity, updatedCake.CategoryID, ImageUrl), Cake.enMode.Update);
+        }
+        else
+        {
+            cakeInstance = new Cake(updatedCake, Cake.enMode.Update);
+        }
 
         var validationResult = _validator.Validate(cakeInstance);
         if (!validationResult.IsValid)
@@ -142,7 +145,7 @@ public class CakesController : BaseController
     public ActionResult<List<CakeDTO>> GetCakesByCategoryName(string categoryName)
         => GetAllEntitiesBy<string, CakeDTO, string>(categoryName, Cake.AllByCategoryName, "Cake");
 
-   
+
     // GET: api/cakes/page/number/{pageNumber}?pageSize={pageSize}
     [HttpGet("page/number/{pageNumber}", Name = "GetCakesByPage")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -176,7 +179,7 @@ public class CakesController : BaseController
     [HttpGet("TotalPages/number/{Id}", Name = "GetTotalPages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetTotalPages(int Id )
+    public IActionResult GetTotalPages(int Id)
     {
         // Validate the categoryId
         if (Id < -1)
@@ -194,7 +197,7 @@ public class CakesController : BaseController
         return Ok(new
         {
             totalRows,
-             totalPages
+            totalPages
         });
     }
 }

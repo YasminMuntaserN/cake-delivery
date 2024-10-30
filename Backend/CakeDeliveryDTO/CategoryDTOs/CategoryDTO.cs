@@ -12,5 +12,5 @@ namespace CakeDeliveryDTO;
 public record CategoryDTO(
     int? CategoryID,
     string CategoryName,
-    string CategoryImageUrl
+    string? CategoryImageUrl = null
 );
