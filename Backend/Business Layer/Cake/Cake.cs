@@ -134,5 +134,8 @@ namespace Business_Layer.Cake
 
         public static void GetTotalPagesAndRows(int catogeryId ,out int totalRows, out int totalPages)
             => CakeData.GetTotalPagesAndRows(catogeryId ,out totalRows, out totalPages);
+
+        public static bool ChangeStockQuantiy(int? cakeId, int Quantity)
+            => CakeData.ChangeStockQuantiy(cakeId, Quantity);
     }
 }

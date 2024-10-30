@@ -155,5 +155,10 @@ namespace DataAccessLayer
 
         public static void GetTotalPagesAndRows(int catogeryId ,out int totalRows, out int totalPagess)
             => DataAccessHelper.GetTotalPagesAndRows(catogeryId, 5 ,out totalRows, out totalPagess);
+
+        public static bool ChangeStockQuantiy(int? cakeId, int Quantity)
+        {
+            return DataAccessHelper.ChangeStockQuantiy(cakeId, Quantity);
+        }
     }
 }

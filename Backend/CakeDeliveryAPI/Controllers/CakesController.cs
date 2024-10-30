@@ -200,4 +200,24 @@ public class CakesController : BaseController
             totalPages
         });
     }
+
+    // PUT: api/cakes/{id}/{quantity}
+    [HttpPut("StockQuantiy/{StockQuantiy}/cakeID/{cakeID}", Name = "ChangeStockQuantiy")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult ChangeStockQuantiy(int? cakeID, int StockQuantiy) 
+    {
+        if (StockQuantiy < 0)
+        {
+            return BadRequest("The quantity must be 0 or greater.");
+        }
+
+        if (Cake.ChangeStockQuantiy(cakeID, StockQuantiy))
+        {
+            return Ok("The quantity changed.");
+        }
+
+        return NotFound(new { message = "Cake not found or stock could not be changed." });
+    }
 }

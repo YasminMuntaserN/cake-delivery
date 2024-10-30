@@ -99,7 +99,7 @@ namespace DataAccessLayer
             return (rowAffected > 0);
         }
 
-        // Retrieve a single record by any parameter (ID, string, etc.)
+       
         public static T? GetByParameter<T>(string storedProcedureName, string parameterName, object? value, Func<IDataReader, T> mapFunction)
         {
             try
@@ -133,7 +133,7 @@ namespace DataAccessLayer
             return default; // Return default value if no result found
         }
 
-        // Retrieve all records with a parameter
+     
         public static List<T> GetAll<T>(string storedProcedureName, string parameterName, object? value, Func<IDataReader, T> mapFunction)
         {
             var list = new List<T>();
@@ -146,7 +146,7 @@ namespace DataAccessLayer
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        // Add parameter with dynamic type
+                       
                         command.Parameters.AddWithValue($"@{parameterName}", value ?? DBNull.Value);
 
                         connection.Open();
@@ -154,7 +154,7 @@ namespace DataAccessLayer
                         {
                             while (reader.Read())
                             {
-                                // Pass the reader to your mapping function
+                               
                                 var item = mapFunction(reader);
                                 list.Add(item);
                             }
@@ -170,7 +170,7 @@ namespace DataAccessLayer
             return list;
         }
 
-        // Retrieve all records without any parameter
+       
         public static List<T> GetAll<T>(string storedProcedureName, Func<IDataReader, T> mapFunction)
         {
             var list = new List<T>();
@@ -188,7 +188,7 @@ namespace DataAccessLayer
                             while (reader.Read())
                             {
 
-                                // Pass the reader to your mapping function
+                              
                                 var item = mapFunction(reader);
                                 list.Add(item);
                             }
@@ -204,7 +204,7 @@ namespace DataAccessLayer
             return list;
         }
 
-        // Delete a record
+
         public static bool Delete(string storedProcedureName, string parameterName, object? value)
         {
             int rowsAffected = 0;
@@ -217,7 +217,7 @@ namespace DataAccessLayer
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        // Add the parameter for the ID or value used to identify the record to delete
+
                         command.Parameters.AddWithValue($"@{parameterName}", value ?? DBNull.Value);
 
                         connection.Open();
@@ -350,6 +350,35 @@ namespace DataAccessLayer
             }
 
             return isFound;
+        }
+
+
+        public static bool ChangeStockQuantiy(int? cakeId, int Quantity)
+        {
+            if (!cakeId.HasValue) return false;
+
+            int rowAffected = 0;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DataAccessSettings.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_changCakeInStock", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CakeID", cakeId);
+                        cmd.Parameters.AddWithValue("@Quantity", Quantity);
+
+                        conn.Open();
+                        rowAffected = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex); 
+            }
+
+            return (rowAffected > 0);
         }
 
         // Add parameters from a DTO object to a SqlCommand
