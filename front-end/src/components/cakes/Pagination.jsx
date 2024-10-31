@@ -43,13 +43,3 @@ const StyledContainer ="flex space-x-2 mb-4 justify-center ";
 const StyledLink ="text-pink px-3 py-1 rounded hover:text-peach text-4xl";
 
 
-
-        {/* </li>
-              {Array.from({ length: pagesNum.totalPages }, (_, index) => (
-          <li key={index + 1}>
-            <a href="#" className={StyledLink} >
-              {index + 1}
-            </a>
-          </li>
-        ))}
-        <li> */}

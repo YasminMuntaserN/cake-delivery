@@ -36,7 +36,7 @@ function CustomerFeedback() {
         </div>
 
         <div className={StyledImgContainer}>
-            <img className={StyledImg} src="./Social-tree-cuate.png"/>
+            <img className={StyledImg} src="./Social-tree-cuate.png" alt="Social-tree"/>
           </div >
   </div>
   )

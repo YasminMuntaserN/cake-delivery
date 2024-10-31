@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import FormRow from "../../ui/FormRow";
 import { useDispatch } from "react-redux";
 import { fetchAddress } from "./customerSlice";
 
 function CustomerAddressInput({ errors, register, StyledInput, onGeocode,setValue={setValue} }) {
   const dispatch = useDispatch();
-  // const [address , setAddress]=useState();
 
   const handleGeolocation = async () => {
     try {
       const { address, position } = await dispatch(fetchAddress()).unwrap();
       
       onGeocode(position); 
-      // setAddress(address);
       setValue("address", address); 
     } catch (error) {
       console.error("Error fetching position:", error);
@@ -21,7 +19,7 @@ function CustomerAddressInput({ errors, register, StyledInput, onGeocode,setValu
 
   useEffect(() => {
     handleGeolocation(); 
-  }, []);
+  }, [handleGeolocation]);
 
   return (
     <div className="relative">

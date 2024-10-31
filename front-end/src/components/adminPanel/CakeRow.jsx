@@ -1,9 +1,10 @@
 import Delete from "../common/operations/Delete";
 import Edit from "../common/operations/Edit";
 import Image from "../../ui/Image";
+import { useCategoryName } from "../Categories/hook/useCategoryName";
 
 function CakeRow({cake ,onPageNumber}) {
-
+  const {data :categoryName , error , isLoading}=useCategoryName(cake.categoryID);
   const StyledStockQuantity = `rounded-full p-3 w-10 h-5 flex items-center ${
     cake.stockQuantity === 0 
       ? "bg-red-500" 
@@ -17,7 +18,7 @@ function CakeRow({cake ,onPageNumber}) {
         <p>{cake.cakeName}</p>
         <div className={StyledStockQuantity}><p >{cake.stockQuantity}</p></div>
           <div>{cake.price}</div>
-          <div>{cake.categoryID}</div>
+          <div>{isLoading ? "loading...." :error?"something get wrong " :categoryName}</div>
         <Delete isDeleting={true} id={cake.cakeID} onPageNumber={onPageNumber} entity="Cake"/>
         <Edit isUpdating ={true} cake={cake}/>
     </div>

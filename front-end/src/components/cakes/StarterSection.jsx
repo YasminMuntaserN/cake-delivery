@@ -14,11 +14,11 @@ function StarterSection() {
 
         <div className={StyledShippingContainer}>
         <p className="text-sm font-semibold text-pink-600 mb-2">
-          <img src="./transport.png"className="w-7 inline-grid mr-4"/>
+          <img src="./transport.png"className="w-7 inline-grid mr-4" alt="starter-img"/>
           No shipping charge
         </p>
         <p className="text-sm font-semibold text-pink-600">
-        <img src="./secure.png" className="w-7 inline-grid mr-4"/>
+        <img src="./secure.png" className="w-7 inline-grid mr-4" alt="checkout-img"/>
           100% secure checkout</p>
           </div>
       </div>

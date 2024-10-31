@@ -4,13 +4,12 @@ import { getTotalPrice } from "../cart/cartSlice";
 import Button from "../../ui/Button";
 import { useOrder } from "./hooks/useOrder";
 import { usePayment } from "../payment/hooks/usePayment";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import PaymentOptions from "../payment/PaymentOptions";
 import AddCustomerFeedback from "../customerFeedback/AddCustomerFeedback";
 import { useCartItems } from "../../context/CartItemsContext";
 import useOrderItem from "./hooks/useOrderItems";
 import { getCustomerId } from "../customer/customerSlice";
-import { json } from "react-router-dom";
 import { useStockQuantity } from "../cakes/hooks/useStockQuantity";
 
 function Order() {

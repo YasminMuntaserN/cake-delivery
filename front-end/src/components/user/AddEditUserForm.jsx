@@ -40,7 +40,7 @@ useEffect(() => {
       setValue("email", user.email);
     }
   }
-}, [user, isEditSession, setValue]);
+}, [user, isEditSession, setValue,operationName]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>

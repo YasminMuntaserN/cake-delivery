@@ -6,7 +6,7 @@ import Edit from "../common/operations/Edit";
 
 function CartItem({ item }) {
     const {cakeObject, quantity, sizeId } = item;
-    const size= sizeId===1 ?"Small" : sizeId==   2 ?"medium":"large";
+    const size= sizeId===1 ?"Small" : sizeId===  2 ?"medium":"large";
     return (
         <div className={styledRow }>
             <p></p>

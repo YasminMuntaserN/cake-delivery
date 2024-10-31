@@ -107,7 +107,6 @@ export async function ChangeStockQuantity(cakeID ,StockQuantiy) {
             
             return data;
         } else {
-            const errorText = await response.text();
             throw new Error(`Error Updating Stock Quantity`);
         }
     } catch (error) {

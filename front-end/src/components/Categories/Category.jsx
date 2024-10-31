@@ -16,8 +16,7 @@ return (
       <div className="flex justify-center items-center h-screen lg:mt-0 sm:mt-16"> 
       <div className="flex flex-wrap  mt-0 gap-10  justify-center items-center">
       {categories.map((Category) => (
-      <CategoryElement key={Category.
-        categoryID} Category={Category} />
+      <CategoryElement key={Category.categoryID} Category={Category} />
     ))}
       </div>
       </div>

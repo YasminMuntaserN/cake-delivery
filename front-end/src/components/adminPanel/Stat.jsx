@@ -1,4 +1,4 @@
-import { HiMiniPencil ,HiMiniPlusCircle } from "react-icons/hi2";
+import {HiMiniPlusCircle } from "react-icons/hi2";
 import Stats from "./Stats";
 import Modal from "../../ui/Modal";
 import { useState } from "react";
@@ -29,7 +29,7 @@ function Stat() {
           {
             Operations.map((operation ,i)=>
             <Modal.Open key ={i+1} onClick={()=>{setOperation(operation.name)}} >
-                <button ><Stats operation={operation} color={i%2 == 0 ?"peach" :"pink"}/></button>
+                <button ><Stats operation={operation} color={i%2 === 0 ?"peach" :"pink"}/></button>
             </Modal.Open>
           )
           }

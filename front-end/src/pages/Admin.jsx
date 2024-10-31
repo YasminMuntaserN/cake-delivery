@@ -1,5 +1,3 @@
-import Stat from "../components/adminPanel/Stat";
-import StockQuantity from "../components/adminPanel/CakesTable";
 import WeeklySalesChart from "../components/adminPanel/WeeklySalesChart";
 
 function Admin() {
