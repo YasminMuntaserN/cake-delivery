@@ -26,6 +26,15 @@ namespace CakeDeliveryAPI.Controllers
         public ActionResult<CategoryDTO> GetCategoryById(int id)
             => GetEntityByIdentifier(id, Category.FindCategoryById, category => Ok(category));
 
+        // GET: api/categories/{id}
+        [HttpGet("categoryId/{categoryId}", Name = "GetCategoryNameById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<string> GetCategoryNameById(int categoryId)
+            => GetEntityByIdentifier(categoryId, Category.GetCategoryNameById , category => Ok(category));
+
+
         // POST: api/categories
         [HttpPost(Name = "AddCategory")]
         [ProducesResponseType(StatusCodes.Status201Created)]

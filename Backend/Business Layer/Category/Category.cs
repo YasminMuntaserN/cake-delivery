@@ -71,6 +71,11 @@ namespace Business_Layer.Category
             return CategoryData.GetCategoryById(categoryId);
         }
 
+        public static string GetCategoryNameById(int categoryId)
+        {
+            return CategoryData.GetCategoryNameById(categoryId);
+        }
+
         public static CategoryDTO? FindCategoryByName(string categoryName)
         {
             return CategoryData.GetCategoryByName(categoryName);

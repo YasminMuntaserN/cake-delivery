@@ -14,10 +14,8 @@ namespace DataAccessLayer
 {
     public class DataAccessHelper
     {
-        // Create an instance of clsErrorLogger
         private static ErrorLogger _logger = new ErrorLogger(ErrorLogger.LogToEventViewer);
 
-        // Method to handle exceptions and log them
         private static void HandleException(Exception ex)
         {
             if (ex is SqlException sqlEx)
@@ -44,10 +42,8 @@ namespace DataAccessLayer
                         command.CommandType = CommandType.StoredProcedure;
 
 
-                        // Add input parameters from the DTO
                         AddParametersFromDto(command, entity);
 
-                        // Add output parameter to get the new ID
                         SqlParameter outputIdParam = new SqlParameter($"@{outputParameterName}", SqlDbType.Int)
                         {
                             Direction = ParameterDirection.Output
@@ -70,7 +66,6 @@ namespace DataAccessLayer
             return newId;
         }
 
-        // Update an existing record
         public static bool Update<T>(string storedProcedureName, T entity)
         {
             int rowAffected = 0;
@@ -110,7 +105,6 @@ namespace DataAccessLayer
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        // Add parameter with dynamic type
                         command.Parameters.AddWithValue($"@{parameterName}", value ?? DBNull.Value);
 
                         connection.Open();

@@ -1,6 +1,7 @@
 ﻿using CakeDeliveryDTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,21 @@ namespace DataAccessLayer
                 "CategoryID",
                 categoryId,
                 Mappings.MapCategoryDTOFromReader
+            );
+        }
+
+        /// <summary>
+        /// Retrieves a category Name by its ID.
+        /// </summary>
+        /// <param name="categoryId">The ID of the categoryName  to find.</param>
+        /// <returns>category Name if found, otherwise null.</returns>
+        public static string GetCategoryNameById(int? categoryId)
+        {
+            return DataAccessHelper.GetByParameter<string>(
+                "sp_getCategoryNameById",
+                "CategoryID",
+                categoryId,
+               (IDataReader reader) => reader["CategoryName"].ToString() ?? string.Empty
             );
         }
 
