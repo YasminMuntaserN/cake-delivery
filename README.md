@@ -119,4 +119,4 @@ Admins can create new user accounts for additional staff members, manage existin
   - Ensures incoming data is accurate and secure.
   - Model attributes and custom logic enforce data requirements.
 ## 🚀 Live Demo
-<a href="#" alt="under-development">🔗 under development!</a>
+<a href="https://youtu.be/ZqCrSqjeXdg?si=leU7gdXsEMdJVfc_" alt="demo">🔗click me 😊!</a>
