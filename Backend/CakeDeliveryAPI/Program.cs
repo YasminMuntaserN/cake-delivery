@@ -1,20 +1,28 @@
 using Microsoft.Extensions.FileProviders;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 
-// Add CORS Policy
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")  // React App URL
+        policy.WithOrigins("http://localhost:5173")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
+
+builder.Services.AddHangfire(config =>
+    config.UseSqlServerStorage(
+        builder.Configuration.GetConnectionString("HangfireConnection")
+    )
+);
+
+builder.Services.AddHangfireServer();
+builder.Services.AddScoped<EmailService>();
 
 // Swagger/OpenAPI config
 builder.Services.AddEndpointsApiExplorer();
@@ -22,7 +30,6 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -30,14 +37,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-// Enable CORS Policy for the React app
 app.UseCors("AllowReactApp");
 
-// Enable static files to serve images from wwwroot
-app.UseStaticFiles(); // Serves files in wwwroot by default
-
-// Optionally, map /uploads specifically
+app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
@@ -45,8 +47,8 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/uploads"
 });
 
+app.UseHangfireDashboard("/dashboard");
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

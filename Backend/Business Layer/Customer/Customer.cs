@@ -98,6 +98,11 @@ namespace Business_Layer.Customer
             return Finder.Find<CustomerDTO, T>(data, findBy);
         }
 
+        public static CustomerDTO FindById(int? CustomerID)
+        {
+            return CustomerData.GetCustomerById(CustomerID);
+        }
+
     }
 }
 

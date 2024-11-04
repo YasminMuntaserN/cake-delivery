@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.68.0.1869" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CakeDeliveryDTO\CakeDeliveryDTO.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\Validation\Validation.csproj" />

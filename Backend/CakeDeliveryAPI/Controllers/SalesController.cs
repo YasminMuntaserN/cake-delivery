@@ -2,6 +2,7 @@
 using CakeDeliveryDTO.CakeDTOs;
 using CakeDeliveryDTO.SalesDTOs;
 using DataAccessLayer;
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CakeDeliveryAPI.Controllers
@@ -16,5 +17,6 @@ namespace CakeDeliveryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<SalesDTO>> GetAllSales()
             => GetAllEntities(() => SalesData.All());
+
     }
 }

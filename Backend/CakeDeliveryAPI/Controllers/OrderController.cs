@@ -3,6 +3,7 @@ using Business_Layer.Cake;
 using Business_Layer.Order;
 using CakeDeliveryDTO.CakeDTOs;
 using DTOs;
+using Hangfire;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ namespace CakeDeliveryAPI.Controllers
         [HttpPost(Name = "AddOrder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<OrderDTO> AddOrder([FromBody] OrderCreateDTO newOrderDTO)
+        public async Task<ActionResult<OrderDTO>> AddOrder([FromBody] OrderCreateDTO newOrderDTO)
         {
             if (newOrderDTO == null || newOrderDTO.CustomerID < 1)
             {
@@ -63,6 +64,8 @@ namespace CakeDeliveryAPI.Controllers
 
             if (orderInstance.Save())
             {
+                BackgroundJob.Schedule(() => EmailService.SendEmail(newOrderDTO.CustomerID, newOrderDTO.TotalAmount, orderInstance.OrderDate), TimeSpan.FromMinutes(5));
+               ;
                 var locationUrl = Url.Link("GetOrderById", new { id = orderInstance.OrderID });
                 return Ok(locationUrl);
             }
